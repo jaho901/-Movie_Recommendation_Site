@@ -8,6 +8,7 @@
         id="username"
         v-model="credentials.username"
       >
+      <button>중복확인</button>
     </div>
     <div>
       <label for="password">비밀번호: </label>
@@ -25,6 +26,12 @@
         v-model="credentials.passwordConfirmation"
         @keyup.enter="signup"
       >
+      <div v-if = 'credentials.password === credentials.passwordConfirmation'>
+        비밀번호가 일치합니다!
+      </div>
+      <div v-else>
+        비밀번호가 일치하지 않습니다
+      </div>
     </div>
     <button @click="signup">회원가입</button>
   </div>
@@ -39,9 +46,9 @@ export default {
     return {
       credentials: {
         username: null,
-        password: null,
-        passwordConfirmation: null,
-      }
+        password: null, 
+      },
+      passwordToggle: false
     }
   },
   methods: {
@@ -57,8 +64,13 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          this.passwordToggle = true
         })
     }
   }
 }
 </script>
+
+<style scoped>
+
+</style>

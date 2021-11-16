@@ -18,6 +18,11 @@
         @keyup.enter="login"
       >
     </div>
+    <!-- 비밀번호가 일치하지 않는 경우가 발생할 때 에러메세지 생성 -->
+    <div v-if = 'passwordToggle === true'>
+      비밀번호가 일치하지 않습니다!!!
+    </div>
+
     <button @click="login">로그인</button>
   </div>
 </template>
@@ -32,7 +37,8 @@ export default {
       credentials: {
         username: null,
         password: null,
-      }
+      },
+      passwordToggle: false
     }
   },
   methods: {
@@ -51,8 +57,14 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          // console.log(this.passwordToggle)
+          this.passwordToggle = true
         })
     }
   }
 }
 </script>
+
+<style scoped>
+
+</style>
