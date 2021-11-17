@@ -22,3 +22,5 @@ def movie_list_recent(request):
     # movies = request.user.movie_set.all()
     serializer = MovieSerializer(movies_recent, many=True)
     return Response(serializer.data)
+
+
