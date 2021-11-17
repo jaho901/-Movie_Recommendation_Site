@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p></p>
+    {{movie}}
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   },
   data: function () {
     return {
-      movies: [],
+      movie: null,
     }
   },
   methods: {
@@ -33,14 +33,12 @@ export default {
       console.log(typeof(this.$route.params.movieId))
       
       axios({
-        method: 'get',
+        method: 'GET',
         url: `${SERVER_URL}/movies/${movieId}`,
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          // console.log(res)
-          // console.log(res.data)
-          this.movies = res.data
+          this.movie = res.data
         })
         .catch(err => {
           console.log(err)
