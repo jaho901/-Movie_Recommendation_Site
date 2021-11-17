@@ -8,9 +8,9 @@ from .serializers import MovieSerializer
 from .models import Movie
 
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def movie_list(request):
-    # todos = Todo.objects.all()
-    movies = request.user.movie_set.all()
+    movies = Movie.objects.all()
+    # movies = request.user.movie_set.all()
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)

@@ -1,6 +1,8 @@
 <template>
   <div>
-    {{ movies }}
+    <ul v-for="(movie, idx) in movies" :key="idx">
+      <p>{{ movie.title }}</p>
+    </ul>
   </div>
 </template>
 
@@ -10,10 +12,10 @@ import axios from 'axios'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'TodoList',
+  name: 'MovieList',
   data: function () {
     return {
-      movies: null,
+      movies: [],
     }
   },
   methods: {
@@ -24,7 +26,7 @@ export default {
       }
       return config
     },
-    getTodos: function () {
+    getMovies: function () {
       axios({
         method: 'get',
         url: `${SERVER_URL}/movies/`,
@@ -39,14 +41,14 @@ export default {
           console.log(err)
         })
       },
+    },
+  created: function () {
+    if (localStorage.getItem('jwt')) {
+      this.getMovies()
+    } else {
+      this.$router.push({ name: 'Login' })
     }
-  // created: function () {
-  //   if (localStorage.getItem('jwt')) {
-  //     this.getTodos()
-  //   } else {
-  //     this.$router.push({ name: 'Login' })
-  //   }
-  // }
+  }
 }
 </script>
 <style>

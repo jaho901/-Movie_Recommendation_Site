@@ -1,4 +1,3 @@
-from io import open_code
 from django.db import models
 # from django.db import settings
 
@@ -18,9 +17,9 @@ class Movie(models.Model):
     actor_1 = models.CharField(max_length=20)
     actor_2 = models.CharField(max_length=20, default='')
     actor_3 = models.CharField(max_length=20, default='')
-    content = models.TextField()
     year = models.IntegerField()
     month = models.IntegerField()
     day = models.IntegerField(default='')
+    content = models.TextField()
     def __str__(self):
         return self.title
