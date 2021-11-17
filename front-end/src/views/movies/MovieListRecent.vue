@@ -1,23 +1,22 @@
 <template>
   <div>
-    <ul>
-      <movie-list-item v-for="(movie, idx) in movies" :key="idx"
-        :movie="movie" >
-        </movie-list-item>
-    </ul>
+    <movie-list-recent-item></movie-list-recent-item>
+    <p>여기 뭐가있을까요오옹</p>
   </div>
 </template>
 
 <script>
-import MovieListItem from '@/views/movies/MovieListItem'
+// import MovieListItem from '@/views/movies/MovieListItem'
 import axios from 'axios'
+import MovieListRecentItem from '@/views/movies/MovieListRecentItem.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MovieList',
   components:{
-    MovieListItem
+    MovieListRecentItem
+    
   },
   data: function () {
     return {
@@ -35,7 +34,7 @@ export default {
     getMovies: function () {
       axios({
         method: 'get',
-        url: `${SERVER_URL}/movies/`,
+        url: `${SERVER_URL}/movies/recent/`,
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
@@ -57,6 +56,7 @@ export default {
   }
 }
 </script>
+
 <style>
 
 </style>

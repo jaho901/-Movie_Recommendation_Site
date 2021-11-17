@@ -27,6 +27,7 @@ const routes = [
     name: 'MovieList',
     component: MovieList,
   },
+
 ]
 
 const router = new VueRouter({
