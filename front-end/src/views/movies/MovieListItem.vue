@@ -3,7 +3,7 @@
     <h1>{{movie.title}}</h1>
     <img :src="imgSrc" alt="#">
     <br>
-    <button @click="goToDetail">상세정보</button>
+    <button @click="movieDetailInfo">상세정보</button>
   </div>
 </template>
 
@@ -14,15 +14,17 @@ export default {
     movie: Object
   },
   methods:{
-    goToDetail: function() {
-      console.log(this.movie.id)
-      this.$router.push(
-        { name : 'MovieDetails', 
-          params: {
-            movieId : this.movie.id
-          } 
-      })
-    }
+    movieDetailInfo: function() {
+      this.$store.dispatch
+
+    //   console.log(this.movie.id)
+    //   this.$router.push(
+    //     { name : 'MovieDetails', 
+    //       params: {
+    //         movieId : this.movie.id
+    //       } 
+    //   })
+    // }
   },
   computed: {
     imgSrc : function() {
