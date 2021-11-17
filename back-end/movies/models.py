@@ -9,7 +9,6 @@ class Movie(models.Model):
     vote = models.FloatField()
     country = models.CharField(max_length=50)
     time = models.CharField(max_length=10)
-    open_date = models.CharField(max_length=10)
     grade = models.CharField(max_length=10)
     poster_path = models.TextField()
     genre_1 = models.CharField(max_length=10)
@@ -20,6 +19,8 @@ class Movie(models.Model):
     actor_2 = models.CharField(max_length=20, default='')
     actor_3 = models.CharField(max_length=20, default='')
     content = models.TextField()
-
+    year = models.IntegerField()
+    month = models.IntegerField()
+    day = models.IntegerField(default='')
     def __str__(self):
         return self.title
