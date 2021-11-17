@@ -2,6 +2,8 @@
   <div>
     <h1>{{movie.title}}</h1>
     <img :src="imgSrc" alt="#">
+    <br>
+    <button @click="goToDetail">상세정보</button>
   </div>
 </template>
 
@@ -10,6 +12,17 @@ export default {
   name: "MovieListItem",
   props: {
     movie: Object
+  },
+  methods:{
+    goToDetail: function() {
+      console.log(this.movie.id)
+      this.$router.push(
+        { name : 'MovieDetails', 
+          params: {
+            movieId : this.movie.id
+          } 
+      })
+    }
   },
   computed: {
     imgSrc : function() {
