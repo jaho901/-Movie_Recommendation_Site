@@ -5,14 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    detailMovieInfo : null
   },
   mutations: {
   },
-  actions: {
-    
+  // actions: {
+  //   movieDetailInfo : funciton ({commit}, movieInfo) {
+      
+  //   }
 
-  },
+  // },
   modules: 
   {
   }

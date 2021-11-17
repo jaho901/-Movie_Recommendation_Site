@@ -54,6 +54,7 @@ export default {
           // this.$router.push({ name: 'TodoList' })
           // App 컴포넌트는 login data가 변경된 사실을 알 수 없기 때문에 emit login 이벤트 호출
           this.$emit('login')
+          this.$router.push({ name : 'Movie'})
         })
         .catch(err => {
           console.log(err)
