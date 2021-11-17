@@ -1,7 +1,11 @@
 <template>
   <div>
-    <movie-list-recent-item></movie-list-recent-item>
+    <movie-list-recent-item
+      >
+
+    </movie-list-recent-item>
     <p>여기 뭐가있을까요오옹</p>
+    <p>{{movies}}</p>
   </div>
 </template>
 
