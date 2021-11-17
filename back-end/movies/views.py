@@ -24,7 +24,7 @@ def movie_list_recent(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['GET'])
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(movie)
