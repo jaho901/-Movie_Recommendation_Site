@@ -5,4 +5,5 @@ app_name="movies"
 
 urlpatterns = [
     path('', views.movie_list),
+    path('recent/', views.movie_list_recent),
 ]
