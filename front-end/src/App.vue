@@ -2,11 +2,12 @@
   <div id="app">
     <div id="nav">
       <span v-if="isLogin">
-        <router-link @click.native="logout" to="#">Logout</router-link>
+        <router-link @click.native="logout" to="#">Logout</router-link> |
+        <router-link :to="{ name: 'MovieList' }">MovieList</router-link> 
       </span>
       <span v-else>
         <router-link :to="{ name: 'Signup' }">Signup</router-link> |
-        <router-link :to="{ name: 'Login' }">Login</router-link> 
+        <router-link :to="{ name: 'Login' }">Login</router-link>
       </span>
     </div>
     <router-view @login="isLogin=true"/>

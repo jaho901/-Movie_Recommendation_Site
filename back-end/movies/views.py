@@ -11,6 +11,6 @@ from .models import Movie
 @api_view(['GET', 'POST'])
 def movie_list(request):
     # todos = Todo.objects.all()
-    todos = request.user.movie_set.all()
-    serializer = MovieSerializer(todos, many=True)
+    movies = request.user.movie_set.all()
+    serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
