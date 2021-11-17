@@ -2,7 +2,7 @@
   <div>
     <h1>{{movie.title}}</h1>
     <img :src="imgSrc" alt="#">
-    <p>{{movie.content}}</p>
+    
   </div>
   
 </template>
