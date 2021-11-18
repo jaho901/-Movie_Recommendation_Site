@@ -12,6 +12,13 @@ from .models import Movie, Review
 
 
 @api_view(['GET'])
+def movie_all(request):
+    movies = Movie.objects.all()
+    serializer = MovieSerializer(movies, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 def movie_list(request):
     movies = Movie.objects.all().order_by('-id')[723:]
     # movies = request.user.movie_set.all()
