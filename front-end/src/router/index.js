@@ -6,6 +6,7 @@ import Login from '@/views/accounts/Login'
 // import MovieList from '@/views/movies/MovieList'
 import Movie from '@/views/movies/Movie'
 import MovieDetails from '@/views/movies/MovieDetails'
+import profile from '@/views/accounts/profile'
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +35,12 @@ const routes = [
     name: 'MovieDetails',
     component: MovieDetails,
   },
+  {
+    path: '/accounts/profile',
+    name: 'profile',
+    component: profile,
+  },
+
 
 ]
 
