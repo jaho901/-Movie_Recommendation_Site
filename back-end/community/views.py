@@ -17,7 +17,7 @@ def community_list(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def movie_review_create(request, movie_id):
+def community_create(request, movie_id):
     community = get_object_or_404(Community, pk=movie_id)
     serializer = CommunitySerializer(data=request.data)
 
