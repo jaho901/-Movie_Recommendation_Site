@@ -7,4 +7,8 @@ urlpatterns = [
     path('', views.movie_list),
     path('recent/', views.movie_list_recent),
     path('<int:movie_id>/', views.movie_detail),
+    path('<int:movie_id>/review/', views.movie_review),
+    path('<int:movie_id>/review/create/', views.movie_review_create),
+    path('<int:movie_id>/review/<int:review_pk>/update/', views.movie_review_update),
+    path('<int:movie_id>/review/<int:review_pk>/delete/', views.movie_review_delete),
 ]
