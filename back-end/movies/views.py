@@ -1,7 +1,7 @@
 from rest_framework import serializers, status
 from rest_framework import permissions
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 
 from django.shortcuts import get_object_or_404
 
@@ -35,7 +35,7 @@ def movie_detail(request, movie_id):
 
 
 @api_view(['GET'])
-@permissions([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def movie_review(request, movie_id):
     review = get_object_or_404(Review, pk=movie_id)
     serializer = ReviewSerializer(review, many=False)
@@ -43,7 +43,7 @@ def movie_review(request, movie_id):
 
 
 @api_view(['POST'])
-@permissions([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def movie_review_create(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = ReviewSerializer(data=request.data)
@@ -56,7 +56,7 @@ def movie_review_create(request, movie_id):
 
 
 @api_view(['POST'])
-@permissions([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def movie_review_update(request, movie_id, review_pk):
     movie = get_object_or_404(Movie, pk=movie_id)
     review = get_object_or_404(Review, pk=review_pk)
@@ -71,7 +71,7 @@ def movie_review_update(request, movie_id, review_pk):
 
 
 @api_view(['DELETE'])
-@permissions([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def movie_review_delete(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     review.delete()
