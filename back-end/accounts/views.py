@@ -32,10 +32,11 @@ def signup(request):
         # password는 직렬화 과정에는 포함 되지만 → 표현(response)할 때는 나타나지 않는다. (wrtie_only)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 @api_view(['GET'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
-def profile(request):
-    user = get_object_or_404(User, pk=request.user.pk)
+def profile(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
     serializer = UserSerializer(user)
     return Response(serializer.data)
