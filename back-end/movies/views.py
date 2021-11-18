@@ -35,6 +35,17 @@ def movie_detail(request, movie_id):
 
 
 @api_view(['GET'])
+def movie_like(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    if movie.like_users.filter(pk=request.user.pk).exists():
+        movie.like_users.remove(request.user)
+    else:
+        movie.like_users.add(request.user)
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def movie_review(request, movie_id):
     review = get_object_or_404(Review, pk=movie_id)
