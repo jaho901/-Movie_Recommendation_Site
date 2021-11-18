@@ -40,8 +40,8 @@ export default {
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          console.log(res)
-          console.log(res.data)
+          // console.log(res)
+          // console.log(res.data)
           this.movies = res.data
         })
         .catch(err => {
