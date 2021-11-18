@@ -10,10 +10,34 @@ export default {
   name: "Community",
   components: {
   },
+  data: function () {
+    return {
+
+    }
+  },
   methods: {
     writeContent: function() {
        this.$router.push({ name : 'CommunityForm'})
-       }
+       },
+    getMovies: function () {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/community/`,
+        headers: this.setToken()  // 'JWT token~~~'
+      })
+        .then(res => {
+          // console.log(res)
+          // console.log(res.data)
+          this.$store.state.communityMovie = res.data
+          console.log( this.$store.state.communityMovie)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
+    
+    
+
   }
 }
 // 뭐 해리  --> 해리포터 라는걸 포함하고있는

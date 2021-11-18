@@ -47,7 +47,6 @@ const routes = [
     component: CommunityForm,
   },
 
-
 ]
 
 const router = new VueRouter({
