@@ -7,6 +7,7 @@ import Login from '@/views/accounts/Login'
 import Movie from '@/views/movies/Movie'
 import MovieDetails from '@/views/movies/MovieDetails'
 import profile from '@/views/accounts/profile'
+import CommunityForm from '@/views/community/CommunityForm'
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,6 +40,11 @@ const routes = [
     path: '/accounts/profile',
     name: 'profile',
     component: profile,
+  },
+  {
+    path: '/community/CommunityForm',
+    name: 'CommunityForm',
+    component: CommunityForm,
   },
 
 

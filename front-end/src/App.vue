@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'App',
   data: function () {
@@ -30,7 +32,30 @@ export default {
       this.isLogin = false
       localStorage.removeItem('jwt')
       this.$router.push({ name: 'Login' })
-    }
+    },
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
+    getMovies: function () {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/`,
+        headers: this.setToken()  // 'JWT token~~~'
+      })
+        .then(res => {
+          // console.log(res)
+          // console.log(res.data)
+          this.$store.state.communityMovie = res.data
+          console.log( this.$store.state.communityMovie)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
   },
   created: function () {
     // 1. Vue Instance가 생성된 직후에 호출되어 jwt를 가져오기
@@ -39,6 +64,14 @@ export default {
     if (token) {
       // 3. true로 변경하고 없으면 유지
       this.isLogin = true
+    
+    if (localStorage.getItem('jwt')) {
+      this.getMovies()
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
+
+    
     }
   }
 }

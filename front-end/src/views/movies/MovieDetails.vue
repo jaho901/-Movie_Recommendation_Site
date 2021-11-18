@@ -1,18 +1,26 @@
 <template>
   <div>
     {{movie}}
+    <review>
+
+    </review>
   </div>
+
+  
 </template>
 
 <script>
 import axios from 'axios'
+import Review from '@/views/movies/Review.vue'
+// import Review from './Review.vue'
+
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MovieDetails',
   components:{
-    
+    Review
   },
   data: function () {
     return {
