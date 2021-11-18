@@ -10,7 +10,7 @@ import axios from 'axios'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: 'MovieList',
+  name: 'MovieDetails',
   components:{
     
   },
@@ -19,6 +19,12 @@ export default {
       movie: null,
     }
   },
+  // methods :  {
+  //   getMovie: function () {
+  //     this.movie = this.$store.state.detailMovieInfo
+  //   }
+
+  // }
   methods: {
     setToken: function () {
       const token = localStorage.getItem('jwt')
@@ -45,12 +51,15 @@ export default {
         })
       },
     },
+
   created: function () {
     if (localStorage.getItem('jwt')) {
       this.getMovies()
     } else {
       this.$router.push({ name: 'Login' })
     }
+    // console.log(this.$store.state.detailMovieInfo)
+    // this.movie = this.$store.state.detailMovieInfo
   }
 }
 </script>

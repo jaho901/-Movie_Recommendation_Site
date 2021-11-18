@@ -8,14 +8,17 @@ export default new Vuex.Store({
     detailMovieInfo : null
   },
   mutations: {
+    // DETAIL_MOVIE_INFO : function (state, movieInfo) {
+    //     state.detailMovieInfo = movieInfo
+    // }
   },
-  // actions: {
-  //   movieDetailInfo : funciton ({commit}, movieInfo) {
-      
-  //   }
+  actions: {
+    // movieDetailInfo : function ({commit}, movieInfo) {
+    //   commit('DETAIL_MOVIE_INFO', movieInfo)
+    // }
 
-  // },
-  modules: 
-  {
+  },
+  modules: {
+
   }
 })
