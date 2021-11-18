@@ -21,6 +21,8 @@ class Movie(models.Model):
     month = models.IntegerField()
     day = models.IntegerField(default='')
     content = models.TextField()
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_movies")
+
     def __str__(self):
         return self.title
 
