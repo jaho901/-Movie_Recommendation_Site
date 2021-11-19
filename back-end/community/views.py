@@ -24,3 +24,9 @@ def community_create(request):
         serializer.save(use=request.user)
         return Response(serializer.data)
 
+
+@api_view(['GET'])
+def community_detail(request, community_id):
+    community = get_object_or_404(Community, pk=community_id)
+    serializer = CommunitySerializer(community)
+    return Response(serializer.data)

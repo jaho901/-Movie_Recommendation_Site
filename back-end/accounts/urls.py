@@ -7,5 +7,7 @@ app_name = 'accounts'
 urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('api-token-auth/', obtain_jwt_token),
-    path('<username>/', views.profile, name='profile'),
+    path('<user_pk>/', views.profile, name='profile'),
+    # path('delete/', views.user_delete),
+    # path('')
 ]
