@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 
 # Create your models here.
+class Genre(models.Model):
+    name = models.CharField(max_length=20)
+
 class Movie(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=50)
@@ -10,10 +13,6 @@ class Movie(models.Model):
     time = models.CharField(max_length=10)
     grade = models.CharField(max_length=10)
     poster_path = models.TextField()
-    genre_1 = models.CharField(max_length=10)
-    genre_2 = models.CharField(max_length=10, default='')
-    genre_3 = models.CharField(max_length=10, default='')
-    genre_4 = models.CharField(max_length=10, default='')
     actor_1 = models.CharField(max_length=20)
     actor_2 = models.CharField(max_length=20, default='')
     actor_3 = models.CharField(max_length=20, default='')
@@ -22,6 +21,7 @@ class Movie(models.Model):
     day = models.IntegerField(default='')
     content = models.TextField()
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_movies")
+    genre = models.ManyToManyField(Genre, related_name='movie_genres')
 
     def __str__(self):
         return self.title
