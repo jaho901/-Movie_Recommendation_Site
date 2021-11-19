@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     detailMovieInfo : null,
-    communityMovie : null
+    communityMovie : null,
+    selectMovie : null
   },
   mutations: {
     // DETAIL_MOVIE_INFO : function (state, movieInfo) {
