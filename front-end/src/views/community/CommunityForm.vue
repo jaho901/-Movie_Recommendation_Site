@@ -12,6 +12,7 @@
       v-for="result in clickByResult" :key="result.id"
       :result ="result"
       @changeresult="changeResults"
+      @clickidMovieInfo="movieInfosave"
       >
     </search-movie-list>   
   
@@ -27,13 +28,20 @@
       v-model="content"
       >
     <br>
-    <button>작성하기</button>
+    <!-- @click="createArticle" -->
+    <button
+      @click="createCommunity"
+    >
+    작성하기
+    </button>
 
   </div>
 </template>
 
 <script>
 import SearchMovieList from './SearchMovieList.vue'
+import axios from 'axios'
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "CommunityForm",
@@ -43,11 +51,11 @@ export default {
   data: function () {
     return {
       search_name : null,
-      movie_title : null,
       community_title : null,
       content :null,
       movie_list : null,
       results: [],
+      movieInfo : null
     }
   },
   methods :  {
@@ -74,7 +82,7 @@ export default {
       
       this.results = this.results.map(result => {
         if (selectMovie.flag === false) {
-          if (result===selectMovie) {
+          if (result===selectMovie) { 
             return {
               ...selectMovie,
               flag: true
@@ -94,7 +102,48 @@ export default {
         }
 
       })   
-    }
+    },
+    movieInfosave: function (movieInfo) {
+      if (this.movieInfo == null) {
+        this.movieInfo = movieInfo
+        // console.log(this.movieInfo)
+      } else {
+        this.movieInfo = null
+        // console.log(this.movieInfo)
+      }
+    },
+     setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
+    createCommunity: function () {
+      const movieItem = {
+        community_title: this.community_title,
+        movie_title : this.movieInfo.title,
+        content : this.content
+      }
+      console.log('앙 기모링')
+      if (movieItem.community_title && movieItem.movie_title && movieItem.content) {
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/community/community_create/`,
+          data: movieItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+        }
+    },
+  
   },
   created : function  () {
     this.getMovie()

@@ -18,8 +18,6 @@ export default {
   },
   data : function () {
     return {
-      show : true,
-      click : false
     }
   },
   methods : {
@@ -32,6 +30,7 @@ export default {
       // this.click = true
       // const title = event.target.parentNode.dataset.movieTitle
       this.$emit("changeresult",this.result)
+      this.$emit('clickidMovieInfo', this.result)
 
     }
   },
