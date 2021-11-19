@@ -1,5 +1,7 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from rest_framework import status
+from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -38,3 +40,26 @@ def profile(request, user_pk):
     serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
 
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def user_delete(request):
+    request.user.delete()
+    return HttpResponse(status=200)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def follow(request, user_pk, other_pk):
+    user = get_object_or_404(User, pk=user_pk)
+    if user != request.user:
+        if user.followers.filter(pk=request.user.pk).exists():
+            user.followers.remove(request.user)
+        else:
+            user.followers.add(request.user)
+
+    else:
+        if user.followers.filter(pk=other_pk).exists():
+            user.followers.remove(request.user)
+        else:
+            user.followers.add(request.user)
