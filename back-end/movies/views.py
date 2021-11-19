@@ -55,8 +55,8 @@ def movie_like(request, movie_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def movie_review(request, movie_id):
-    review = get_object_or_404(Review, pk=movie_id)
-    serializer = ReviewSerializer(review, many=False)
+    reviews = Review.objects.filter(movie=movie_id)
+    serializer = ReviewSerializer(reviews, many=False)
     return Response(serializer.data)
 
 
