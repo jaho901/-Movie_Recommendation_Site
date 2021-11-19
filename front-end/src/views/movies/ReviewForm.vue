@@ -58,7 +58,8 @@ export default {
         rank: this.ratingValue,
         content : this.reviewContent
       }
-      // console.log('ㄴㄷㄹㄷㄹ')
+      console.log(this.ratingValue)
+      console.log(this.reviewContent)
       if (ReviewItem.rank && ReviewItem.content) {
         axios({
           method: 'post',
