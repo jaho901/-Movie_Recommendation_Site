@@ -113,7 +113,7 @@ export default {
         // console.log(this.movieInfo)
       }
     },
-     setToken: function () {
+    setToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
         Authorization: `JWT ${token}`

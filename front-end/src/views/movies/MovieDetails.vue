@@ -1,8 +1,8 @@
 <template>
   <div>
     {{movie}}
-    <review>
-
+    <review :movie="movie">
+        <p>리뷰창</p>
     </review>
   </div>
 
