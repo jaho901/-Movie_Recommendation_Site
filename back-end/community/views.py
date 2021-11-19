@@ -17,13 +17,10 @@ def community_list(request):
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def community_create(request, community_pk):
-    community = get_object_or_404(Community, pk=community_pk)
+def community_create(request):
     serializer = CommunitySerializer(data=request.data)
 
     if serializer.is_valid(raise_exception=True):
-        serializer.community = community
-        serializer.user = request.user
-        serializer.save()
+        serializer.save(use=request.user)
         return Response(serializer.data)
 
