@@ -41,6 +41,7 @@
 <script>
 import SearchMovieList from './SearchMovieList.vue'
 import axios from 'axios'
+import jwtDecode from "jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
@@ -106,7 +107,7 @@ export default {
     movieInfosave: function (movieInfo) {
       if (this.movieInfo == null) {
         this.movieInfo = movieInfo
-        // console.log(this.movieInfo)
+        console.log(this.movieInfo)
       } else {
         this.movieInfo = null
         // console.log(this.movieInfo)
@@ -120,7 +121,12 @@ export default {
       return config
     },
     createCommunity: function () {
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
       const movieItem = {
+        
+        user : user_id,
+        movie: this.movieInfo.id,
         community_title: this.community_title,
         movie_title : this.movieInfo.title,
         content : this.content
