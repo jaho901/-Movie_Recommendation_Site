@@ -7,8 +7,8 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
-from .serializers import MovieSerializer, ReviewSerializer
-from .models import Movie, Review
+from .serializers import MovieSerializer, ReviewSerializer, GenreSerializer
+from .models import Movie, Review, Genre
 
 
 @api_view(['GET'])
@@ -94,3 +94,10 @@ def movie_review_delete(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     review.delete()
     return Response('DELETE SUCCESS!')
+
+
+@api_view(['GET'])
+def genre_list(request):
+    genres = Genre.objects.all()
+    serializer = GenreSerializer(genres, many=True)
+    return Response(serializer.data)
