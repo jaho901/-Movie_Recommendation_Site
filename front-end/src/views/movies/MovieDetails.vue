@@ -1,7 +1,7 @@
 <template>
   <div>
     {{movie}}
-    <review :movie="movie">
+    <review :movie="movie" :id="movie.id">
         <p>리뷰창</p>
     </review>
   </div>
@@ -27,12 +27,6 @@ export default {
       movie: null,
     }
   },
-  // methods :  {
-  //   getMovie: function () {
-  //     this.movie = this.$store.state.detailMovieInfo
-  //   }
-
-  // }
   methods: {
     setToken: function () {
       const token = localStorage.getItem('jwt')
@@ -53,6 +47,7 @@ export default {
       })
         .then(res => {
           this.movie = res.data
+          console.log(res)
         })
         .catch(err => {
           console.log(err)
