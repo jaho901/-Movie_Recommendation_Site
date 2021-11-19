@@ -1,31 +1,83 @@
 <template>
   <div>
     <p>리뷰내용</p>
-    <input type="text" >
+    <input type="text" v-model="reviewContent">
+    {{reviewContent}}
     <p>평점</p>
-    
+    {{ratingValue}}
     <div class="star-rating">
-      <input type="radio" id="5-stars" name="rating" value="5" />
+      <input type="radio" id="5-stars" name="rating" value="5" @click="rating" />
       <label for="5-stars" class="star">&#9733;</label>
-      <input type="radio" id="4-stars" name="rating" value="4" />
+      <input type="radio" id="4-stars" name="rating" value="4" @click="rating"/>
       <label for="4-stars" class="star">&#9733;</label>
-      <input type="radio" id="3-stars" name="rating" value="3" />
+      <input type="radio" id="3-stars" name="rating" value="3" @click="rating"/>
       <label for="3-stars" class="star">&#9733;</label>
-      <input type="radio" id="2-stars" name="rating" value="2" />
+      <input type="radio" id="2-stars" name="rating" value="2" @click="rating"/>
       <label for="2-stars" class="star">&#9733;</label>
-      <input type="radio" id="1-star" name="rating" value="1" />
+      <input type="radio" id="1-star" name="rating" value="1" @click="rating"/>
       <label for="1-star" class="star">&#9733;</label>
     </div>
 
-    
-
-
+    <button @click="createReview">작성하기</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import jwtDecode from "jwt-decode"
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name: "ReviewForm",
+  data: function () {
+    return {
+      reviewContent: null,
+      ratingValue : null
+    }
+  },
+  props: {
+    movie: Object
+  },
+  methods : {
+    rating: function(event) {
+      this.ratingValue = event.target.value
+    },
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
+    createReview: function () {
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const ReviewItem = {
+        user : user_id,
+        movie: this.movie.id,
+        rank: this.ratingValue,
+        content : this.reviewContent
+      }
+      // console.log('ㄴㄷㄹㄷㄹ')
+      if (ReviewItem.rank && ReviewItem.content) {
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${this.movie.id}/review/create/`,
+          data: ReviewItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+        }
+    },
+
+    }
   
 }
 </script>
