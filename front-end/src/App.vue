@@ -4,7 +4,7 @@
       <span v-if="isLogin">
         <router-link @click.native="logout" to="#">Logout</router-link> |
         <router-link :to="{ name: 'Movie' }">Movie</router-link> |
-        <router-link :to="{ name: 'profile' }">profile</router-link>
+        <router-link :to="{ name: 'profile'}">profile</router-link>
         <!-- <router-link :to="{ name: 'MovieDetails' }">MovieDetails</router-link> | -->
 
       </span>

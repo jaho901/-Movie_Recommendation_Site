@@ -33,7 +33,7 @@ export default {
     getMovies: function () {
       axios({
         method: 'get',
-        url: `${SERVER_URL}/accounts/profile`,
+        url: `${SERVER_URL}/accounts/1`,
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
