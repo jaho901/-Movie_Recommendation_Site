@@ -124,7 +124,6 @@ export default {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const movieItem = {
-        
         user : user_id,
         movie: this.movieInfo.id,
         community_title: this.community_title,
