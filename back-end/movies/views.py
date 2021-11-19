@@ -68,8 +68,7 @@ def movie_review_create(request, movie_id):
 
     if serializer.is_valid(raise_exception=True):
         serializer.movie = movie
-        serializer.user = request.user
-        serializer.save()
+        serializer.save(user=request.user)
         return Response(serializer.data)
 
 
