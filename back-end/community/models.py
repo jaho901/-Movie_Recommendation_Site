@@ -10,3 +10,5 @@ class Community(models.Model):
     community_title = models.CharField(max_length=50)
     movie_title = models.CharField(max_length=50)
     content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
