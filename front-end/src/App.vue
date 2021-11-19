@@ -50,7 +50,7 @@ export default {
           // console.log(res)
           // console.log(res.data)
           this.$store.state.communityMovie = res.data
-          console.log( this.$store.state.communityMovie)
+          // console.log( this.$store.state.communityMovie)
         })
         .catch(err => {
           console.log(err)
