@@ -21,7 +21,7 @@ def community_create(request):
     serializer = CommunitySerializer(data=request.data)
 
     if serializer.is_valid(raise_exception=True):
-        serializer.save(use=request.user)
+        serializer.save(user=request.user)
         return Response(serializer.data)
 
 
