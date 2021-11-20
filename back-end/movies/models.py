@@ -5,13 +5,16 @@ from django.conf import settings
 class Genre(models.Model):
     name = models.CharField(max_length=20)
 
+class Grade(models.Model):
+    rating = models.CharField(max_length=20)
+
 class Movie(models.Model):
     id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=50)
     vote = models.FloatField()
     country = models.CharField(max_length=50)
     time = models.CharField(max_length=10)
-    grade = models.CharField(max_length=10)
+    grade = models.ManyToManyField(Grade, related_name='movie_grade')
     poster_path = models.TextField()
     actor_1 = models.CharField(max_length=20)
     actor_2 = models.CharField(max_length=20, default='')
@@ -21,7 +24,7 @@ class Movie(models.Model):
     day = models.IntegerField(default='')
     content = models.TextField()
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_movies")
-    genre = models.ManyToManyField(Genre, related_name='movie_genres')
+    genre = models.ManyToManyField(Genre, related_name='movie_genre')
 
     def __str__(self):
         return self.title

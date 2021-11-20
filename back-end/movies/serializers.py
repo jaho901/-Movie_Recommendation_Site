@@ -1,5 +1,6 @@
+from django.db.models import fields
 from rest_framework import serializers
-from .models import Movie, Review, Genre
+from .models import Movie, Review, Genre, Grade
 from accounts.serializers import UserSerializer
 
 
@@ -8,9 +9,16 @@ class MovieSerializer(serializers.ModelSerializer):
 
         class Meta:
             model = Genre
-            fields = '__all__'   
+            fields = '__all__'
+
+    class GradeSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Grade
+            fields = '__all__'
 
     genre = GenreSerializer(many=True, read_only=True)
+    grade = GradeSerializer(many=True, read_only=True)
 
     class Meta:
         model = Movie
@@ -30,3 +38,9 @@ class GenreSerializer(serializers.ModelSerializer):
         model = Genre
         fields = '__all__'
 
+
+class GradeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Grade
+        fields = '__all__'
