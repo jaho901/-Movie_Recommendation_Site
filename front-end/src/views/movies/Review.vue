@@ -2,7 +2,7 @@
   <div>
     <p> 리뷰들 </p>
       <div >
-        {{movie}}
+        {{ review_list }}
       </div>
 
     <p>리뷰폼</p>
@@ -21,8 +21,8 @@ import axios from 'axios'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  components: { ReviewForm },
   name : 'Review',
+  components: { ReviewForm },
   props: {
     movie:{ 
       type: Object,
@@ -33,7 +33,7 @@ export default {
   },
   data: function() {
     return {
-      Reviews: []
+      review_list: null
       }
   },
   methods : {
@@ -41,21 +41,22 @@ export default {
       const token = localStorage.getItem('jwt')
       const config = {
         Authorization: `JWT ${token}`
-      }
-      return config
+    }
+    return config
     },
     getMovies: function () {
-      const movieId = this.movie.id
-      console.log(movieId )
+      // const movieId = this.movie.id
+      console.log( this.movie.id )
 
       axios({
         method: 'GET',
-        url: `${SERVER_URL}/movies/${movieId}/review`,
+        url: `${SERVER_URL}/movies/${this.movie}/review`,
         headers: this.setToken(),
+        params: { movieId: this.movie.id }
       })
         .then(res => {
           console.log(res)
-          this.Reviews = res.data
+          this.review_list = res.data
           console.log('성공')
         })
         .catch(err => {
@@ -67,10 +68,6 @@ export default {
   created: function () {
     this.getMovies()
   }
-  
-
-  
-
 }
 </script>
 
