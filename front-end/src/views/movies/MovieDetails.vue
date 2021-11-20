@@ -25,7 +25,8 @@ export default {
   },
   data: function () {
     return {
-      movie: null,
+      movie: this.$route.params.movie,
+      review_list: null
     }
   },
   methods: {
@@ -54,17 +55,37 @@ export default {
           console.log(err)
         })
       },
-    },
+      // getReviews: function () {
+      // // const movieId = this.movie.id
+      // console.log( this.movie.id )
 
+      // axios({
+      //   method: 'get',
+      //   url: `${SERVER_URL}/movies/${this.movie.id}/review_create/`,
+      //   headers: this.setToken()
+      // })
+      //   .then(res => {
+      //     console.log(res)
+      //     this.review_list = res.data
+      //     console.log('성공')
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //     console.log('실패')
+      //   })
+      // }
+    },
   created: function () {
     if (localStorage.getItem('jwt')) {
       this.getMovies()
+      // this.getReviews()
     } else {
       this.$router.push({ name: 'Login' })
     }
     // console.log(this.$store.state.detailMovieInfo)
     // this.movie = this.$store.state.detailMovieInfo
-  }
+  },
+  
 }
 </script>
 
