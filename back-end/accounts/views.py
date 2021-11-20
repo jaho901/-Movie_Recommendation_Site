@@ -1,6 +1,6 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
@@ -63,3 +63,10 @@ def follow(request, user_pk, other_pk):
             user.followers.remove(request.user)
         else:
             user.followers.add(request.user)
+
+
+@api_view(['GET'])
+def userlist(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
