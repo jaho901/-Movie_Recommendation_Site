@@ -4,6 +4,7 @@
        v-for="(movie, idx) in movies" :key="idx"
         :movie="movie">
     </movie-list-recent-item>
+    {{genreMovie}}
   </div>
 </template>
 
@@ -23,6 +24,7 @@ export default {
   data: function () {
     return {
       movies: [],
+      genreMovie: null
     }
   },
   methods: {
@@ -48,10 +50,28 @@ export default {
           console.log(err)
         })
       },
+      getGenre : function () {
+        axios({
+        method: 'get',
+        url: `${SERVER_URL}/movies/movie_by_genre/`,
+        headers: this.setToken()  // 'JWT token~~~'
+      })
+        .then(res => {
+          console.log(res.data)
+          // console.log(res.data)
+          // this.movies = res.data
+          console.log('앙 기모띵')
+          this.genreMovie = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     },
   created: function () {
     if (localStorage.getItem('jwt')) {
       this.getMovies()
+      this.getGenre()
     } else {
       this.$router.push({ name: 'Login' })
     }

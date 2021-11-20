@@ -1,13 +1,17 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  plugins: [createPersistedState()],
   state: {
     detailMovieInfo : null,
     communityMovie : null,
-    selectMovie : null
+    selectMovie : null,
+    loginUserID : null,
+    movieDetailInfo: null,
   },
   mutations: {
     // DETAIL_MOVIE_INFO : function (state, movieInfo) {

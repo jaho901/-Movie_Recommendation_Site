@@ -4,7 +4,7 @@
       <span v-if="isLogin">
         <router-link @click.native="logout" to="#">Logout</router-link> |
         <router-link :to="{ name: 'Movie' }">Movie</router-link> |
-        <router-link :to="{ name: 'profile'}">profile</router-link>
+        <button @click="myProfile">내프로필</button>
         <!-- <router-link :to="{ name: 'MovieDetails' }">MovieDetails</router-link> | -->
 
       </span>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
+import jwtDecode from "jwt-decode"
 import axios from 'axios'
+
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'App',
@@ -55,7 +57,14 @@ export default {
         .catch(err => {
           console.log(err)
         })
-      }
+      },
+      myProfile : function() {
+        const token = localStorage.getItem('jwt')
+        const user_id = jwtDecode(token).user_id
+        // this.$store.state.loginUserID = user_id//
+        this.$router.push({name: "profile", params: {user_id:user_id }})
+      },
+   
   },
   created: function () {
     // 1. Vue Instance가 생성된 직후에 호출되어 jwt를 가져오기
