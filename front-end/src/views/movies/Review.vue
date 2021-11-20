@@ -4,11 +4,11 @@
       <div >
         {{ review_list }}
       </div>
-
+    <p>----------------------------------</p>
     <p>리뷰폼</p>
-    <review-form :movie="movie">
+    <review-form :movie="movie"
+      @update-review="getReviews">
       
-
     </review-form>
   </div>
 
@@ -64,9 +64,12 @@ export default {
         })
       }
   },
-  // created: function () {
-  //   this.getReviews()
-  // }
+  conputed: function () {
+    this.getReviews()
+  },
+  created: function () {
+    this.getReviews()
+  }
 }
 </script>
 

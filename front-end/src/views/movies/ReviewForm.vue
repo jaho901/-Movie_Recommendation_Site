@@ -70,6 +70,7 @@ export default {
           .then(res => {
             console.log(res)
             console.log('성공')
+            this.$emit('update-review')
           })
           .catch(err => {
             console.log(err)
