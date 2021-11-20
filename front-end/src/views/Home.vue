@@ -1,18 +1,28 @@
 <template>
   <div class="home">
-    <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+   <p>저희 홈페이지에 처음이신가요?</p>
+    <button @click="gotoSignup">넹!</button>
+    <br>
+    <button @click="gotoLogin">아니오</button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
-
+// import movie from '@/views/movies/Movie.vue'
 export default {
   name: 'Home',
   components: {
-    // HelloWorld
+    // movie
+  },
+  methods : {
+    gotoSignup : function () {
+      this.$router.push({name:'Signup'})
+    },
+    gotoLogin :function () {
+      this.$router.push({name:'Login'})
+    }
   }
 }
 </script>

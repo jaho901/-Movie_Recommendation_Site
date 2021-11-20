@@ -2,7 +2,7 @@
   <div>
     <p>리뷰내용</p>
     <input type="text" v-model="reviewContent">
-    {{reviewContent}}
+  
     <p>평점</p>
     {{ratingValue}}
     <div class="star-rating">

@@ -29,7 +29,7 @@ const routes = [
     component: Login,
   },
   {
-    path: '/movies/movie_list',
+    path: '/movies/',
     name: 'Movie',
     component: Movie,
   },

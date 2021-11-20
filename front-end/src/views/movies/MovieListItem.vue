@@ -17,7 +17,7 @@ export default {
     movieDetailInfo: function() {
       // console.log(this.movie)
       const movieInfo = this.movie
-      this.$store.dispatch('movieDetailInfo', movieInfo )
+      this.$store.state.movieDetailInfo = movieInfo
 
 
       // console.log(this.movie.id)
