@@ -24,7 +24,8 @@ export default {
       this.$router.push(
         { name : 'MovieDetails', 
           params: {
-            movieId : this.movie.id
+            movieId : this.movie.id,
+            movie: this.movie
           } 
       })
     }

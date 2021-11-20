@@ -64,9 +64,9 @@ export default {
         })
       }
   },
-  created: function () {
-    this.getReviews()
-  }
+  // created: function () {
+  //   this.getReviews()
+  // }
 }
 </script>
 
