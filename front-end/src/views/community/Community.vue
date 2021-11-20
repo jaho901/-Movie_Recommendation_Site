@@ -1,7 +1,9 @@
 <template>
   <div>
-    <p>{{community_list}}</p>
+
     <community-detail
+      v-for="(communityContents, idx) in community_list" :key="idx"
+      :communityContents = "communityContents"
       >
 
     </community-detail>
