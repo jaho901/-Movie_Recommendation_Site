@@ -63,7 +63,7 @@ export default {
       if (ReviewItem.rank && ReviewItem.content) {
         axios({
           method: 'post',
-          url: `${SERVER_URL}/movies/${this.movie.id}/review/create/`,
+          url: `${SERVER_URL}/movies/${this.movie.id}/review_create/`,
           data: ReviewItem,
           headers: this.setToken()
         })
