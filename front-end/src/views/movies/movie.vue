@@ -1,8 +1,8 @@
 <template>
   <div>
-    <movie-list></movie-list>
+    <movie-list  class="bestMovie"></movie-list>
     <hr>
-    <movie-list-recent></movie-list-recent>
+    <movie-list-recent class="bestMovie"></movie-list-recent>
   </div>
 </template>
 
@@ -15,6 +15,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.bestMovie {
+  float: left
+}
 </style>

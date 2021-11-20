@@ -1,10 +1,42 @@
 <template>
   <div>
-    <movie-list-recent-item
-       v-for="(movie, idx) in movies" :key="idx"
-        :movie="movie">
-    </movie-list-recent-item>
-    {{genreMovie}}
+    
+    <div>
+      <button @click="valueChange" value="최신">최신</button>
+      <button @click="valueChange" value="adventureMovies">모험</button>
+      <button @click="valueChange" value="warMovies">전쟁</button>
+      <button @click="valueChange" value="actionMovies">액션</button>
+      <button @click="valueChange" value="musicalMovies">뮤지컬</button>
+      <button @click="valueChange" value="animationMovies">애니메이션</button>
+      <button @click="valueChange" value="criminalMovies">범죄</button>
+      <button @click="valueChange" value="comedyMovies">코미디</button>
+      <button @click="valueChange" value="dramaMovies">드라마</button>
+      <button @click="valueChange" value="suspenseMovies">서스펜스</button>
+      <button @click="valueChange" value="fantasyMovies">판타지</button>
+      <button @click="valueChange" value="romanceMovies">멜로/로맨스</button>
+      <button @click="valueChange" value="thrillerMovies">스릴러</button>
+      <button @click="valueChange" value="mysteryMovies">미스터리</button>
+      <button @click="valueChange" value="sfMovies">SF</button>
+      <button @click="valueChange" value="horrorMovies">공포</button>
+      <button @click="valueChange" value="documentaryMovies">다큐멘터리</button>
+      <button @click="valueChange" value="familyMovies">가족</button>
+      <button @click="valueChange" value="concertMovies">콘서트</button>
+    </div>
+    <br>
+      <div v-if="genreId==='최신'">
+        <movie-list-recent-item
+          v-for="(movie, idx) in movies" :key="idx"
+            :movie="movie" class="bestMovie">
+        </movie-list-recent-item >
+      </div>
+      <div v-else>
+        <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
+          :gmovie="gmovie" :genreName="genreName">
+          
+        </movie-genre-list>
+      </div>
+    <br>
+    
   </div>
 </template>
 
@@ -12,19 +44,23 @@
 // import MovieListItem from '@/views/movies/MovieListItem'
 import axios from 'axios'
 import MovieListRecentItem from '@/views/movies/MovieListRecentItem.vue'
+import MovieGenreList from '@/views/movies/MovieGenreList.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'MovieList',
   components:{
-    MovieListRecentItem
-    
+    MovieListRecentItem,
+    MovieGenreList
   },
   data: function () {
     return {
       movies: [],
-      genreMovie: null
+      genreMovie: null,
+      genreId : "최신",
+      changeList: null,
+      genreName: null
     }
   },
   methods: {
@@ -66,6 +102,18 @@ export default {
         .catch(err => {
           console.log(err)
         })
+      },
+      valueChange : function (event) {
+        console.log(event.target.innerText)
+        this.genreName = event.target.innerText
+        this.genreId = event.target.value
+        const genreId = this.genreId
+        for (const genre in this.genreMovie) {
+          if (genre === genreId) {
+            this.changeList = this.genreMovie[genre]
+          }
+        }
+        console.log(this.changeList)
       }
     },
   created: function () {
@@ -75,10 +123,13 @@ export default {
     } else {
       this.$router.push({ name: 'Login' })
     }
-  }
+  },
 }
 </script>
 
 <style>
+.bestMovie {
+  float: left
+}
 
 </style>

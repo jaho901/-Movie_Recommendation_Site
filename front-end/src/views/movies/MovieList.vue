@@ -2,7 +2,7 @@
   <div>
     <ul>
       <movie-list-item v-for="(movie, idx) in movies" :key="idx"
-        :movie="movie" >
+        :movie="movie" class="bestMovie">
         </movie-list-item>
     </ul>
   </div>
@@ -58,5 +58,8 @@ export default {
 }
 </script>
 <style>
+.bestMovie {
+  float: left
+}
 
 </style>
