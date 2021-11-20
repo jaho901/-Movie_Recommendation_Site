@@ -4,7 +4,14 @@ from accounts.serializers import UserSerializer
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    
+    class GenreSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Genre
+            fields = '__all__'   
+
+    genre = GenreSerializer(many=True, read_only=True)
+
     class Meta:
         model = Movie
         fields = '__all__'
