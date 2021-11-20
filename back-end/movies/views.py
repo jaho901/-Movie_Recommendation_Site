@@ -56,7 +56,7 @@ def movie_like(request, movie_id):
 # @permission_classes([IsAuthenticated])
 def review_list_create(request, movie_id):
     if request.method == 'GET':
-        reviews = Review.objects.all()
+        reviews = Review.objects.filter(movie=movie_id)
         serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
     
@@ -65,8 +65,10 @@ def review_list_create(request, movie_id):
         serializer = ReviewSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
+            print('hi')
             serializer.movie = movie
-            serializer.save(user=request.user)
+            serializer.user = request.user
+            serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

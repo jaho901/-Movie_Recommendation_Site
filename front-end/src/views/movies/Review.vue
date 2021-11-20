@@ -41,18 +41,17 @@ export default {
       const token = localStorage.getItem('jwt')
       const config = {
         Authorization: `JWT ${token}`
-    }
-    return config
+      }
+      return config
     },
-    getMovies: function () {
+    getReviews: function () {
       // const movieId = this.movie.id
       console.log( this.movie.id )
 
       axios({
-        method: 'GET',
-        url: `${SERVER_URL}/movies/${this.movie}/review`,
-        headers: this.setToken(),
-        params: { movieId: this.movie.id }
+        method: 'get',
+        url: `${SERVER_URL}/movies/${this.movie.id}/review_create/`,
+        headers: this.setToken()
       })
         .then(res => {
           console.log(res)
@@ -66,7 +65,7 @@ export default {
       }
   },
   created: function () {
-    this.getMovies()
+    this.getReviews()
   }
 }
 </script>
