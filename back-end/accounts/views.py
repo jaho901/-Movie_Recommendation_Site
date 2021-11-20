@@ -1,11 +1,12 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from rest_framework import serializers, status
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from django.contrib.auth import get_user_model
 
 from .models import User
 from .serializers import UserSerializer
@@ -35,9 +36,18 @@ def signup(request):
 @api_view(['GET'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
-def profile(request, user_pk):
-    user = get_object_or_404(User, pk=user_pk)
+def profile(request):
+    user = get_object_or_404(get_user_model(), pk=request.user.id)
     serializer = UserSerializer(user, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def user_detail(request, user_pk):
+    user = get_object_or_404(get_user_model(), pk=user_pk)
+    if request.user == user:
+        return redirect('accounts:profile')
+    serializer = UserSerializer(user)
     return Response(serializer.data)
 
 
@@ -63,10 +73,3 @@ def follow(request, user_pk, other_pk):
             user.followers.remove(request.user)
         else:
             user.followers.add(request.user)
-
-
-@api_view(['GET'])
-def userlist(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
