@@ -2,7 +2,7 @@
   <div>
     <p> 리뷰들 </p>
       <div >
-        {{Reviews}}
+        {{movie}}
       </div>
 
     <p>리뷰폼</p>
@@ -24,18 +24,20 @@ export default {
   components: { ReviewForm },
   name : 'Review',
   props: {
-    movie : Object,
+    movie:{ 
+      type: Object,
+    }
   },
   component: {
     ReviewForm
   },
   data: function() {
     return {
-      Reviews: null
+      Reviews: []
       }
   },
   methods : {
-     setToken: function () {
+    setToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
         Authorization: `JWT ${token}`
@@ -44,19 +46,21 @@ export default {
     },
     getMovies: function () {
       const movieId = this.movie.id
-      // console.log(typeof(movieId))
+      console.log(movieId )
+
       axios({
         method: 'GET',
         url: `${SERVER_URL}/movies/${movieId}/review`,
-        headers: this.setToken(),  // 'JWT token~~~'
-        // params: {movie_id: this.movie.id}
+        headers: this.setToken(),
       })
         .then(res => {
           console.log(res)
           this.Reviews = res.data
+          console.log('성공')
         })
         .catch(err => {
           console.log(err)
+          console.log('실패')
         })
       }
   },

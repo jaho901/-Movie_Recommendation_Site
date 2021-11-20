@@ -1,5 +1,8 @@
 <template>
   <div>
+    {{community_list}}
+
+
     <button @click="writeContent">게시글 작성</button>
     <button>게시글 정보</button>
   </div>
@@ -16,13 +19,20 @@ export default {
   },
   data: function () {
     return {
-
+      community_list : null
     }
   },
   methods: {
     writeContent: function() {
        this.$router.push({ name : 'CommunityForm'})
-       },
+    },
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+    }
+    return config
+    },
     getMovies: function () {
       axios({
         method: 'get',
@@ -32,16 +42,16 @@ export default {
         .then(res => {
           // console.log(res)
           // console.log(res.data)
-          this.$store.state.communityMovie = res.data
-          console.log( this.$store.state.communityMovie)
+          this.community_list = res.data
+          
         })
         .catch(err => {
           console.log(err)
         })
-      }
-    
-    
-
+      }    
+  },
+  created : function() {
+    this.getMovies()
   }
 }
 // 뭐 해리  --> 해리포터 라는걸 포함하고있는

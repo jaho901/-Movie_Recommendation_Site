@@ -120,6 +120,9 @@ export default {
       }
       return config
     },
+    gotoCommunity: function () {
+      this.$router.push({name:'Community'})
+    },
     createCommunity: function () {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
@@ -131,7 +134,8 @@ export default {
         content : this.content
       }
       console.log('앙 기모링')
-      if (movieItem.community_title && movieItem.movie_title && movieItem.content) {
+      if (movieItem.community_title && movieItem.movie_title && movieItem.content) 
+      {
         axios({
           method: 'post',
           url: `${SERVER_URL}/community/community_create/`,
@@ -141,11 +145,14 @@ export default {
           .then(res => {
             console.log(res)
             console.log('성공')
+            this.gotoCommunity()
           })
           .catch(err => {
             console.log(err)
             console.log('실패')
           })
+
+
         }
     },
   
