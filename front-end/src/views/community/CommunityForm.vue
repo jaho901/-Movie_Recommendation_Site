@@ -22,6 +22,11 @@
     <input type="text"
        v-model = "community_title"
       >
+    <br>
+    <br>
+    <!-- <input type="file" name="image" @change="EditImage" ref="serveyImage"> -->
+
+
     <!-- 게시글 내용 -->
     <p>내용</p>
     <input type="text"
@@ -56,7 +61,8 @@ export default {
       content :null,
       movie_list : null,
       results: [],
-      movieInfo : null
+      movieInfo : null,
+      // image: "",
     }
   },
   methods :  {
@@ -132,9 +138,10 @@ export default {
         community_title: this.community_title,
         movie_title : this.movieInfo.title,
         content : this.content,
-        poster_path: this.movieInfo.poster_path
+        poster_path: this.movieInfo.poster_path,
+        // image: this.image
       }
-      console.log('앙')
+      console.log(movieItem)
       if (movieItem.community_title && movieItem.movie_title && movieItem.content) 
       {
         axios({
@@ -156,6 +163,10 @@ export default {
 
         }
     },
+    // EditImage(){
+    //   this.image = this.$refs.serveyImage.files
+    //   console.log(this.image)
+    // }
   
   },
   created : function  () {
