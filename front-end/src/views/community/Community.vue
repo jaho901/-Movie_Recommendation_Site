@@ -1,7 +1,10 @@
 <template>
   <div>
-    {{community_list}}
+    <p>{{community_list}}</p>
+    <community-detail
+      >
 
+    </community-detail>
 
     <button @click="writeContent">게시글 작성</button>
     <button>게시글 정보</button>
@@ -10,12 +13,14 @@
 
 <script>
 import axios from 'axios'
+import CommunityDetail from './CommunityDetail.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "Community",
   components: {
+    CommunityDetail
   },
   data: function () {
     return {
@@ -41,7 +46,7 @@ export default {
       })
         .then(res => {
           // console.log(res)
-          // console.log(res.data)
+          // console.log(typeof(res.data[0].id))
           this.community_list = res.data
           
         })
