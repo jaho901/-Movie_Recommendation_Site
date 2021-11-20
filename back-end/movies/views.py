@@ -53,7 +53,7 @@ def movie_like(request, movie_id):
 
 
 @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def review_list_create(request, movie_id):
     if request.method == 'GET':
         reviews = Review.objects.filter(movie=movie_id)
@@ -65,7 +65,6 @@ def review_list_create(request, movie_id):
         serializer = ReviewSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
-            print('hi')
             serializer.movie = movie
             serializer.user = request.user
             serializer.save()
@@ -109,7 +108,7 @@ def movie_review_update(request, movie_id, review_pk):
 
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def movie_review_delete(request, review_pk):
+def movie_review_delete(request, movie_id, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     review.delete()
     return Response('DELETE SUCCESS!')
