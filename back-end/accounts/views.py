@@ -37,8 +37,8 @@ def signup(request):
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def profile(request, user_pk):
-    user = get_object_or_404(get_user_model(), pk=user_pk)
-    serializer = UserSerializer(user, many=True)
+    user = get_object_or_404(User, pk=user_pk)
+    serializer = UserSerializer(user)
     return Response(serializer.data)
 
 

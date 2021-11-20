@@ -2,6 +2,7 @@
   <div>
     <p>프로필페이지입니다.</p>
     <!-- <h1>{{userData.username}}님의 프로필입니다!</h1> -->
+    {{ userData }}
   </div>
 </template>
 
@@ -9,6 +10,7 @@
 <script>
 // import MovieListItem from '@/views/movies/MovieListItem'
 import axios from 'axios'
+// import jwtDecode from "jwt-decode"
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -30,29 +32,36 @@ export default {
       }
       return config
     },
-    getMovies: function () {
+    getUserProfile: function () {
+      // const token = localStorage.getItem('jwt')
+      // const user_id = jwtDecode(token).user_id
+      const userId = this.$route.params.user_id
+      console.log(userId)
       axios({
-        method: 'get',
-        url: `${SERVER_URL}/accounts/`,
-        headers: this.setToken()  // 'JWT token~~~'
-      })
-        .then(res => {
-          // console.log(res)
-          // console.log(res.data)
-          this.userData = res.data
+          method: 'GET',
+          url: `${SERVER_URL}/accounts/profile/${userId}/`,
+          headers: this.setToken()
         })
-        .catch(err => {
-          console.log(err)
-        })
-      },
-    },
-  // created: function () {
-  //   if (localStorage.getItem('jwt')) {
-  //     this.getMovies()
-  //   } else {
-  //     this.$router.push({ name: 'Login' })
-  //   }
-  // }
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+            this.userData = res.data
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+
+    }
+  },
+ created: function () {
+    if (localStorage.getItem('jwt')) {
+      this.getUserProfile()
+      console.log('로그인은됨')
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
+  }
 }
 </script>
 
