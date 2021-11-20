@@ -46,7 +46,6 @@ def movie_detail(request, movie_id):
         if movie == similar_movies[i]:
             de_id = similar_movies[i].pk
     # print(similar_movies.id)
-    similar_movies[1].delete()
 
     similar_serializer = MovieSerializer(similar_movies, many=True)
     context = {
