@@ -215,14 +215,14 @@ def genre_list(request):
 @api_view(['GET'])
 def movie_by_genre(request):
     adventure_movies = Movie.objects.filter(genre=0)[:20]
-    war_movies = Movie.objects.filter(genre=1)
-    musical_movies = Movie.objects.filter(genre=2)
+    war_movies = Movie.objects.filter(genre=1)[:20]
+    musical_movies = Movie.objects.filter(genre=2)[:20]
     action_movies = Movie.objects.filter(genre=3)[:20]
     animation_movies = Movie.objects.filter(genre=4)[:20]
     criminal_movies = Movie.objects.filter(genre=5)[:20]
     comedy_movies = Movie.objects.filter(genre=6)[:20]
     drama_movies = Movie.objects.filter(genre=7)[:20]
-    suspense_movies = Movie.objects.filter(genre=8)
+    suspense_movies = Movie.objects.filter(genre=8)[:20]
     fantasy_movies = Movie.objects.filter(genre=9)[:20]
     romance_movies = Movie.objects.filter(genre=10)[:20]
     thriller_movies = Movie.objects.filter(genre=11)[:20]
@@ -231,7 +231,7 @@ def movie_by_genre(request):
     horror_movies = Movie.objects.filter(genre=14)[:20]
     documentary_movies = Movie.objects.filter(genre=15)[:20]
     family_movies = Movie.objects.filter(genre=16)[:20]
-    concert_movies = Movie.objects.filter(genre=17)
+    concert_movies = Movie.objects.filter(genre=17)[:20]
     
     adventure_serializer = MovieSerializer(adventure_movies, many=True)
     war_serializer = MovieSerializer(war_movies, many=True)
