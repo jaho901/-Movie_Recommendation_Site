@@ -1,12 +1,12 @@
 <template>
   <div>
 
-    <community-detail
+    <community-list
       v-for="(communityContents, idx) in community_list" :key="idx"
       :communityContents = "communityContents"
       >
 
-    </community-detail>
+    </community-list>
 
     <button @click="writeContent">게시글 작성</button>
     <button>게시글 정보</button>
@@ -15,14 +15,14 @@
 
 <script>
 import axios from 'axios'
-import CommunityDetail from './CommunityDetail.vue'
+import CommunityList from './CommunityList.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: "Community",
   components: {
-    CommunityDetail
+    CommunityList
   },
   data: function () {
     return {

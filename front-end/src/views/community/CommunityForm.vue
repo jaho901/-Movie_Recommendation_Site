@@ -131,7 +131,8 @@ export default {
         movie: this.movieInfo.id,
         community_title: this.community_title,
         movie_title : this.movieInfo.title,
-        content : this.content
+        content : this.content,
+        poster_path: this.movieInfo.poster_path
       }
       console.log('앙')
       if (movieItem.community_title && movieItem.movie_title && movieItem.content) 
