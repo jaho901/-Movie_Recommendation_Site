@@ -15,12 +15,12 @@ export default {
   },
   methods:{
     movieDetailInfo: function() {
-      console.log(this.movie)
+      // console.log(this.movie)
       const movieInfo = this.movie
       this.$store.dispatch('movieDetailInfo', movieInfo )
 
 
-      console.log(this.movie.id)
+      // console.log(this.movie.id)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {

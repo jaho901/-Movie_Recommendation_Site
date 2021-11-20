@@ -1,8 +1,9 @@
 <template>
   <div>
     {{movie}}
-    <review :movie="movie" :id="movie.id">
-        <p>리뷰창</p>
+    <p>리뷰창</p>
+    <review :movie="movie">
+        
     </review>
   </div>
 
@@ -37,8 +38,8 @@ export default {
     },
     getMovies: function () {
       const {movieId} = this.$route.params
-      console.log(movieId)
-      console.log(typeof(this.$route.params.movieId))
+      // console.log(movieId)
+      // console.log(typeof(this.$route.params.movieId))
       
       axios({
         method: 'GET',
