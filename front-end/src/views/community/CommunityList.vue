@@ -2,7 +2,7 @@
   <div>
     <hr>
     <img :src="imgSrc" alt="#">
-    <h2>{{communityContents.user}}</h2>
+    <h2>{{communityContents.user.username}}</h2>
     <h2>{{communityContents}}</h2>
     <p>{{communityContents.community_title}}</p>
     <p>{{communityContents.movie_title}}</p>
@@ -36,19 +36,20 @@ export default {
     },
     getMovies: function () {
       const user_id = this.communityContents.user
-      // console.log(user_id)
+      console.log(user_id)
       axios({
-        method: 'get',
-        url: `${SERVER_URL}/accounts/${user_id}`,
+        method: 'GET',
+        url: `${SERVER_URL}/accounts/${user_id}/`,
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          console.log(res)
-          console.log(res.data)
+          // console.log(res)
+          // console.log(res.data[0].username)
           this.userInfo = res.data
         })
         .catch(err => {
           console.log(err)
+        
         })
       },
     },
