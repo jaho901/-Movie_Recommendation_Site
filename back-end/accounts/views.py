@@ -36,18 +36,9 @@ def signup(request):
 @api_view(['GET'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
-def profile(request):
-    user = get_object_or_404(get_user_model(), pk=request.user.id)
-    serializer = UserSerializer(user, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def user_detail(request, user_pk):
+def profile(request, user_pk):
     user = get_object_or_404(get_user_model(), pk=user_pk)
-    if request.user == user:
-        return redirect('accounts:profile')
-    serializer = UserSerializer(user)
+    serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
 
 

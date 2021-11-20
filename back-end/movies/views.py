@@ -52,24 +52,42 @@ def movie_like(request, movie_id):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 # @permission_classes([IsAuthenticated])
-def movie_review(request):
-    reviews = Review.objects.all()
-    serializer = ReviewSerializer(reviews, many=False)
-    return Response(serializer.data)
-
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def movie_review_create(request, movie_id):
-    movie = get_object_or_404(Movie, pk=movie_id)
-    serializer = ReviewSerializer(data=request.data)
-
-    if serializer.is_valid(raise_exception=True):
-        serializer.movie = movie
-        serializer.save(user=request.user)
+def review_list_create(request, movie_id):
+    if request.method == 'GET':
+        reviews = Review.objects.all()
+        serializer = ReviewSerializer(reviews, many=True)
         return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        movie = get_object_or_404(Movie, pk=movie_id)
+        serializer = ReviewSerializer(data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.movie = movie
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+# @api_view(['GET'])
+# # @permission_classes([IsAuthenticated])
+# def movie_review(request):
+#     reviews = Review.objects.all()
+#     serializer = ReviewSerializer(reviews, many=False)
+#     return Response(serializer.data)
+
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def movie_review_create(request, movie_id):
+#     movie = get_object_or_404(Movie, pk=movie_id)
+#     serializer = ReviewSerializer(data=request.data)
+
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.movie = movie
+#         serializer.save(user=request.user)
+#         return Response(serializer.data)
 
 
 @api_view(['POST'])
