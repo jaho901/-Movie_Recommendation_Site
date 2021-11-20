@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>프로필페이지입니다.</p>
-    <h1>{{userData.username}}님의 프로필입니다!</h1>
+    <!-- <h1>{{userData.username}}님의 프로필입니다!</h1> -->
   </div>
 </template>
 
@@ -46,13 +46,13 @@ export default {
         })
       },
     },
-  created: function () {
-    if (localStorage.getItem('jwt')) {
-      this.getMovies()
-    } else {
-      this.$router.push({ name: 'Login' })
-    }
-  }
+  // created: function () {
+  //   if (localStorage.getItem('jwt')) {
+  //     this.getMovies()
+  //   } else {
+  //     this.$router.push({ name: 'Login' })
+  //   }
+  // }
 }
 </script>
 

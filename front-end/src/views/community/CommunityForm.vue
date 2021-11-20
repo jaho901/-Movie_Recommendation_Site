@@ -133,7 +133,7 @@ export default {
         movie_title : this.movieInfo.title,
         content : this.content
       }
-      console.log('앙 기모링')
+      console.log('앙')
       if (movieItem.community_title && movieItem.movie_title && movieItem.content) 
       {
         axios({
