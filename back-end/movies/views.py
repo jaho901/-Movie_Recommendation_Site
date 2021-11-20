@@ -1,6 +1,7 @@
 from rest_framework import serializers, status
 from rest_framework import permissions
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 
 from django.shortcuts import get_object_or_404
@@ -52,15 +53,57 @@ def movie_detail(request, movie_id):
     return Response(context)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def movie_like(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
-    if movie.like_users.filter(pk=request.user.pk).exists():
-        movie.like_users.remove(request.user)
+    user = request.user
+    if movie.like_users.filter(pk=user.pk).exists():
+        movie.like_users.remove(user)
+        like = False
     else:
-        movie.like_users.add(request.user)
-    serializer = MovieSerializer(movie)
-    return Response(serializer.data)
+        movie.like_users.add(user)
+        like = True
+    like_status = {
+        'like': like,
+        'count': movie.like_users.count(),
+    }
+    return JsonResponse(like_status)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def movie_hate(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    user = request.user
+    if movie.hate_users.filter(pk=user.pk).exists():
+        movie.hate_users.remove(user)
+        hate = False
+    else:
+        movie.hate_users.add(user)
+        hate = True
+    hate_status = {
+        'hate': hate,
+        'count': movie.hate_users.count(),
+    }
+    return JsonResponse(hate_status)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def movie_favorite(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    user = request.user
+    if movie.favorite_users.filter(pk=user.pk).exists():
+        movie.favorite_users.remove(user)
+        favorite = False
+    else:
+        movie.favorite_users.add(user)
+        favorite = True
+    favorite_status = {
+        'favorite': favorite,
+        'count': movie.favorite_users.count(),
+    }
+    return JsonResponse(favorite_status)
+
 
 
 @api_view(['GET', 'POST'])
@@ -123,6 +166,43 @@ def movie_review_delete(request, movie_id, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     review.delete()
     return Response('DELETE SUCCESS!')
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def movie_review_like(request, movie_id, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    user = request.user
+    if review.like_users.filter(pk=user.pk).exists():
+        review.like_users.remove(user)
+        like = False
+    else:
+        review.like_users.add(user)
+        like = True
+    like_status = {
+        'like': like,
+        'count': review.like_users.count(),
+    }
+    return JsonResponse(like_status)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def movie_review_hate(request, movie_id, review_pk):
+    review = get_object_or_404(Review, pk=review_pk)
+    user = request.user
+    if review.hate_users.filter(pk=user.pk).exists():
+        review.hate_users.remove(user)
+        hate = False
+    else:
+        review.hate_users.add(user)
+        hate = True
+    hate_status = {
+        'hate': hate,
+        'count': review.hate_users.count(),
+    }
+    return JsonResponse(hate_status)
+
 
 
 @api_view(['GET'])

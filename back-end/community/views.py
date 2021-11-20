@@ -1,6 +1,7 @@
 from rest_framework import serializers, status
 from rest_framework import permissions
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
 
 from django.shortcuts import get_object_or_404
@@ -57,6 +58,41 @@ def community_update(request, user_pk, community_id):
             return Response(False)
 
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def community_like(request, community_id):
+    community = get_object_or_404(Community, pk=community_id)
+    user = request.user
+    if community.like_users.filter(pk=user.pk).exists():
+        community.like_users.remove(user)
+        like = False
+    else:
+        community.like_users.add(user)
+        like = True
+    like_status = {
+        'like': like,
+        'count': community.like_users.count(),
+    }
+    return JsonResponse(like_status)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def community_hate(request, community_id):
+    community = get_object_or_404(Community, pk=community_id)
+    user = request.user
+    if community.hate_users.filter(pk=user.pk).exists():
+        community.hate_users.remove(user)
+        hate = False
+    else:
+        community.hate_users.add(user)
+        hate = True
+    hate_status = {
+        'hate': hate,
+        'count': community.hate_users.count(),
+    }
+    return JsonResponse(hate_status)
+
+
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def review_list_create(request, community_id):
@@ -97,3 +133,38 @@ def community_review_delete(request, community_id, review_pk):
     ceview = get_object_or_404(Ceview, pk=review_pk)
     ceview.delete()
     return Response('DELETE SUCCESS!')
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def community_review_like(request, community_id, review_pk):
+    ceview = get_object_or_404(Ceview, pk=review_pk)
+    user = request.user
+    if ceview.like_users.filter(pk=user.pk).exists():
+        ceview.like_users.remove(user)
+        like = False
+    else:
+        ceview.like_users.add(user)
+        like = True
+    like_status = {
+        'like': like,
+        'count': ceview.like_users.count(),
+    }
+    return JsonResponse(like_status)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def community_review_hate(request, community_id, review_pk):
+    ceview = get_object_or_404(Ceview, pk=review_pk)
+    user = request.user
+    if ceview.hate_users.filter(pk=user.pk).exists():
+        ceview.hate_users.remove(user)
+        hate = False
+    else:
+        ceview.hate_users.add(user)
+        hate = True
+    hate_status = {
+        'hate': hate,
+        'count': ceview.hate_users.count(),
+    }
+    return JsonResponse(hate_status)

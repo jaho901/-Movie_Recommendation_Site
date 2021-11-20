@@ -4,6 +4,7 @@ from rest_framework import serializers, status
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.response import Response
+from django.http import JsonResponse
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.contrib.auth import get_user_model
@@ -50,17 +51,31 @@ def user_delete(request):
 
 
 @api_view(['POST'])
+@authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def follow(request, user_pk, other_pk):
-    user = get_object_or_404(User, pk=user_pk)
-    if user != request.user:
-        if user.followers.filter(pk=request.user.pk).exists():
-            user.followers.remove(request.user)
+    person = get_object_or_404(User, pk=user_pk)
+    user = request.user
+    if person != user:
+        if person.followers.filter(pk=user.pk).exists():
+            person.followers.remove(user)
+            follow = True
         else:
-            user.followers.add(request.user)
-
+            person.followers.add(user)
+            follow = False
+        follow_status = {
+            'follow': follow,
+            'followings': person.followings.count(),
+            'followers': person.followers.count(),
+            }
     else:
         if user.followers.filter(pk=other_pk).exists():
             user.followers.remove(request.user)
-        else:
-            user.followers.add(request.user)
+            follow = True
+        follow_status = {
+            'follow': follow,
+            'followings': user.followings.count(),
+            'followers': user.followers.count(),
+        }
+    return JsonResponse(follow_status)
+    
