@@ -28,7 +28,7 @@ def movie_list(request):
 
 @api_view(['GET'])
 def movie_list_recent(request):
-    movies_recent = Movie.objects.all().order_by('-id')[623:723]
+    movies_recent = Movie.objects.all().order_by('-id')[703:723]
     # movies = request.user.movie_set.all()
     serializer = MovieSerializer(movies_recent, many=True)
     return Response(serializer.data)
@@ -190,5 +190,26 @@ def movie_by_genre(request):
         'documentaryMovies': documentary_serializer.data,
         'familyMovies': family_serializer.data,
         'concertMovies': concert_serializer.data,
+    }
+    return Response(context)
+
+
+api_view(['GET'])
+def movie_by_grade(request):
+    movies_all = Movie.objects.filter(grade=0)[:20]
+    movies_12 = Movie.objects.filter(grade=1)[:20]
+    movies_15 = Movie.objects.filter(grade=2)[:20]
+    movies_19 = Movie.objects.filter(grade=3)[:20]
+
+    serializer_all = MovieSerializer(movies_all, many=True)
+    serializer_12 = MovieSerializer(movies_12, many=True)
+    serializer_15 = MovieSerializer(movies_15, many=True)
+    serializer_19 = MovieSerializer(movies_19, many=True)
+
+    context = {
+        'allMovies': serializer_all.data,
+        '12Movies': serializer_12.data,
+        '15Movies': serializer_15.data,
+        '19Movies': serializer_19.data,
     }
     return Response(context)
