@@ -39,7 +39,7 @@ const routes = [
     component: MovieDetails,
   },
   {
-    path: '/accounts/1',
+    path: '/accounts/:user_id',
     name: 'profile',
     component: profile,
   },
@@ -55,7 +55,7 @@ const routes = [
   },
   {
     path: '/movies/:movieId/review',
-    name: 'MovieDetailsReview',
+    name: 'Review',
     component: Review,
   }
 
