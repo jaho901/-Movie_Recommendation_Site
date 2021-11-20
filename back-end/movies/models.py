@@ -24,6 +24,8 @@ class Movie(models.Model):
     day = models.IntegerField(default='')
     content = models.TextField()
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_movies")
+    hate_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="hate_movies")
+    favorite_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="favorite_movies")
     genre = models.ManyToManyField(Genre, related_name='movie_genre')
 
     def __str__(self):
@@ -36,3 +38,5 @@ class Review(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_reviews")
+    hate_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="hate_reviews")
