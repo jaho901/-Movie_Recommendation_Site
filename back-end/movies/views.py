@@ -36,16 +36,13 @@ def movie_list_recent(request):
 
 @api_view(['GET'])
 def movie_detail(request, movie_id):
-    movie = get_object_or_404(Movie, pk=movie_id)
+    movies = Movie.objects.all()
+    movie = Movie.objects.get(pk=movie_id)
     serializer = MovieSerializer(movie)
 
     # 같은 장르의 영화 최신순 10개 받아오기
     genre = movie.genre.all().values_list('id', flat=True)
     similar_movies = Movie.objects.filter(genre__id__in=genre).prefetch_related('genre').distinct()[:15]
-    for i in range(15):
-        if movie == similar_movies[i]:
-            de_id = similar_movies[i].pk
-    # print(similar_movies.id)
 
     similar_serializer = MovieSerializer(similar_movies, many=True)
     context = {
@@ -137,24 +134,25 @@ def genre_list(request):
 
 @api_view(['GET'])
 def movie_by_genre(request):
-    adventure_movies = Movie.objects.filter(genre=0)
+    adventure_movies = Movie.objects.filter(genre=0)[:20]
     war_movies = Movie.objects.filter(genre=1)
     musical_movies = Movie.objects.filter(genre=2)
-    action_movies = Movie.objects.filter(genre=3)
-    animation_movies = Movie.objects.filter(genre=4)
-    criminal_movies = Movie.objects.filter(genre=5)
-    comedy_movies = Movie.objects.filter(genre=6)
-    drama_movies = Movie.objects.filter(genre=7)
+    action_movies = Movie.objects.filter(genre=3)[:20]
+    animation_movies = Movie.objects.filter(genre=4)[:20]
+    criminal_movies = Movie.objects.filter(genre=5)[:20]
+    comedy_movies = Movie.objects.filter(genre=6)[:20]
+    drama_movies = Movie.objects.filter(genre=7)[:20]
     suspense_movies = Movie.objects.filter(genre=8)
-    fantasy_movies = Movie.objects.filter(genre=9)
-    romance_movies = Movie.objects.filter(genre=10)
-    thriller_movies = Movie.objects.filter(genre=11)
-    mystery_movies = Movie.objects.filter(genre=12)
-    sf_movies = Movie.objects.filter(genre=13)
-    horror_movies = Movie.objects.filter(genre=14)
-    documentary_movies = Movie.objects.filter(genre=15)
-    family_movies = Movie.objects.filter(genre=16)
+    fantasy_movies = Movie.objects.filter(genre=9)[:20]
+    romance_movies = Movie.objects.filter(genre=10)[:20]
+    thriller_movies = Movie.objects.filter(genre=11)[:20]
+    mystery_movies = Movie.objects.filter(genre=12)[:20]
+    sf_movies = Movie.objects.filter(genre=13)[:20]
+    horror_movies = Movie.objects.filter(genre=14)[:20]
+    documentary_movies = Movie.objects.filter(genre=15)[:20]
+    family_movies = Movie.objects.filter(genre=16)[:20]
     concert_movies = Movie.objects.filter(genre=17)
+    
     adventure_serializer = MovieSerializer(adventure_movies, many=True)
     war_serializer = MovieSerializer(war_movies, many=True)
     musical_serializer = MovieSerializer(musical_movies, many=True)
