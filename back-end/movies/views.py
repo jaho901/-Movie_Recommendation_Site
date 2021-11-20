@@ -38,7 +38,22 @@ def movie_list_recent(request):
 def movie_detail(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     serializer = MovieSerializer(movie)
-    return Response(serializer.data)
+
+    # 같은 장르의 영화 최신순 10개 받아오기
+    genre = movie.genre.all().values_list('id', flat=True)
+    similar_movies = Movie.objects.filter(genre__id__in=genre).prefetch_related('genre').distinct()[:15]
+    for i in range(15):
+        if movie == similar_movies[i]:
+            de_id = similar_movies[i].pk
+    # print(similar_movies.id)
+    similar_movies[1].delete()
+
+    similar_serializer = MovieSerializer(similar_movies, many=True)
+    context = {
+        "movie": serializer.data,
+        "similar_movies": similar_serializer.data,
+    }
+    return Response(context)
 
 
 @api_view(['GET'])
@@ -119,3 +134,64 @@ def genre_list(request):
     genres = Genre.objects.all()
     serializer = GenreSerializer(genres, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def movie_by_genre(request):
+    adventure_movies = Movie.objects.filter(genre=0)
+    war_movies = Movie.objects.filter(genre=1)
+    musical_movies = Movie.objects.filter(genre=2)
+    action_movies = Movie.objects.filter(genre=3)
+    animation_movies = Movie.objects.filter(genre=4)
+    criminal_movies = Movie.objects.filter(genre=5)
+    comedy_movies = Movie.objects.filter(genre=6)
+    drama_movies = Movie.objects.filter(genre=7)
+    suspense_movies = Movie.objects.filter(genre=8)
+    fantasy_movies = Movie.objects.filter(genre=9)
+    romance_movies = Movie.objects.filter(genre=10)
+    thriller_movies = Movie.objects.filter(genre=11)
+    mystery_movies = Movie.objects.filter(genre=12)
+    sf_movies = Movie.objects.filter(genre=13)
+    horror_movies = Movie.objects.filter(genre=14)
+    documentary_movies = Movie.objects.filter(genre=15)
+    family_movies = Movie.objects.filter(genre=16)
+    concert_movies = Movie.objects.filter(genre=17)
+    adventure_serializer = MovieSerializer(adventure_movies, many=True)
+    war_serializer = MovieSerializer(war_movies, many=True)
+    musical_serializer = MovieSerializer(musical_movies, many=True)
+    action_serializer = MovieSerializer(action_movies, many=True)
+    animation_serializer = MovieSerializer(animation_movies, many=True)
+    criminal_serializer = MovieSerializer(criminal_movies, many=True)
+    comedy_serializer = MovieSerializer(comedy_movies, many=True)
+    drama_serializer = MovieSerializer(drama_movies, many=True)
+    suspense_serializer = MovieSerializer(suspense_movies, many=True)
+    fantasy_serializer = MovieSerializer(fantasy_movies, many=True)
+    romance_serializer = MovieSerializer(romance_movies, many=True)
+    thriller_serializer = MovieSerializer(thriller_movies, many=True)
+    mystery_serializer = MovieSerializer(mystery_movies, many=True)
+    sf_serializer = MovieSerializer(sf_movies, many=True)
+    horror_serializer = MovieSerializer(horror_movies, many=True)
+    documentary_serializer = MovieSerializer(documentary_movies, many=True)
+    family_serializer = MovieSerializer(family_movies, many=True)
+    concert_serializer = MovieSerializer(concert_movies, many=True)
+    context = {
+        'adventureMovies': adventure_serializer.data,
+        'warMovies': war_serializer.data,
+        'musicalMovies': musical_serializer.data,
+        'actionMovies': action_serializer.data,
+        'animationMovies': animation_serializer.data,
+        'criminalMovies': criminal_serializer.data,
+        'comedyMovies': comedy_serializer.data,
+        'dramaMovies': drama_serializer.data,
+        'suspenseMovies': suspense_serializer.data,
+        'fantasyMovies': fantasy_serializer.data,
+        'romanceMovies': romance_serializer.data,
+        'thrillerMovies': thriller_serializer.data,
+        'mysteryMovies': mystery_serializer.data,
+        'sfMovies': sf_serializer.data,
+        'horrorMovies': horror_serializer.data,
+        'documentaryMovies': documentary_serializer.data,
+        'familyMovies': family_serializer.data,
+        'concertMovies': concert_serializer.data,
+    }
+    return Response(context)
