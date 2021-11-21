@@ -86,7 +86,7 @@ def user_delete(request):
     return HttpResponse(status=200)
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
 def follow(request, user_pk):
@@ -108,7 +108,7 @@ def follow(request, user_pk):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def follow_list(request, user_pk):
     follower = User.objects.filter(followers__=True)
     following = User.objects.filter(following__=True)
