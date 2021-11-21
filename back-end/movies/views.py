@@ -59,7 +59,7 @@ def movie_detail(request, movie_id):
 @permission_classes([IsAuthenticated])
 def movie_like(request, movie_id):
     if request.method == 'GET':
-        like_user = User.objects.filter(movie__like=True).distinct()
+        like_user = User.objects.filter(movie__like=True, movie__id=movie_id).distinct()
         serializer = UserDetailSerializer(data=like_user, many=True)
         return Response(serializer)
     elif request.method == 'POST':
