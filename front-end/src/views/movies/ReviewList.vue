@@ -9,11 +9,16 @@
     <button @click="deleteReview(review)">삭제</button>
     <button @click="updateReview" v-if="update">수정</button>
     <button @click="pushReview" v-else>업데이트</button>
+
+    <button @click="reviewLikeClick">좋아요</button>
+    
+    <button>싫어요</button>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import jwtDecode from "jwt-decode"
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -28,7 +33,9 @@ export default {
     return {
       update : true,
       content : this.review.content,
-      newReview : null
+      newReview : null,
+      reviewLike : null,
+      reviewLikeCount: null
     }
   },
   methods:{
@@ -63,7 +70,33 @@ export default {
     pushReview: function() {
       this.review.content = this.newReview
       this.update = true
-    }
+    },
+    reviewLikeClick : function () { 
+      const movieId = this.movie.id
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      const reviewId = this.review.id
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${movieId}/review/${reviewId}/like/`,
+          data: likeItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+            this.reviewLike = res.data.like
+            this.reviewLikeCount = res.data.count
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
   }
 }
 </script>

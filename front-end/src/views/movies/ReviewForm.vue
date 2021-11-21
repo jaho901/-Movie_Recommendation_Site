@@ -17,7 +17,7 @@
       <input type="radio" id="1-star" name="rating" value="1" @click="rating"/>
       <label for="1-star" class="star">&#9733;</label>
     </div>
-
+   
     <button @click="createReview">작성하기</button>
   </div>
 </template>
@@ -58,8 +58,8 @@ export default {
         rank: this.ratingValue,
         content : this.reviewContent
       }
-      console.log(this.ratingValue)
-      console.log(this.reviewContent)
+      // console.log(this.ratingValue)
+      // console.log(this.reviewContent)
       if (ReviewItem.rank && ReviewItem.content) {
         axios({
           method: 'post',
@@ -69,12 +69,12 @@ export default {
         })
           .then(res => {
             console.log(res)
-            console.log('성공')
+            // console.log('성공')
             this.$emit('update-review')
           })
           .catch(err => {
             console.log(err)
-            console.log('실패')
+            // console.log('실패')
           })
         }
     },
