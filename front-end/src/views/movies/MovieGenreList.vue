@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>{{genreName}} 영화 목록</p>
+
     {{gmovie}}
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {
   name: "MovieGenreList",
   props: {
     gmovie : Object,
-    genreName : String
+    genreName : String,
   }
 }
 </script>

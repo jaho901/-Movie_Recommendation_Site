@@ -26,7 +26,7 @@
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
-
+// console.log(SERVER_URL)
 export default {
   name: "ReviewForm",
   data: function () {

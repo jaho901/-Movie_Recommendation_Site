@@ -24,13 +24,16 @@
     </div>
     <div>
       연령별
-      <button @click="ageChange">전체관람가능</button>
-      <button>12세이상 관람가능</button>
-      <button>15세이상 관람가능</button>
-      <button>19세이상 관람가능</button>
+      <button @click="ageChange" value="전체">전체관람가능</button>
+      <button @click="ageChange" value="12세">12세이상 관람가능</button>
+      <button @click="ageChange" value="15세">15세이상 관람가능</button>
+      <button @click="ageChange" value="19세">19세이상 관람가능</button>
 
     </div>
+
     <br>
+    <hr>
+    <p>{{genreName}} 영화 목록</p>
       <div v-if="genreId==='최신'">
         <movie-list-recent-item
           v-for="(movie, idx) in movies" :key="idx"
@@ -38,10 +41,18 @@
         </movie-list-recent-item >
       </div>
       <div v-else>
-        <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
-          :gmovie="gmovie" :genreName="genreName">
-          
-        </movie-genre-list>
+        <div v-if="age==='전체'">
+          <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
+            :gmovie="gmovie" :genreName="genreName">
+            
+          </movie-genre-list>
+        </div>
+        <div v-else>
+          <movie-genre-list v-for="gmovie in ageList" :key="gmovie.idx"
+            :gmovie="gmovie" :genreName="genreName">
+            
+          </movie-genre-list>
+        </div>
       </div>
     <br>
     
@@ -68,8 +79,9 @@ export default {
       genreMovie: null,
       genreId : "최신",
       changeList: null,
-      genreName: null,
-      age: null
+      genreName: "전체",
+      age: "전체",
+      ageList : null
     }
   },
   methods: {
@@ -113,19 +125,58 @@ export default {
         })
       },
       valueChange : function (event) {
-        console.log(event.target.innerText)
+        // console.log(event.target.innerText)
+        this.age = "전체"
         this.genreName = event.target.innerText
         this.genreId = event.target.value
         const genreId = this.genreId
+        //  const age = this.age
+        
         for (const genre in this.genreMovie) {
           if (genre === genreId) {
             this.changeList = this.genreMovie[genre]
           }
         }
-        console.log(this.changeList)
+        // } else {
+      
+        //   console.log(age)
+        //   for (const genre in this.genreMovie) {
+        //     if (genre === genreId) {
+        //       this.changeList = this.genreMovie[genre]
+        //     }
+          
+        //   for (const ageGenre in this.changeList) {
+        //     console.log(ageGenre)
+        //   }
+        //   }
+        // }
+        // console.log(this.changeList)
       },
       ageChange : function (event) {
-        console.log(event)
+        console.log(event.target.value)
+        this.age = event.target.value
+        const age = this.age
+   
+         if (age==="전체") {
+            // console.log(ageList.grade[0].rating)
+            console.log('앙')
+          }
+          else if (age=="12세") {
+            // console.log(ageList)
+            this.ageList = this.changeList.filter(list =>
+                list.grade[0].rating === "12세 관람가"
+              )
+          }
+          else if (age=="15세") {
+            this.ageList = this.changeList.filter(list =>
+                list.grade[0].rating === "15세 관람가"
+              )
+          }
+          else {
+            this.ageList = this.changeList.filter(list =>
+                list.grade[0].rating === "청소년 관람불가"
+              )
+          }
       }
     },
   created: function () {

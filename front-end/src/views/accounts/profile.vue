@@ -1,8 +1,9 @@
 <template>
   <div>
-    <p>프로필페이지입니다.</p>
+    <p>{{ userData.nickname }}님의 프로필페이지입니다.</p>
     <!-- <h1>{{userData.username}}님의 프로필입니다!</h1> -->
-    {{ userData }}
+      <button>팔로우</button>
+      <button>언팔로우</button>
   </div>
 </template>
 
