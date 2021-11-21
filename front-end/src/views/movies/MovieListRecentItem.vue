@@ -2,12 +2,14 @@
   <div>
     <!-- <h1>{{movie.title}}</h1> -->
     <img :src="imgSrc" alt="#">
+    <p>{{movie.like_users}}</p>
     <p @click="movieLike" v-if="!like">좋아요</p>
     <p @click="movieLike" v-else>좋아요취소</p>
     <p>{{likeCount}} 명이 좋아합니다</p>
     <p @click="movieHate" v-if="!hate">싫어요</p>
     <p @click="movieHate" v-else>싫어요취소</p>
     <p>{{hateCount}} 명이 싫어합니다</p>
+    <p>{{movie.hate_users.length}}</p>
     
   </div>
   

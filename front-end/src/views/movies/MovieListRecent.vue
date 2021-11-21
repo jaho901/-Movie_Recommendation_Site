@@ -24,7 +24,7 @@
     </div>
     <div>
       연령별
-      <button>전체관람가능</button>
+      <button @click="ageChange">전체관람가능</button>
       <button>12세이상 관람가능</button>
       <button>15세이상 관람가능</button>
       <button>19세이상 관람가능</button>
@@ -68,7 +68,8 @@ export default {
       genreMovie: null,
       genreId : "최신",
       changeList: null,
-      genreName: null
+      genreName: null,
+      age: null
     }
   },
   methods: {
@@ -122,6 +123,9 @@ export default {
           }
         }
         console.log(this.changeList)
+      },
+      ageChange : function (event) {
+        console.log(event)
       }
     },
   created: function () {
