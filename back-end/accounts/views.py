@@ -45,19 +45,15 @@ def signup(request):
 @permission_classes([IsAuthenticated])
 def profile(request, user_pk):
     # 유저 정보
-    if request.user.pk == user_pk:
-        per = request.user.pk
-    else:
-        per = user_pk
-    person = get_object_or_404(User, pk=per)
+    person = get_object_or_404(User, pk=user_pk)
     serializer = UserSerializer(person, many=True)
 
     # 유저가 좋아요 누른 영화
-    likeMoive = Movie.objects.filter(like_users=per)
+    likeMoive = Movie.objects.filter(like_users=user_pk)
     likeserializer = MovieSerializer(likeMoive, many=True)
 
     # 댓글을 단 영화
-    review = Review.objects.filter(user=per)
+    review = Review.objects.filter(user=user_pk)
     review_li = []
     for i in range(len(review)):
         review_li.append(review[i].movie_id)
@@ -66,14 +62,15 @@ def profile(request, user_pk):
     reserializer = MovieSerializer(reviewMovie, many=True)
 
     # 작성한 게시글
-    community = Community.objects.filter(user=per)
+    community = Community.objects.filter(user=user_pk)
     comserializer = CommunitySerializer(community, many=True)
 
     # 좋아요 누른 게시글
-    likeCommunity = Community.objects.filter(like_users=per)
+    likeCommunity = Community.objects.filter(like_users=user_pk)
     likecomserializer = CommunitySerializer(likeCommunity, many=True)
 
     context = {
+        'userInfo': serializer.data,
         'userLikeMovies': likeserializer.data,
         'reviewInMovies': reserializer.data,
         'userCreateCommunity': comserializer.data,
