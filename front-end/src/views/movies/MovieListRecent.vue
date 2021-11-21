@@ -22,6 +22,14 @@
       <button @click="valueChange" value="familyMovies">가족</button>
       <button @click="valueChange" value="concertMovies">콘서트</button>
     </div>
+    <div>
+      연령별
+      <button>전체관람가능</button>
+      <button>12세이상 관람가능</button>
+      <button>15세이상 관람가능</button>
+      <button>19세이상 관람가능</button>
+
+    </div>
     <br>
       <div v-if="genreId==='최신'">
         <movie-list-recent-item

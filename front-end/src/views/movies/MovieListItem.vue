@@ -1,9 +1,10 @@
 <template>
   <div>
-    <!-- <h1>{{movie.title}}</h1> -->
+    
     <img :src="imgSrc" alt="#">
     <br>
     <button @click="movieDetailInfo">상세정보</button>
+    
   </div>
 </template>
 
