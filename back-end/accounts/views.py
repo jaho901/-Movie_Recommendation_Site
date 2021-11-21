@@ -108,7 +108,7 @@ def follow(request, user_pk):
 
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def follow_list(request, user_pk):
     follower = User.objects.filter(followings__in=[user_pk])
     following = User.objects.filter(followers__in=[user_pk])
