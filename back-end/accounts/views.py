@@ -89,7 +89,7 @@ def user_delete(request):
 @api_view(['POST'])
 @authentication_classes([JSONWebTokenAuthentication])
 @permission_classes([IsAuthenticated])
-def follow(request, user_pk, other_pk):
+def follow(request, user_pk):
     person = get_object_or_404(User, pk=user_pk)
     user = request.user
     if person != user:
