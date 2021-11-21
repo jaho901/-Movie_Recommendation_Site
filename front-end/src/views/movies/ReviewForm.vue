@@ -4,7 +4,7 @@
     <input type="text" v-model="reviewContent">
   
     <p>평점</p>
-    {{ratingValue}}
+    <!-- {{ratingValue}} -->
     <div class="star-rating">
       <input type="radio" id="5-stars" name="rating" value="5" @click="rating" />
       <label for="5-stars" class="star">&#9733;</label>
@@ -17,7 +17,7 @@
       <input type="radio" id="1-star" name="rating" value="1" @click="rating"/>
       <label for="1-star" class="star">&#9733;</label>
     </div>
-   
+
     <button @click="createReview">작성하기</button>
   </div>
 </template>
@@ -58,8 +58,8 @@ export default {
         rank: this.ratingValue,
         content : this.reviewContent
       }
-      // console.log(this.ratingValue)
       // console.log(this.reviewContent)
+      console.log(this.movie)
       if (ReviewItem.rank && ReviewItem.content) {
         axios({
           method: 'post',
@@ -68,9 +68,9 @@ export default {
           headers: this.setToken()
         })
           .then(res => {
-            console.log(res)
+            console.log(res,'폼')
             // console.log('성공')
-            this.$emit('update-review')
+            this.$emit('updatereviews')
           })
           .catch(err => {
             console.log(err)

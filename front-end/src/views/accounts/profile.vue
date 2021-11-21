@@ -105,6 +105,7 @@ export default {
             this.followBoolen= res.data.follow
             this.follower= res.data.followes
             this.following= res.data.following
+            this.follow()
           })
           .catch(err => {
             console.log(err)

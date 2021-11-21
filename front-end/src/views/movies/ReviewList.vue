@@ -10,9 +10,12 @@
     <button @click="updateReview" v-if="update">수정</button>
     <button @click="pushReview" v-else>업데이트</button>
 
-    <button @click="reviewLikeClick">좋아요</button>
+    <button @click="reviewLikeClick" v-if="!like">좋아요</button>
+    <button @click="reviewLikeClick" v-else>좋아요취소</button>
+    <p>좋아요 갯수 {{this.likeCount}}</p>
+    <button @click="reviewHateClick">싫어요</button>
     
-    <button>싫어요</button>
+    <!-- <button>싫어요</button> -->
   </div>
 </template>
 
@@ -35,7 +38,9 @@ export default {
       content : this.review.content,
       newReview : null,
       reviewLike : null,
-      reviewLikeCount: null
+      reviewLikeCount: null,
+      like: false,
+      likeCount : null
     }
   },
   methods:{
@@ -89,14 +94,54 @@ export default {
           .then(res => {
             console.log(res)
             console.log('성공')
-            this.reviewLike = res.data.like
-            this.reviewLikeCount = res.data.count
+            this.like = res.data.like
+            this.likeCount = res.data.count
+            this.$emit('like-update')
           })
           .catch(err => {
             console.log(err)
             console.log('실패')
           })
     },
+    reviewHateClick : function () { 
+      const movieId = this.movie.id
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      const reviewId = this.review.id
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${movieId}/review/${reviewId}/hate/`,
+          data: likeItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+            this.$emit('hate-update')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
+    checkStatus : function () {
+      const token = localStorage.getItem('jwt')
+      const userpk = jwtDecode(token).user_id
+      if (this.review.like_users.includes(userpk)) {
+        this.like = true
+      } else {
+        this.like = false
+      }
+      // console.log(this.review.like_users.length)
+      this.likeCount =this.review.like_users.length
+    }
+  },
+  created : function() {
+    this.checkStatus()
   }
 }
 </script>

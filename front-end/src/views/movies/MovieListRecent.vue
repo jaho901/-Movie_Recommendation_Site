@@ -114,10 +114,10 @@ export default {
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          console.log(res.data)
+          // console.log(res.data)
           // console.log(res.data)
           // this.movies = res.data
-          console.log('앙 기모띵')
+          // console.log('앙 기모띵')
           this.genreMovie = res.data
         })
         .catch(err => {

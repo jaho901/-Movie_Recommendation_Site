@@ -19,14 +19,13 @@ export default {
       // console.log(this.movie)
       const movieInfo = this.movie
       this.$store.state.movieDetailInfo = movieInfo
-
+      // console.log(this.$store.state.movieDetailInfo)
 
       // console.log(this.movie.id)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {
             movieId : this.movie.id,
-            movie: this.movie
           } 
       })
     }

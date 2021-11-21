@@ -42,6 +42,7 @@ export default {
           // console.log(res)
           // console.log(res.data)
           this.movies = res.data
+          
         })
         .catch(err => {
           console.log(err)
