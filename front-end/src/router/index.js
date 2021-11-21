@@ -10,6 +10,7 @@ import profile from '@/views/accounts/profile'
 import CommunityForm from '@/views/community/CommunityForm'
 import Community from '@/views/community/Community'
 import statusSetting from '@/views/accounts/statusSetting'
+import Recommendation from '@/views/recommendation/Recommendation'
 // import Review from '@/views/movies/Review'
 Vue.use(VueRouter)
 
@@ -55,10 +56,15 @@ const routes = [
     component: Community,
   },
   {
-    path: '/profile/setting/',
+    path: '/accounts/profile/setting/',
     name: 'Setting',
     component: statusSetting,
   },
+  {
+    path: '/recommendation/',
+    name: 'Recommendation',
+    component: Recommendation,
+  }
 ]
 
 const router = new VueRouter({
