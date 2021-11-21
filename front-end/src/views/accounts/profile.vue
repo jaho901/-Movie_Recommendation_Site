@@ -79,13 +79,13 @@ export default {
       this.$router.push({name:'Setting'})
     },
     follow : function() {
-      const token = localStorage.getItem('jwt')
-      const user_id = jwtDecode(token).user_id
+      // const token = localStorage.getItem('jwt')
+      // const user_id = jwtDecode(token).user_id
       // console.log(this.$route.params.user_id)
       const profile_id = this.$route.params.user_id
       console.log(profile_id)
       const movieItem = {
-        user : user_id,
+        user : profile_id,
         // movie: this.movieInfo.id,
         // community_title: this.community_title,
         // movie_title : this.movieInfo.title,
@@ -113,13 +113,13 @@ export default {
 
       },
       getData : function () {
-         const token = localStorage.getItem('jwt')
-          const user_id = jwtDecode(token).user_id
+        //  const token = localStorage.getItem('jwt')
+        //   const user_id = jwtDecode(token).user_id
           // console.log(this.$route.params.user_id)
           const profile_id = this.$route.params.user_id
           console.log(profile_id)
           const movieItem = {
-            user : user_id,
+            user : profile_id,
             // movie: this.movieInfo.id,
             // community_title: this.community_title,
             // movie_title : this.movieInfo.title,
@@ -150,15 +150,15 @@ export default {
  created: function () {
     if (localStorage.getItem('jwt')) {
       this.getUserProfile()
-      this.getData()
+      // this.getData()
       // console.log('로그인은됨')
     } else {
       this.$router.push({ name: 'Login' })
     }
   },
-  computed: function() {
-      // this.getData()
-  }
+  // computed: function() {
+  //     // this.getData()
+  // }
   
 }
 </script>
