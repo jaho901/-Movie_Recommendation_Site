@@ -10,9 +10,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from .serializers import MovieSerializer, ReviewSerializer, GenreSerializer
 from .models import Movie, Review, Genre
-from accounts.models import User
-from accounts.serializers import UserDetailSerializer
-
 
 @api_view(['GET'])
 def movie_all(request):
@@ -55,27 +52,22 @@ def movie_detail(request, movie_id):
     return Response(context)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def movie_like(request, movie_id):
-    if request.method == 'GET':
-        like_user = User.objects.filter(movie__like=True, movie__id=movie_id).distinct()
-        serializer = UserDetailSerializer(data=like_user, many=True)
-        return Response(serializer)
-    elif request.method == 'POST':
-        movie = get_object_or_404(Movie, pk=movie_id)
-        user = request.user
-        if movie.like_users.filter(pk=user.pk).exists():
-            movie.like_users.remove(user)
-            like = False
-        else:
-            movie.like_users.add(user)
-            like = True
-        like_status = {
-            'like': like,
-            'count': movie.like_users.count(),
-        }
-        return JsonResponse(like_status)
+    movie = get_object_or_404(Movie, pk=movie_id)
+    user = request.user
+    if movie.like_users.filter(pk=user.pk).exists():
+        movie.like_users.remove(user)
+        like = False
+    else:
+        movie.like_users.add(user)
+        like = True
+    like_status = {
+        'like': like,
+        'count': movie.like_users.count(),
+    }
+    return JsonResponse(like_status)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
