@@ -4,4 +4,4 @@ from django.conf import settings
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=15, blank=False, null=False)
-    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followings')
+    followings = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='followers')
