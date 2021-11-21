@@ -104,17 +104,15 @@ def follow(request, user_pk, other_pk):
             'followings': person.followings.count(),
             'followers': person.followers.count(),
             }
-    else:
-        if user.followers.filter(pk=other_pk).exists():
-            user.followers.remove(request.user)
-            follow = True
-        follow_status = {
-            'follow': follow,
-            'followings': user.followings.count(),
-            'followers': user.followers.count(),
-        }
-    return JsonResponse(follow_status)
-    
+        return JsonResponse(follow_status)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def follow_list(request, user_pk):
+    follower = User.objects.filter(followers__=True)
+    following = User.objects.filter(following__=True)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
