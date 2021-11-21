@@ -51,7 +51,7 @@ def movie_detail(request, movie_id):
     return Response(context)
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def movie_like(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
