@@ -1,13 +1,22 @@
 <template>
-  <div></div>
+  <div>
+    <reco-week class="bestMovie"></reco-week>
+  </div>
 </template>
 
 <script>
-export default {
+import RecoWeek from '@/views/recommendation/RecoWeek'
 
+export default {
+  name: 'Recommendation',
+  components: {
+    RecoWeek,
+  }
 }
 </script>
 
-<style>
-
+<style scoped>
+.bestMovie {
+  float: left
+}
 </style>

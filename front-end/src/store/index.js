@@ -22,7 +22,6 @@ export default new Vuex.Store({
     // movieDetailInfo : function ({commit}, movieInfo) {
     //   commit('DETAIL_MOVIE_INFO', movieInfo)
     // }
-
   },
   modules: {
 
