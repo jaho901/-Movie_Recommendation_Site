@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 
 from .models import User
 from .serializers import UserSerializer
@@ -81,3 +81,23 @@ def follow(request, user_pk, other_pk):
         }
     return JsonResponse(follow_status)
     
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request, user_pk):
+    old_password = request.data.get('old_password')
+    password = request.data.get('password')
+    password_confirmation = request.data.get('passwordConfirmation')
+    if old_password == password:
+        return Response({'error': '비밀번호가 이전 비밀번호와 일치합니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    if password != password_confirmation:
+        return Response({'error': '비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    person = get_object_or_404(User, pk=user_pk)
+    serializer = UserSerializer(instance=person, data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        user = serializer.save()
+        update_session_auth_hash(request, user)
+        user.set_password(request.data.get('password'))
+        user.save()
+        return Response(serializer.data)

@@ -18,8 +18,8 @@ class Community(models.Model):
     # image = models.ImageField(blank=True, upload_to='images/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_communities")
-    hate_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="hate_communities")
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_communities", blank=True, null=True)
+    hate_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="hate_communities", blank=True, null=True)
 
 
 class Ceview(models.Model):
@@ -29,5 +29,5 @@ class Ceview(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_ceviews")
-    hate_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="hate_ceviews")
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_ceviews", blank=True, null=True)
+    hate_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="hate_ceviews", blank=True, null=True)
