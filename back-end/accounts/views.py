@@ -41,8 +41,8 @@ def signup(request):
 
 
 @api_view(['GET'])
-# @authentication_classes([JSONWebTokenAuthentication])
-# @permission_classes([IsAuthenticated])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
 def profile(request, user_pk):
     # 유저 정보
     person = get_object_or_404(User, pk=user_pk)
