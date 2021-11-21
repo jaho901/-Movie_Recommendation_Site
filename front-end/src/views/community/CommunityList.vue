@@ -6,6 +6,8 @@
     <h2>{{communityContents}}</h2>
     <p>{{communityContents.community_title}}</p>
     <p>{{communityContents.movie_title}}</p>
+
+    <button @click="communityDetail">gotoDetail</button>
     <hr>
   </div>
 </template>
@@ -31,9 +33,16 @@ export default {
           user_id: this.communityContents.user.pk
         }
       })
+    },
+    communityDetail : function () {
+      // console.log(this.communityContents.id)
+      const community_id = this.communityContents.id
+      console.log(community_id)
+      this.$router.push({name:"communityDetail",params:{community_id : community_id}})
+
     }
       
-    },
+  },
   computed : {
     imgSrc : function () {
       const imgsrc = this.communityContents.poster_path

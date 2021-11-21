@@ -9,6 +9,7 @@ import MovieDetails from '@/views/movies/MovieDetails'
 import profile from '@/views/accounts/profile'
 import CommunityForm from '@/views/community/CommunityForm'
 import Community from '@/views/community/Community'
+import communityDetail from '@/views/community/communityDetail'
 import statusSetting from '@/views/accounts/statusSetting'
 import Recommendation from '@/views/recommendation/Recommendation'
 // import Review from '@/views/movies/Review'
@@ -64,7 +65,13 @@ const routes = [
     path: '/recommendation/',
     name: 'Recommendation',
     component: Recommendation,
-  }
+  },
+  {
+    path: '/community/:community_id',
+    name: 'communityDetail',
+    component: communityDetail,
+  },
+
 ]
 
 const router = new VueRouter({

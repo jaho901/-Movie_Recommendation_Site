@@ -58,11 +58,10 @@ export default {
         })
           .then(res => {
             console.log(res)
-            console.log('성공')
-            // console.log(res.data.count)
-            // console.log(res.data.like)
+            console.log('성공') 
             this.like = res.data.like
             this.likeCount = res.data.count
+            
           })
           .catch(err => {
             console.log(err)
