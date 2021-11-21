@@ -33,6 +33,7 @@
       v-model="content"
       >
     <br>
+
     <!-- @click="createArticle" -->
     <button
       @click="createCommunity"
@@ -62,7 +63,6 @@ export default {
       movie_list : null,
       results: [],
       movieInfo : null,
-      // image: "",
     }
   },
   methods :  {
