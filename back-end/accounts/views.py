@@ -101,8 +101,8 @@ def follow(request, user_pk):
             follow = False
         follow_status = {
             'follow': follow,
-            'followers': person.followings.count(),
-            'followings': person.followers.count(),
+            'followings': person.followings.count(),
+            'followers': person.followers.count(),
             }
         return JsonResponse(follow_status)
 
