@@ -101,8 +101,8 @@ def follow(request, user_pk):
             follow = False
         follow_status = {
             'follow': follow,
-            'followings': person.followings.count(),
-            'followers': person.followers.count(),
+            'followers': person.followings.count(),
+            'followings': person.followers.count(),
             }
         return JsonResponse(follow_status)
 
@@ -110,8 +110,15 @@ def follow(request, user_pk):
 @api_view(['GET'])
 # @permission_classes([IsAuthenticated])
 def follow_list(request, user_pk):
-    follower = User.objects.filter(followers__=True)
-    following = User.objects.filter(following__=True)
+    follower = User.objects.filter(followings__in=[user_pk])
+    following = User.objects.filter(followers__in=[user_pk])
+    followerserializer = UserSerializer(follower, many=True)
+    followingserializer = UserSerializer(following, many=True)
+    context = {
+        'followers': followerserializer.data,
+        'followings': followingserializer.data,
+    }
+    return Response(context)
 
 
 @api_view(['POST'])
