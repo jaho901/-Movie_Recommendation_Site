@@ -1,23 +1,19 @@
 <template>
   <div>
-    {{ movies }}
+    {{ user_movies }}
   </div>
 </template>
 
 <script>
-// import RecoMovieList from '@/views/recommendation/RecoMovieList'
 import axios from 'axios'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name: "RecoWeek",
-  components:{
-    // RecoMovieList
-  },
+  name: "RecoToday",
   data: function () {
     return {
-      movies: null,
+      user_movies: null,
     }
   },
   methods: {
@@ -31,12 +27,13 @@ export default {
     getMovies: function () {
       axios({
         method: 'GET',
-        url: `${SERVER_URL}/recommendation/recommend_by_day_of_week/`,
+        url: `${SERVER_URL}/recommendation/today_user_list/`,
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          this.movies = res.data
+          this.user_movies = res.data
           console.log(res)
+          console.log('성공')
         })
         .catch(err => {
           console.log(err)
