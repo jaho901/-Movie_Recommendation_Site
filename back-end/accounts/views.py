@@ -135,3 +135,4 @@ def change_password(request, user_pk):
         user.set_password(request.data.get('password'))
         user.save()
         return Response(serializer.data)
+

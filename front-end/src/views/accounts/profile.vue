@@ -1,19 +1,18 @@
 <template>
   <div>
     <p>{{ nickname }}님의 프로필페이지입니다.</p>
-    <!-- {{this.itsMe}} -->
+    {{userData}}
     <!-- <h1>{{userData.username}}님의 프로필입니다!</h1> -->
     <div v-if="!itsMe" >
-      <button>팔로우</button>
-      <button>언팔로우</button>
+      <button @click="follow">팔로우</button>
+      <button @click="follow">언팔로우</button>
     </div>
     <div v-else>
       <button @click="goToSetting">유저정보 변경</button>
       <button>팔로우한 목록</button>
       <button>팔로잉한 목록</button>
     </div>
-    
-  </div>
+  </div> 
 </template>
 
 
@@ -49,20 +48,20 @@ export default {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const userId = this.$route.params.user_id
-      console.log(userId)
+      // console.log(userId)
       axios({
           method: 'GET',
           url: `${SERVER_URL}/accounts/profile/${userId}/`,
           headers: this.setToken()
         })
           .then(res => {
-            console.log(res)
-            console.log('성공이여')
+            // console.log(res)
+            // console.log('성공이여')
             this.userData = res.data
             this.nickname = res.data.nickname
               if (userId === user_id) {
                 this.itsMe = true
-                console.log('나다')
+                // console.log('나다')
               } else {
                 this.itsME = false
               }
@@ -76,7 +75,39 @@ export default {
     goToSetting: function() {
       this.$router.push({name:'Setting'})
     },
-  },
+    follow : function() {
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      // console.log(this.$route.params.user_id)
+      const profile_id = this.$route.params.user_id
+      const movieItem = {
+        user : user_id,
+        // movie: this.movieInfo.id,
+        // community_title: this.community_title,
+        // movie_title : this.movieInfo.title,
+        // content : this.content,
+        // poster_path: this.movieInfo.poster_path
+        // image: this.image
+        }
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/community/${profile_id}/`,
+          data: movieItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('성공했슴다')
+            // this.gotoCommunity()
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+
+      }
+    },
+  
  created: function () {
     if (localStorage.getItem('jwt')) {
       this.getUserProfile()
