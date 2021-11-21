@@ -36,7 +36,6 @@ def movie_list_recent(request):
 
 @api_view(['GET'])
 def movie_detail(request, movie_id):
-    movies = Movie.objects.all()
     movie = Movie.objects.get(pk=movie_id)
     serializer = MovieSerializer(movie)
 
