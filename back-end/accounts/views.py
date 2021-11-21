@@ -46,7 +46,7 @@ def signup(request):
 def profile(request, user_pk):
     # 유저 정보
     person = get_object_or_404(User, pk=user_pk)
-    serializer = UserSerializer(person, many=True)
+    serializer = UserSerializer(person)
 
     # 유저가 좋아요 누른 영화
     likeMoive = Movie.objects.filter(like_users=user_pk)

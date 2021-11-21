@@ -6,7 +6,7 @@
         <router-link :to="{ name: 'Movie' }">Movie</router-link> |
         <!-- <router-link :to="{ name: 'Profile',params: {user_id: } }">Movie</router-link> | -->
         <button @click="myProfile">내프로필</button>
-        <!-- <button @click="otherProfile">딴놈프로필</button> -->
+        <button @click="otherProfile">딴놈프로필</button>
         <!-- <router-link :to="{ name: 'MovieDetails' }">MovieDetails</router-link> | -->
 
       </span>
@@ -15,7 +15,7 @@
         <router-link :to="{ name: 'Login' }">Login</router-link>
       </span>
     </div>
-    <router-view @login="isLogin=true"/>
+    <router-view @login="isLogin=true" :key="$route.fullPath"/>
   </div>
 </template>
 
@@ -74,9 +74,9 @@ export default {
           // }
         // this.$router.push({name: "profile", params: {user_id:user_id }})
       },
-      // otherProfile : function() {
-      //   this.$router.push({name: "profile", params: {user_id: 5}})
-      // }
+      otherProfile : function() {
+        this.$router.push({name: "profile", params: {user_id: 5}})
+      }
    
   },
   created: function () {

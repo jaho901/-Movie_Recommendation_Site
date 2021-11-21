@@ -13,7 +13,6 @@
       <button>팔로잉한 목록</button>
     </div>
     
-
   </div>
 </template>
 
