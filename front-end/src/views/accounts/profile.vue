@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <p>{{ userData.username }}님의 프로필페이지입니다.</p> -->
+    <p>{{ nickname }}님의 프로필페이지입니다.</p>
     <!-- {{this.itsMe}} -->
     <!-- <h1>{{userData.username}}님의 프로필입니다!</h1> -->
     <div v-if="!itsMe" >

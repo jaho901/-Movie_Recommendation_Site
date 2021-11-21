@@ -6,7 +6,7 @@
         <router-link :to="{ name: 'Movie' }">Movie</router-link> |
         <!-- <router-link :to="{ name: 'Profile',params: {user_id: } }">Movie</router-link> | -->
         <button @click="myProfile">내프로필</button>
-        <button @click="otherProfile">딴놈프로필</button>
+        <!-- <button @click="otherProfile">딴놈프로필</button> -->
         <!-- <router-link :to="{ name: 'MovieDetails' }">MovieDetails</router-link> | -->
 
       </span>
@@ -67,15 +67,16 @@ export default {
         // this.$store.state.loginUserID = user_id//
       
         // const path = `/accounts/profile/${user_id}`
-        //   console.log(this.$route.path)
-        //   if (this.$route.path !== path){
-        //     this.$router.push({name: "profile", params: {user_id:user_id }})
-        //   }
-        this.$router.push({name: "profile", params: {user_id:user_id }})
+          console.log(this.$route.path)
+          this.$router.push({name: "profile", params: {user_id:user_id }}).catch(()=>{})
+          // if (this.$route.path !== path){
+          //   this.$router.push({name: "profile", params: {user_id:user_id }})
+          // }
+        // this.$router.push({name: "profile", params: {user_id:user_id }})
       },
-      otherProfile : function() {
-        this.$router.push({name: "profile", params: {user_id: 5}})
-      }
+      // otherProfile : function() {
+      //   this.$router.push({name: "profile", params: {user_id: 5}})
+      // }
    
   },
   created: function () {
