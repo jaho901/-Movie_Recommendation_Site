@@ -100,14 +100,13 @@ export default {
       },
       getReviews: function () {
         const movieId = this.$route.params.movieId
-        console.log(movieId)
-        axios({
-        method: 'get',
-        url: `${SERVER_URL}/movies/${movieId}/review_create/`,
-        headers: this.setToken()
-      })
+         axios({
+          method: 'get',
+          url: `${SERVER_URL}/movies/${movieId}/review_create/`,
+          headers: this.setToken()
+        })
         .then(res => {
-          // console.log(res)
+          console.log(res,'겟리뷰')
           this.review_list = res.data
           // console.log('성공')
         })

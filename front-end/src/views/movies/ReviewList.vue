@@ -15,7 +15,7 @@
     <p>좋아요 갯수 {{this.likeCount}}</p>
     <button @click="reviewHateClick" v-if="!hate">싫어요</button>
     <button @click="reviewHateClick" v-else>싫어요취소</button>
-    
+    <p>싫어요 갯수 {{this.hateCount}}</p>
     <!-- <button>싫어요</button> -->
   </div>
 </template>
@@ -41,9 +41,9 @@ export default {
       reviewLike : null,
       reviewLikeCount: null,
       like: false,
-      likeCount : null,
+      likeCount : 0,
       hate: false,
-      hateCount : null
+      hateCount : 0
     }
   },
   methods:{
@@ -141,13 +141,14 @@ export default {
       } else {
         this.like = false
       }
-      if (this.review.like_users.includes(userpk)) {
-        this.like = true
+      if (this.review.hate_users.includes(userpk)) {
+        this.hate = true
       } else {
-        this.like = false
+        this.hate = false
       }
       // console.log(this.review.like_users.length)
       this.likeCount =this.review.like_users.length
+      this.hateCount= this.review.hate_users.length
     }
   },
   created : function() {
