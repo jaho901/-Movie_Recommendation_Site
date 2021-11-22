@@ -44,13 +44,15 @@
       <div v-else>
         <div v-if="age==='전체'">
           <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
-            :gmovie="gmovie" :genreName="genreName">
+            :gmovie="gmovie" :genreName="genreName"
+            @change="getGenre">
             
           </movie-genre-list>
         </div>
         <div v-else>
           <movie-genre-list v-for="gmovie in ageList" :key="gmovie.idx"
-            :gmovie="gmovie" :genreName="genreName">
+            :gmovie="gmovie" :genreName="genreName"
+            @change="getGenre">
           </movie-genre-list>
         </div>
       </div>

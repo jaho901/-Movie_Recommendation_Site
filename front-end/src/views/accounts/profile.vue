@@ -12,11 +12,14 @@
     <div v-else>
       <button @click="goToSetting">유저정보 변경</button>
     </div>
-      <button @click="owChange">팔로우한 목록</button>
-      <p v-if="owList">{{followerList}}</p>
-      <button @clikc="ingChange">팔로잉한 목록</button>
-      <p v-if="ingList">{{followingList}}</p>
-    
+      
+    <button @click="owChange">팔로워 목록</button>
+    <p v-if="owList">{{this.followerList}}</p>
+
+    <button @click="ingChanges">팔로워 목록</button>
+    <p v-if="ingList">{{this.followingList}}</p>
+   
+    <!-- {{this.followingList}} -->
     <p>팔로워 수  {{this.follower}}</p>
     <p>팔로잉 수  {{this.following}}</p>
 
@@ -58,8 +61,8 @@ export default {
       allData : null,
       followerList : null,
       followingList : null,
-      owList : true,
-      ingList : true,
+      owList : false,
+      ingList : false,
       userLikeMovies : [],
       reviewInMovies : [],
       userCreateCommunity : [],
@@ -95,15 +98,15 @@ export default {
             this.reviewInMovies = res.data.reviewInMovies
             this.userCreateCommunity = res.data.userCreateCommunity
             this.userLikeCommunity = res.data.userLikeCommunity
-            console.log(this.userLikeMovies)
-            console.log(res.data,'유저데이터')
+            // console.log(this.userLikeMovies)
+            // console.log(res.data,'유저데이터')
               if (userId === user_id) {
                 this.itsMe = true
                 // console.log('나다')
               } else {
                 this.itsME = false
               }
-              this.getData()
+              
           })
           .catch(err => {
             console.log(err)
@@ -127,13 +130,14 @@ export default {
           headers: this.setToken()
         })
           .then(res => {
-            // console.log(res)
-            console.log('성공했슴다')
+            console.log(res)
+            console.log('성공했슴다팔로우')
             this.followBoolen= res.data.follow
             // console.log(res.data.followers)
             this.follower= res.data.followers
             this.following= res.data.followings
-            // this.getData()
+            this.getData()
+            // this.$route.push({name:"profile",params: {user_id:profile_id}})
           })
           .catch(err => {
             console.log(err)
@@ -142,8 +146,8 @@ export default {
 
       },
       getData : function () {
-        // const token = localStorage.getItem('jwt')
-        // const user_id = jwtDecode(token).user_id
+        const token = localStorage.getItem('jwt')
+        const user_id = jwtDecode(token).user_id
         const profile_id = this.$route.params.user_id
         // console.log(profile_id)
         axios({
@@ -154,35 +158,48 @@ export default {
           .then(res => {
             console.log(res)
             console.log('성공했슴다1')
-            if (res.data.followings.includes(profile_id)) {
-              this.followBoolen = true
-            } else {
+            const list = res.data.followers.filter(user =>
+                user.pk === user_id
+                )
+            // console.log(list.length)
+            if (list.length) {
               this.followBoolen = false
+              console.log('팔로우하고있음',this.followBoolen)
+            } else {
+              this.followBoolen = true
+              console.log('팔로우취소',this.followBoolen)
             }
-              console.log(res.data.followers.length)
-              this.follower = res.data.followers.length
-              this.following = res.data.followings.length
-              this.followerList = res.data.followers
-              this.followingList = res.data.followings
+            console.log(this.followBoolen)
+            console.log(res.data.followers.length)
+            this.follower = res.data.followers.length
+            this.following = res.data.followings.length
+            this.followerList = res.data.followers
+            this.followingList = res.data.followings
+            console.log(this.followerList)
+            console.log(this.followingList, '팔로잉리스트')
           })
           .catch(err => {
             console.log(err)
             console.log('실패')
           })
         },
-        owChange : function () {
-        if (this.owChange === true) {
-          this.owChange = false
+      owChange : function () {
+        if (this.owList === true) {
+          console.log('떠라')
+          this.owList = false
         } else {
-          this.owChange = true
+          this.owList = true
         }
+        // this.getData()
       },
-      ingChange : function () {
-        if (this.ingChange === true) {
-          this.ingChange = false
+      ingChanges : function () {
+        if (this.ingList === true) {
+          console.log('왔다')
+          this.ingList = false
         } else {
-          this.ingChange = true
+          this.ingList = true
         }
+        // this.getData()
       },
     },
   
@@ -191,7 +208,7 @@ export default {
         this.getUserProfile()
         this.getData()
         // this.getData()
-        console.log('로그인은됨')
+        // console.log('로그인은됨')
       } else {
         this.$router.push({ name: 'Login' })
       }
