@@ -2,6 +2,7 @@
   <div>
     <!-- {{movie.movie.like_users.length}} -->
     {{movie.movie}}
+
     <p>리뷰창</p>
     <review-list 
       v-for="review in review_list" :key="review.id"
@@ -35,7 +36,7 @@ export default {
   name: 'MovieDetails',
   components:{
     ReviewList,
-    ReviewForm
+    ReviewForm,
     },
     data: function () {
       return {
@@ -67,6 +68,7 @@ export default {
         .then(res => {
           console.log(res)
           this.movie = res.data
+          console.log(this.movie)
         })
         .catch(err => {
           console.log(err)
