@@ -1,15 +1,15 @@
 <template>
   <div>
     <img :src="imgSrc" alt="#">
-    <p>{{itemData}}</p>
+    <p>{{this.movie}}</p>
     <p @click="movieLike" v-if="!like">좋아요</p>
     <p @click="movieLike" v-else>좋아요취소</p>
-    <p>{{this.movie}} 명이 좋아합니다</p>
-    <!-- <p @click="movieHate" v-if="!hate">싫어요</p>
+    <p> {{this.likeCount}}명이 좋아합니다</p>
+    <p @click="movieHate" v-if="!hate">싫어요</p>
     <p @click="movieHate" v-else>싫어요취소</p>
-    <p>{{hateCount}} 명이 싫어합니다</p>
-    <p>{{movie.hate_users.length}}</p> -->
-    <!-- <p @click="getDataInfo">확인용</p> -->
+    <p>{{this.hateCount}} 명이 싫어합니다</p>
+    
+    
   </div>
   
 </template>
@@ -26,7 +26,7 @@ export default {
   },
   data : function () {
     return {
-      likeCount : this.movie.like_users.length,
+      likeCount : null,
       like : null,
       hateCount : 0,
       hate : null,
@@ -56,9 +56,10 @@ export default {
           headers: this.setToken()
         })
           .then(res => {
-            // console.log(res)
-            // console.log('성공')
+            console.log(res)
+            console.log('리센트무비')
             this.like = res.data.like
+            this.likeCount  = res.data.count
             this.$emit('like-change')
           })
           .catch(err => {
@@ -66,6 +67,49 @@ export default {
             console.log('실패')
           })
     },
+    movieHate : function () { 
+      const movieId = this.movie.id
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${movieId}/hate/`,
+          data: likeItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('리센트무비')
+            this.hate = res.data.like
+            this.hateCount  = res.data.count
+            this.$emit('like-change')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
+    getData : function () {
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      if (this.movie.like_users.includes(user_id)) { 
+        this.like = true
+      } else {
+        this.like = false
+      }
+      if (this.movie.hate_users.includes(user_id)) { 
+        this.hate = true
+      } else {
+        this.hate = false
+      }
+      this.likeCount = this.movie.like_users.length
+      this.hateCount = this.movie.hate_users.length
+      console.log('add')
+    }
 
     
   },
@@ -75,6 +119,9 @@ export default {
       return imgsrc
     },
   },
+  created: function () {
+    this.getData()
+  }
   // watch : {
   //   movieLike : function () {
   //     this.movie = this.getMovies()

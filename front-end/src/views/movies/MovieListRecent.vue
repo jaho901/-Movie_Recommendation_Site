@@ -62,6 +62,8 @@
 <script>
 // import MovieListItem from '@/views/movies/MovieListItem'
 import axios from 'axios'
+// import jwtDecode from "jwt-decode"
+
 import MovieListRecentItem from '@/views/movies/MovieListRecentItem.vue'
 import MovieGenreList from '@/views/movies/MovieGenreList.vue'
 
@@ -93,6 +95,8 @@ export default {
       return config
     },
     getMovies: function () {
+      // const token = localStorage.getItem('jwt')
+      // const user_id = jwtDecode(token).user_id
       axios({
         method: 'get',
         url: `${SERVER_URL}/movies/recent/`,
@@ -102,6 +106,9 @@ export default {
           // console.log(res)
           console.log(res.data,"여기에용")
           this.movies = res.data
+          // if (this.movies.like_users.includes(user_id)) {
+
+          // }
         })
         .catch(err => {
           console.log(err)
