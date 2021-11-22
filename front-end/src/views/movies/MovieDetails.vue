@@ -1,13 +1,25 @@
 <template>
   <div>
+    {{movieTitle}}
+    {{content}}
+    {{imgsrc}}
     <youtube-list v-for="(video,idx) in youtubeList"
      :key="idx"
       :video="video"
       />
-
+    <hr>
+    <!-- {{this.movie.similar_movies}} -->
+    <!-- {{simmilarMovie}} -->
+    <simmilar
+      v-for="smovie in simmilarMovie" :key="smovie.idx"
+      :smovie="smovie"
+      >
+    </simmilar>
+    <hr>
     <p>리뷰창</p>
+    
     <review-list 
-      v-for="review in review_list" :key="review.id"
+      v-for="review in review_list" :key="review.pk"
       :movie="movie.movie" :review="review"
       @like-update="getReviews" @hate-update="getReviews"
       @update-review="getReviews"
@@ -27,6 +39,7 @@ import axios from 'axios'
 import ReviewForm from './ReviewForm.vue'
 import ReviewList from './ReviewList.vue'
 import youtubeList from './youtubeList.vue'
+import simmilar from '@/views/movies/simmilar.vue'
 // import ReviewForm from './ReviewForm.vue'
 // import Review from '@/views/movies/Review.vue'
 // import Review from './Review.vue'
@@ -39,7 +52,8 @@ export default {
   components:{
     ReviewList,
     ReviewForm,
-    youtubeList
+    youtubeList,
+    simmilar
     },
     data: function () {
       return {
@@ -49,7 +63,9 @@ export default {
         content : null,
         newReview : null,
         movieTitle : "",
-        youtubeList : []
+        youtubeList : [],
+        simmilarMovie: [],
+        imgsrc: ""
       }
   },
   methods: {
@@ -69,10 +85,14 @@ export default {
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          // console.log(res)
+          console.log(res)
           this.movie = res.data
           // console.log(this.movie,'여기')
           this.movieTitle =res.data.movie.title
+          this.simmilarMovie = res.data.similar_movies
+          this.content = res.data.movie.content
+          this.imgsrc = res.data.movie.poster_path
+          console.log(this.simmilarMovie,'여기')
         })
         .catch(err => {
           console.log(err)
@@ -109,7 +129,8 @@ export default {
           q: this.movieTitle,
           key: YOUTUBE_KEY,
           part: 'snippet',
-          type: 'video'
+          type: 'video',
+          maxResults : 2
         }
           axios({
             method: 'get',
@@ -129,6 +150,7 @@ export default {
         let movie = this.$route.params.movieId
         let movieId = parseInt(movie)
         this.movieTitle = this.$store.state.communityMovie[movieId].title
+        this.movie = this.$store.state.communityMovie[movieId]
         this.getYoutubeList()
         this.setToken()
         this.getMovies()

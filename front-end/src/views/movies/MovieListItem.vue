@@ -17,9 +17,9 @@ export default {
   methods:{
     movieDetailInfo: function() {
       // console.log(this.movie)
-      const movieInfo = this.movie
-      this.$store.state.movieDetailInfo = movieInfo
-      console.log(this.$store.state.movieDetailInfo)
+      // const movieInfo = this.movie
+      // this.$store.state.movieDetailInfo = movieInfo
+      // console.log(this.$store.state.movieDetailInfo)
 
       // console.log(this.movie.id)
       this.$router.push(

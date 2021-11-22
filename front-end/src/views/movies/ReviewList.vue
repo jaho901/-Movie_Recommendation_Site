@@ -13,7 +13,8 @@
     <button @click="reviewLikeClick" v-if="!like">좋아요</button>
     <button @click="reviewLikeClick" v-else>좋아요취소</button>
     <p>좋아요 갯수 {{this.likeCount}}</p>
-    <button @click="reviewHateClick">싫어요</button>
+    <button @click="reviewHateClick" v-if="!hate">싫어요</button>
+    <button @click="reviewHateClick" v-else>싫어요취소</button>
     
     <!-- <button>싫어요</button> -->
   </div>
@@ -40,7 +41,9 @@ export default {
       reviewLike : null,
       reviewLikeCount: null,
       like: false,
-      likeCount : null
+      likeCount : null,
+      hate: false,
+      hateCount : null
     }
   },
   methods:{
@@ -121,6 +124,8 @@ export default {
           .then(res => {
             console.log(res)
             console.log('성공')
+            this.hate = res.data.hate
+            this.hateCount = res.data.count
             this.$emit('hate-update')
           })
           .catch(err => {
@@ -131,6 +136,11 @@ export default {
     checkStatus : function () {
       const token = localStorage.getItem('jwt')
       const userpk = jwtDecode(token).user_id
+      if (this.review.like_users.includes(userpk)) {
+        this.like = true
+      } else {
+        this.like = false
+      }
       if (this.review.like_users.includes(userpk)) {
         this.like = true
       } else {

@@ -8,7 +8,8 @@
     <p @click="movieHate" v-if="!hate">싫어요</p>
     <p @click="movieHate" v-else>싫어요취소</p>
     <p>{{this.hateCount}} 명이 싫어합니다</p>
-    
+    <p @click="movieFavorit" v-if="!favorite">찜뽕</p>
+    <p @click="movieFavorit" v-else>찜뽕취소ㅠ</p>
     
   </div>
   
@@ -30,6 +31,7 @@ export default {
       like : null,
       hateCount : 0,
       hate : null,
+      favorite : null
       // itemData : this.movie
     }
   },
@@ -93,6 +95,32 @@ export default {
             console.log('실패')
           })
     },
+    movieFavorit : function () { 
+      const movieId = this.movie.id
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${movieId}/favorite/`,
+          data: likeItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('리센트무비')
+            this.favorite = res.data.favorit
+  
+            this.$emit('like-change')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
     getData : function () {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
@@ -106,9 +134,14 @@ export default {
       } else {
         this.hate = false
       }
+      if (this.movie.favorite_users.includes(user_id)) { 
+        this.favorite = true
+      } else {
+        this.favorite = false
+      }
       this.likeCount = this.movie.like_users.length
       this.hateCount = this.movie.hate_users.length
-      console.log('add')
+      
     }
 
     
