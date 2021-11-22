@@ -3,7 +3,7 @@
     
     {{gmovie}}
     <img :src="imgSrc" alt="#">
-    <p>{{this.movie}}</p>
+    <!-- <p>{{this.movie}}</p> -->
     <p @click="movieLike" v-if="!like">좋아요</p>
     <p @click="movieLike" v-else>좋아요취소</p>
     <p> {{this.likeCount}}명이 좋아합니다</p>

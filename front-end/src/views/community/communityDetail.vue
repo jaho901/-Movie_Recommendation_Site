@@ -19,15 +19,15 @@
     <!-- 여기는 리뷰창 -->
     <community-review
       v-for="review in review_list" :key="review.pk"
-      :community_id="this.community_id" :review="review"
-      @update="getReviews"
+      :community="communityInfo" :review="review"
+      @update="getCommunityDetail"
         >
     </community-review>
 
     <!-- 리뷰작성 -->
     <community-reivew-form
-      :community_id="this.community_id"
-      @update-review="getCommunityDetail"
+      :community_id="community_id"
+      @update-reviews="getReviews"
     />
 
 
@@ -47,7 +47,7 @@ export default {
   data: function() {
     return {
       community_id: "",
-      communityInfo: null,
+      communityInfo: {},
       likeCount : 0,
       like : null,
       hateCount : 0,
@@ -64,7 +64,9 @@ export default {
       return config
     },
     getCommunityDetail: function () {
+      
       const communityId = this.community_id
+      console.log(communityId,"커뮤아이디")
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       axios({
@@ -93,7 +95,7 @@ export default {
         .catch(err => {
           console.log(err)
         })
-
+      
     },
     gotoBack: function() {
       this.$router.push({name:"Community"})
@@ -152,22 +154,22 @@ export default {
     },
     getReviews: function () {
         // const movieId = this.$route.params.movieId
-        if (this.community_id != "undefined") {
-          axios({
-            method: 'get',
-            url: `${SERVER_URL}/community/${this.community_id}/review_create/`,
-            headers: this.setToken()
-          })
-          .then(res => {
-            console.log(res,'겟리뷰')
-            this.review_list = res.data
-            // console.log('성공')
-          })
-          .catch(err => {
-            console.log(err)
-            console.log('실패')
-          })
-        }
+      
+        axios({
+          method: 'get',
+          url: `${SERVER_URL}/community/${this.community_id}/review_create/`,
+          headers: this.setToken()
+        })
+        .then(res => {
+          console.log(res,'겟리뷰')
+          this.review_list = res.data
+          // console.log('성공')
+        })
+        .catch(err => {
+          console.log(err)
+          console.log('실패')
+        })
+      
       },
 
 
@@ -185,6 +187,7 @@ export default {
         console.log(wantCommunity, '짜잔')
         this.communityInfo = wantCommunity[0]
         this.community_id = wantCommunity[0].id
+        // console.log(typeof(communityId))
         this.setToken()
         this.getCommunityDetail()
         this.getReviews()

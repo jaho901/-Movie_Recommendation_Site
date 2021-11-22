@@ -10,6 +10,7 @@
     <button @click="reviewLikeClick" v-if="!like">좋아요</button>
     <button @click="reviewLikeClick" v-else>좋아요취소</button>
     <p>좋아요 갯수 {{this.likeCount}}</p>
+
     <button @click="reviewHateClick" v-if="!hate">싫어요</button>
     <button @click="reviewHateClick" v-else>싫어요취소</button>
     <p>싫어요 갯수 {{this.hateCount}}</p>
@@ -24,7 +25,7 @@ export default {
   name: 'ReviewList',
   props: {
     review: Object,
-    community_id: String
+    community: Object
   },
   data: function () {
     return {
@@ -52,7 +53,7 @@ export default {
       // console.log(this.review.id)
        axios({
         method: 'delete',
-        url: `${SERVER_URL}/movies/${this.community_id}/review/${review.id}/delete`,
+        url: `${SERVER_URL}/movies/${this.community.id}/review/${review.id}/delete`,
         headers: this.setToken()
       })
         .then(res => {
@@ -83,7 +84,7 @@ export default {
       // console.log(movieId)
       axios({
           method: 'post',
-          url: `${SERVER_URL}/community/${this.community_id}/review/${reviewId}/like/`,
+          url: `${SERVER_URL}/community/${this.community.id}/review/${reviewId}/like`,
           data: likeItem,
           headers: this.setToken()
         })
@@ -110,7 +111,7 @@ export default {
       // console.log(movieId)
       axios({
           method: 'post',
-          url: `${SERVER_URL}/community/${this.community_id}/review/${reviewId}/hate/`,
+          url: `${SERVER_URL}/community/${this.community.id}/review/${reviewId}/hate`,
           data: likeItem,
           headers: this.setToken()
         })

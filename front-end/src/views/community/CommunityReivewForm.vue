@@ -18,7 +18,7 @@ export default {
     }
   },
   props: {
-    community_id: String
+    community_id: Number
   },
   methods : {
     setToken: function () {

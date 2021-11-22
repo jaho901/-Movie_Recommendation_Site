@@ -3,7 +3,7 @@
     <hr>
     <img :src="imgSrc" alt="#">
     <h2 @click="goToUserProfile">{{communityContents.user.username}}</h2>
-    <h2>{{communityContents}}</h2>
+    <!-- <h2>{{communityContents}}</h2/> -->
     <p>{{communityContents.community_title}}</p>
     <p>{{communityContents.movie_title}}</p>
 
