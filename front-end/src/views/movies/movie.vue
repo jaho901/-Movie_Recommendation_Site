@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-list class="bestMovie"></movie-list>
+    <movie-list  class="bestMovie"></movie-list>
     <hr>
     <movie-list-recent class="bestMovie"></movie-list-recent>
   </div>
