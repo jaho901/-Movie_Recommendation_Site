@@ -29,7 +29,7 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
         base_url = 'https://www.google.com/search?q='
         plus_url = quote_plus('오늘의 요일')
         url = base_url + plus_url
-        driver = webdriver.Chrome(executable_path='D:\\Users\\qkreh\Desktop\\finalproject\\back-end\\chromedriver.exe')
+        driver = webdriver.Chrome(executable_path='C:\\Users\\analysis\\Desktop\\SSAFY\\projects\\A_projects\\finalproject\\back-end\\chromedriver.exe')
         driver.get(url)
         html = driver.page_source
         soup = BeautifulSoup(html)
@@ -72,3 +72,10 @@ def today_user_list(request):
         'movies': serializer.data,
     }
     return Response(context)
+
+
+@api_view(['GET'])
+def movie_in_korea(request):
+    komovies = Movie.objects.filter(country = '한국').order_by('-vote')[:20]
+    serializer = MovieSerializer(komovies, many=True)
+    return Response(serializer.data)
