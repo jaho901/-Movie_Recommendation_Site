@@ -212,62 +212,62 @@ def genre_list(request):
 
 @api_view(['GET'])
 def movie_by_genre(request):
-    adventure_movies = Movie.objects.filter(genre=0)[:20]
-    war_movies = Movie.objects.filter(genre=1)[:20]
-    musical_movies = Movie.objects.filter(genre=2)[:20]
-    action_movies = Movie.objects.filter(genre=3)[:20]
-    animation_movies = Movie.objects.filter(genre=4)[:20]
-    criminal_movies = Movie.objects.filter(genre=5)[:20]
-    comedy_movies = Movie.objects.filter(genre=6)[:20]
-    drama_movies = Movie.objects.filter(genre=7)[:20]
-    suspense_movies = Movie.objects.filter(genre=8)[:20]
-    fantasy_movies = Movie.objects.filter(genre=9)[:20]
-    romance_movies = Movie.objects.filter(genre=10)[:20]
-    thriller_movies = Movie.objects.filter(genre=11)[:20]
-    mystery_movies = Movie.objects.filter(genre=12)[:20]
-    sf_movies = Movie.objects.filter(genre=13)[:20]
-    horror_movies = Movie.objects.filter(genre=14)[:20]
-    documentary_movies = Movie.objects.filter(genre=15)[:20]
-    family_movies = Movie.objects.filter(genre=16)[:20]
-    concert_movies = Movie.objects.filter(genre=17)[:20]
+    horror_movies = Movie.objects.filter(genre=0)[:20]
+    sf_movies = Movie.objects.filter(genre=1)[:20]
+    criminal_movies = Movie.objects.filter(genre=2)[:20]
+    mystery_movies = Movie.objects.filter(genre=3)[:20]
+    thriller_movies = Movie.objects.filter(genre=4)[:20]
+    romance_movies = Movie.objects.filter(genre=5)[:20]
+    fantasy_movies = Movie.objects.filter(genre=6)[:20]
+    war_movies = Movie.objects.filter(genre=7)[:20]
+    animation_movies = Movie.objects.filter(genre=8)[:20]
+    adventure_movies = Movie.objects.filter(genre=9)[:20]
+    documentary_movies = Movie.objects.filter(genre=10)[:20]
+    action_movies  = Movie.objects.filter(genre=11)[:20]
+    drama_movies = Movie.objects.filter(genre=12)[:20]
+    suspense_movies = Movie.objects.filter(genre=13)[:20]
+    comedy_movies = Movie.objects.filter(genre=14)[:20]
+    family_movies = Movie.objects.filter(genre=15)[:20]
+    concert_movies = Movie.objects.filter(genre=16)[:20]
+    musical_movies = Movie.objects.filter(genre=17)[:20]
     
-    adventure_serializer = MovieSerializer(adventure_movies, many=True)
-    war_serializer = MovieSerializer(war_movies, many=True)
-    musical_serializer = MovieSerializer(musical_movies, many=True)
-    action_serializer = MovieSerializer(action_movies, many=True)
-    animation_serializer = MovieSerializer(animation_movies, many=True)
+    horror_serializer = MovieSerializer(horror_movies, many=True)
+    sf_serializer = MovieSerializer(sf_movies, many=True)
     criminal_serializer = MovieSerializer(criminal_movies, many=True)
-    comedy_serializer = MovieSerializer(comedy_movies, many=True)
+    mystery_serializer = MovieSerializer(mystery_movies, many=True)
+    thriller_serializer = MovieSerializer(thriller_movies, many=True)
+    romance_serializer = MovieSerializer(romance_movies, many=True)
+    fantasy_serializer = MovieSerializer(fantasy_movies, many=True)
+    war_serializer = MovieSerializer(war_movies, many=True)
+    animation_serializer = MovieSerializer(animation_movies, many=True)
+    adventure_serializer = MovieSerializer(adventure_movies, many=True)
+    documentary_serializer = MovieSerializer(documentary_movies, many=True)
+    action_serializer = MovieSerializer(action_movies, many=True)
     drama_serializer = MovieSerializer(drama_movies, many=True)
     suspense_serializer = MovieSerializer(suspense_movies, many=True)
-    fantasy_serializer = MovieSerializer(fantasy_movies, many=True)
-    romance_serializer = MovieSerializer(romance_movies, many=True)
-    thriller_serializer = MovieSerializer(thriller_movies, many=True)
-    mystery_serializer = MovieSerializer(mystery_movies, many=True)
-    sf_serializer = MovieSerializer(sf_movies, many=True)
-    horror_serializer = MovieSerializer(horror_movies, many=True)
-    documentary_serializer = MovieSerializer(documentary_movies, many=True)
+    comedy_serializer = MovieSerializer(comedy_movies, many=True)
     family_serializer = MovieSerializer(family_movies, many=True)
     concert_serializer = MovieSerializer(concert_movies, many=True)
+    musical_serializer = MovieSerializer(musical_movies, many=True)
     context = {
-        'adventureMovies': adventure_serializer.data,
-        'warMovies': war_serializer.data,
-        'musicalMovies': musical_serializer.data,
-        'actionMovies': action_serializer.data,
-        'animationMovies': animation_serializer.data,
+        'horrorMovies': horror_serializer.data,
+        'sfMovies': sf_serializer.data,
         'criminalMovies': criminal_serializer.data,
-        'comedyMovies': comedy_serializer.data,
+        'mysteryMovies': mystery_serializer.data,
+        'thrillerMovies': thriller_serializer.data,
+        'romanceMovies': romance_serializer.data,
+        'fantasyMovies': fantasy_serializer.data,
+        'warMovies': war_serializer.data,
+        'animationMovies': animation_serializer.data,
+        'adventureMovies': adventure_serializer.data,
+        'documentaryMovies': documentary_serializer.data,
+        'actionMovies': action_serializer.data,
         'dramaMovies': drama_serializer.data,
         'suspenseMovies': suspense_serializer.data,
-        'fantasyMovies': fantasy_serializer.data,
-        'romanceMovies': romance_serializer.data,
-        'thrillerMovies': thriller_serializer.data,
-        'mysteryMovies': mystery_serializer.data,
-        'sfMovies': sf_serializer.data,
-        'horrorMovies': horror_serializer.data,
-        'documentaryMovies': documentary_serializer.data,
+        'comedyMovies': comedy_serializer.data,
         'familyMovies': family_serializer.data,
         'concertMovies': concert_serializer.data,
+        'musicalMovies': musical_serializer.data,
     }
     return Response(context)
 

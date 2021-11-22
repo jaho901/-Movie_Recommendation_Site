@@ -1,11 +1,9 @@
 <template>
-  <div>
-    <!-- {{movie.title}} -->
-    <img :src="imgSrc" alt="#">
-    <br>
-    <button @click="movieDetailInfo">상세정보</button>
-    
-  </div>
+  <b-carousel-slide>
+    <template #img>
+      <img :src="imgSrc" alt="" width="30%" @click="movieDetailInfo">
+    </template>
+  </b-carousel-slide>
 </template>
 
 <script>
@@ -16,12 +14,6 @@ export default {
   },
   methods:{
     movieDetailInfo: function() {
-      // console.log(this.movie)
-      // const movieInfo = this.movie
-      // this.$store.state.movieDetailInfo = movieInfo
-      // console.log(this.$store.state.movieDetailInfo)
-
-      // console.log(this.movie.id)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {

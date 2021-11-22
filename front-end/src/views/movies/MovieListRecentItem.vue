@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #1a1e23">
     <img :src="imgSrc" alt="#">
     <p>{{this.movie}}</p>
     <p @click="movieLike" v-if="!like">좋아요</p>
