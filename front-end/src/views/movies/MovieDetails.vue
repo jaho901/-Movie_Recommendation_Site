@@ -148,6 +148,7 @@ export default {
       if (localStorage.getItem('jwt')) {
         let movie = this.$route.params.movieId
         let movieId = parseInt(movie)
+        console.log(movieId)
         this.movieTitle = this.$store.state.communityMovie[movieId].title
         this.movie = this.$store.state.communityMovie[movieId]
         this.getYoutubeList()

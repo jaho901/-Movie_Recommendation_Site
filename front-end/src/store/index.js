@@ -16,7 +16,8 @@ export default new Vuex.Store({
     loginUserID : null,
     movieDetailInfo: null,
     youtubeVideos: [],
-    all : null
+    all : null,
+    communityList : null
   },
   mutations: {
     // DETAIL_MOVIE_INFO : function (state, movieInfo) {

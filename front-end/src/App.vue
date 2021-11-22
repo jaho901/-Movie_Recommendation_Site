@@ -53,8 +53,24 @@ export default {
       })
         .then(res => {
           // console.log(res)
-          // console.log(res.data)
+          // console.log(res.data,'영화스통')
           this.$store.state.communityMovie = res.data
+          // console.log( this.$store.state.communityMovie)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+      getCommunity: function () {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/community/`,
+        headers: this.setToken()  // 'JWT token~~~'
+      })
+        .then(res => {
+          console.log(res,"스토어")
+          // console.log(res.data)
+          this.$store.state.communityList = res.data
           // console.log( this.$store.state.communityMovie)
         })
         .catch(err => {
@@ -67,7 +83,7 @@ export default {
         // this.$store.state.loginUserID = user_id//
       
         // const path = `/accounts/profile/${user_id}`
-          console.log(this.$route.path)
+          // console.log(this.$route.path)
           this.$router.push({name: "profile", params: {user_id:user_id }}).catch(()=>{})
           // if (this.$route.path !== path){
           //   this.$router.push({name: "profile", params: {user_id:user_id }})
@@ -89,6 +105,7 @@ export default {
     
     if (localStorage.getItem('jwt')) {
       this.getMovies()
+      this.getCommunity()
     } else {
       this.$router.push({ name: 'Login' })
     }

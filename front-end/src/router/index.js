@@ -67,7 +67,7 @@ const routes = [
     component: Recommendation,
   },
   {
-    path: '/community/:community_id',
+    path: '/community/:community_id/',
     name: 'communityDetail',
     component: communityDetail,
   },

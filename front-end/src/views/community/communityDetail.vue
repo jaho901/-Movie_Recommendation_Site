@@ -99,7 +99,7 @@ export default {
       this.$router.push({name:"Community"})
     },
     movieLike : function () { 
-      // const movieId = this.gmovie.id
+      const communityId = this.community_id
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -108,7 +108,7 @@ export default {
       // console.log(movieId)
       axios({
           method: 'post',
-          url: `${SERVER_URL}/community/${this.community_id}/like/`,
+          url: `${SERVER_URL}/community/${communityId}/like/`,
           data: likeItem,
           headers: this.setToken()
         })
@@ -125,7 +125,7 @@ export default {
           })
     },
     movieHate : function () { 
-      // const movieId = this.gmovie.id
+      const communityId = this.community_id
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -134,7 +134,7 @@ export default {
       // console.log(movieId)
       axios({
           method: 'post',
-          url: `${SERVER_URL}/community/${this.community_id}/hate/`,
+          url: `${SERVER_URL}/community/${communityId}/hate/`,
           data: likeItem,
           headers: this.setToken()
         })
@@ -152,20 +152,22 @@ export default {
     },
     getReviews: function () {
         // const movieId = this.$route.params.movieId
-         axios({
-          method: 'get',
-          url: `${SERVER_URL}/community/${this.community_id}/review_create/`,
-          headers: this.setToken()
-        })
-        .then(res => {
-          console.log(res,'겟리뷰')
-          this.review_list = res.data
-          // console.log('성공')
-        })
-        .catch(err => {
-          console.log(err)
-          console.log('실패')
-        })
+        if (this.community_id != "undefined") {
+          axios({
+            method: 'get',
+            url: `${SERVER_URL}/community/${this.community_id}/review_create/`,
+            headers: this.setToken()
+          })
+          .then(res => {
+            console.log(res,'겟리뷰')
+            this.review_list = res.data
+            // console.log('성공')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+        }
       },
 
 
@@ -173,11 +175,16 @@ export default {
   },
   created: function() {
     if (localStorage.getItem('jwt')) {
-        console.log(this.$route.params.community_id,'요오')
+       
         let community = this.$route.params.community_id
-        let communityId = String(community)
-        this.community_id = communityId
-        console.log(this.community_id,'생성')
+        let communityId = parseInt(community)
+        console.log(this.$store.state.communityList,'리뷰리스트')
+        const wantCommunity = this.$store.state.communityList.filter(
+          community => community.id === communityId
+        )
+        console.log(wantCommunity, '짜잔')
+        this.communityInfo = wantCommunity[0]
+        this.community_id = wantCommunity[0].id
         this.setToken()
         this.getCommunityDetail()
         this.getReviews()
