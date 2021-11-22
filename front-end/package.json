@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "i": "^0.3.7",
     "jwt-decode": "^3.1.2",

@@ -1,33 +1,33 @@
 <template>
   <div>
     
-    <div>
-      <button @click="valueChange" value="최신">최신</button>
-      <button @click="valueChange" value="adventureMovies">모험</button>
-      <button @click="valueChange" value="warMovies">전쟁</button>
-      <button @click="valueChange" value="actionMovies">액션</button>
-      <button @click="valueChange" value="musicalMovies">뮤지컬</button>
-      <button @click="valueChange" value="animationMovies">애니메이션</button>
-      <button @click="valueChange" value="criminalMovies">범죄</button>
-      <button @click="valueChange" value="comedyMovies">코미디</button>
-      <button @click="valueChange" value="dramaMovies">드라마</button>
-      <button @click="valueChange" value="suspenseMovies">서스펜스</button>
-      <button @click="valueChange" value="fantasyMovies">판타지</button>
-      <button @click="valueChange" value="romanceMovies">멜로/로맨스</button>
-      <button @click="valueChange" value="thrillerMovies">스릴러</button>
-      <button @click="valueChange" value="mysteryMovies">미스터리</button>
-      <button @click="valueChange" value="sfMovies">SF</button>
-      <button @click="valueChange" value="horrorMovies">공포</button>
-      <button @click="valueChange" value="documentaryMovies">다큐멘터리</button>
-      <button @click="valueChange" value="familyMovies">가족</button>
-      <button @click="valueChange" value="concertMovies">콘서트</button>
+    <div class="my-5">
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="최신">최신</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="horrorMovies">공포</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="sfMovies">SF</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="criminalMovies">범죄</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="mysteryMovies">미스터리</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="thrillerMovies">스릴러</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="romanceMovies">멜로/로맨스</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="fantasyMovies">코미디</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="warMovies">전쟁</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="animationMovies">애니메이션</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="adventureMovies">모험</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="documentaryMovies">다큐멘터리</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="actionMovies">액션</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="dramaMovies">드라마</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="suspenseMovies">서스펜스</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="comedyMovies">코미디</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="familyMovies">가족</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="concertMovies">콘서트</b-button>
+      <b-button pill variant="secondary" class="mx-2" @click="valueChange" value="musicalMovies">뮤지컬</b-button>
     </div>
     <div>
       연령별
-      <button @click="ageChange" value="전체">전체관람가능</button>
-      <button @click="ageChange" value="12세">12세이상 관람가능</button>
-      <button @click="ageChange" value="15세">15세이상 관람가능</button>
-      <button @click="ageChange" value="19세">19세이상 관람가능</button>
+      <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="전체">전체관람가능</b-button>
+      <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="12세">12세이상 관람가능</b-button>
+      <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="15세">15세이상 관람가능</b-button>
+      <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="19세">19세이상 관람가능</b-button>
 
     </div>
 
