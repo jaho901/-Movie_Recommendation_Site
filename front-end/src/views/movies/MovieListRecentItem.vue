@@ -4,7 +4,7 @@
     <p>{{itemData}}</p>
     <p @click="movieLike" v-if="!like">좋아요</p>
     <p @click="movieLike" v-else>좋아요취소</p>
-    <p>{{likeCount}} 명이 좋아합니다</p>
+    <p>{{this.movie}} 명이 좋아합니다</p>
     <!-- <p @click="movieHate" v-if="!hate">싫어요</p>
     <p @click="movieHate" v-else>싫어요취소</p>
     <p>{{hateCount}} 명이 싫어합니다</p>
@@ -30,7 +30,7 @@ export default {
       like : null,
       hateCount : 0,
       hate : null,
-      itemData : this.movie
+      // itemData : this.movie
     }
   },
   methods: {
@@ -48,7 +48,7 @@ export default {
       const likeItem = {
         user: user_id
       }
-      console.log(movieId)
+      // console.log(movieId)
       axios({
           method: 'post',
           url: `${SERVER_URL}/movies/${movieId}/like/`,
@@ -56,11 +56,10 @@ export default {
           headers: this.setToken()
         })
           .then(res => {
-            console.log(res)
-            console.log('성공')
+            // console.log(res)
+            // console.log('성공')
             this.like = res.data.like
-            this.getData()
-
+            this.$emit('like-change')
           })
           .catch(err => {
             console.log(err)
@@ -76,10 +75,11 @@ export default {
       return imgsrc
     },
   },
-  created : function() {
-    // this.getDataInfo()
-    // this.movieHateCount()
-  },
+  // watch : {
+  //   movieLike : function () {
+  //     this.movie = this.getMovies()
+  //   }
+  // }
   
 }
 </script>

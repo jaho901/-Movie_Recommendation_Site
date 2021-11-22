@@ -42,7 +42,7 @@ const routes = [
     component: MovieDetails,
   },
   {
-    path: '/accounts/profile/:user_id',
+    path: '/accounts/profile/:user_id/',
     name: 'profile',
     component: profile,
   },

@@ -1,13 +1,16 @@
 <template>
   <div>
-    <!-- {{movie.movie.like_users.length}} -->
-    {{movie.movie}}
+    <youtube-list v-for="(video,idx) in youtubeList"
+     :key="idx"
+      :video="video"
+      />
 
     <p>리뷰창</p>
     <review-list 
       v-for="review in review_list" :key="review.id"
       :movie="movie.movie" :review="review"
       @like-update="getReviews" @hate-update="getReviews"
+      @update-review="getReviews"
         >
     </review-list>
 
@@ -17,14 +20,13 @@
     </review-form>
 
   </div>
-
-  
 </template>
 
 <script>
 import axios from 'axios'
 import ReviewForm from './ReviewForm.vue'
 import ReviewList from './ReviewList.vue'
+import youtubeList from './youtubeList.vue'
 // import ReviewForm from './ReviewForm.vue'
 // import Review from '@/views/movies/Review.vue'
 // import Review from './Review.vue'
@@ -37,6 +39,7 @@ export default {
   components:{
     ReviewList,
     ReviewForm,
+    youtubeList
     },
     data: function () {
       return {
@@ -45,6 +48,8 @@ export default {
         update : true,
         content : null,
         newReview : null,
+        movieTitle : "",
+        youtubeList : []
       }
   },
   methods: {
@@ -57,18 +62,17 @@ export default {
     },
     getMovies: function () {
       const movieId = this.$route.params.movieId
-      // console.log(movieId)
-      // console.log(typeof(this.$route.params.movieId))
-      
+
       axios({
         method: 'GET',
         url: `${SERVER_URL}/movies/${movieId}`,
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          console.log(res)
+          // console.log(res)
           this.movie = res.data
-          console.log(this.movie)
+          // console.log(this.movie,'여기')
+          this.movieTitle =res.data.movie.title
         })
         .catch(err => {
           console.log(err)
@@ -83,7 +87,7 @@ export default {
         headers: this.setToken()
       })
         .then(res => {
-          console.log(res)
+          // console.log(res)
           this.review_list = res.data
           // console.log('성공')
         })
@@ -95,20 +99,54 @@ export default {
       updateReview: function () {
         this.update = false
       },
+      getYoutubeList : function() {
+        const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
+        const YOUTUBE_KEY = "AIzaSyAl95MuzIshQD-mpyN5iNvM6oRcOE154Ag"
+        let movie = this.$route.params.movieId
+        let movieId = parseInt(movie)
+        this.movieTitle = this.$store.state.communityMovie[movieId].title
+        const params = {
+          q: this.movieTitle,
+          key: YOUTUBE_KEY,
+          part: 'snippet',
+          type: 'video'
+        }
+          axios({
+            method: 'get',
+            url: YOUTUBE_URL,
+            params,
+          })
+          .then(res => {
+            console.log(res.data.items,'디테일')
+            this.youtubeList = res.data.items
+          })
+          .catch(err => console.log(err,'에러'))
+        },
+      },
+  
+    created: function () {
+      if (localStorage.getItem('jwt')) {
+        let movie = this.$route.params.movieId
+        let movieId = parseInt(movie)
+        this.movieTitle = this.$store.state.communityMovie[movieId].title
+        this.getYoutubeList()
+        this.setToken()
+        this.getMovies()
+        this.getReviews()
+      } else {
+        this.$router.push({ name: 'Login' })
+      }
 
     },
-  created: function () {
-    if (localStorage.getItem('jwt')) {
-      // console.log(this.movie)
-      this.setToken()
-      this.getMovies()
-      this.getReviews()
-    } else {
-      this.$router.push({ name: 'Login' })
-    }
+    watch :{
+      getYoutubeList : function() {
+        this.youtubeList = this.getYoutubeList()
+      }
+    },
+    computed: {
 
-  },
-}
+    }
+  }
 </script>
 
 <style>

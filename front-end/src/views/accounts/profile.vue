@@ -9,9 +9,12 @@
     </div>
     <div v-else>
       <button @click="goToSetting">유저정보 변경</button>
+    </div>
       <button>팔로우한 목록</button>
       <button>팔로잉한 목록</button>
-    </div>
+    
+    <p>팔로워 수  {{this.follower}}</p>
+    <p>팔로잉 수  {{this.following}}</p>
   </div> 
 </template>
 
@@ -35,8 +38,8 @@ export default {
       userId : null,
       nickname : null,
       followBoolen: false,
-      follower: null,
-      following:null
+      follower: 0,
+      following: 0
     }
   },
   methods: {
@@ -60,14 +63,16 @@ export default {
           .then(res => {
             // console.log(res)
             // console.log('성공이여')
-            this.userData = res.data
-            this.nickname = res.data.nickname
+            // console.log(res.data)
+            this.userData = res.data.userInfo
+            this.nickname = res.data.userInfo.nickname
               if (userId === user_id) {
                 this.itsMe = true
                 // console.log('나다')
               } else {
                 this.itsME = false
               }
+              this.getData()
           })
           .catch(err => {
             console.log(err)
@@ -79,19 +84,10 @@ export default {
       this.$router.push({name:'Setting'})
     },
     follow : function() {
-      // const token = localStorage.getItem('jwt')
-      // const user_id = jwtDecode(token).user_id
-      // console.log(this.$route.params.user_id)
       const profile_id = this.$route.params.user_id
       console.log(profile_id)
       const movieItem = {
         user : profile_id,
-        // movie: this.movieInfo.id,
-        // community_title: this.community_title,
-        // movie_title : this.movieInfo.title,
-        // content : this.content,
-        // poster_path: this.movieInfo.poster_path
-        // image: this.image
         }
         axios({
           method: 'post',
@@ -100,12 +96,13 @@ export default {
           headers: this.setToken()
         })
           .then(res => {
-            console.log(res)
+            // console.log(res)
             console.log('성공했슴다')
             this.followBoolen= res.data.follow
-            this.follower= res.data.followes
-            this.following= res.data.following
-            this.follow()
+            // console.log(res.data.followers)
+            this.follower= res.data.followers
+            this.following= res.data.followings
+            // this.getData()
           })
           .catch(err => {
             console.log(err)
@@ -114,32 +111,26 @@ export default {
 
       },
       getData : function () {
-        //  const token = localStorage.getItem('jwt')
-        //   const user_id = jwtDecode(token).user_id
-          // console.log(this.$route.params.user_id)
-          const profile_id = this.$route.params.user_id
-          console.log(profile_id)
-          const movieItem = {
-            user : profile_id,
-            // movie: this.movieInfo.id,
-            // community_title: this.community_title,
-            // movie_title : this.movieInfo.title,
-            // content : this.content,
-            // poster_path: this.movieInfo.poster_path
-            // image: this.image
-        }
+        // const token = localStorage.getItem('jwt')
+        // const user_id = jwtDecode(token).user_id
+        const profile_id = this.$route.params.user_id
+        // console.log(profile_id)
         axios({
           method: 'get',
-          url: `${SERVER_URL}/accounts/${profile_id}/follow/`,
-          data: movieItem,
+          url: `${SERVER_URL}/accounts/${profile_id}/follow_list/`,
           headers: this.setToken()
         })
           .then(res => {
             console.log(res)
             console.log('성공했슴다')
-            this.followBoolen= res.data.follow
-            this.follower= res.data.followes
-            this.following= res.data.following
+            if (res.data.followings.includes(profile_id)) {
+              this.followBoolen = true
+            } else {
+              this.followBoolen = false
+            }
+              console.log(res.data.followers.length)
+              this.follower = res.data.followers.length
+              this.following = res.data.followings.length
           })
           .catch(err => {
             console.log(err)
@@ -151,6 +142,7 @@ export default {
  created: function () {
     if (localStorage.getItem('jwt')) {
       this.getUserProfile()
+      this.getData()
       // this.getData()
       // console.log('로그인은됨')
     } else {

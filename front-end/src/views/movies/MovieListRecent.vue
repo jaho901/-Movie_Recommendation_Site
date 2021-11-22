@@ -37,7 +37,8 @@
       <div v-if="genreId==='최신'">
         <movie-list-recent-item
           v-for="(movie, idx) in movies" :key="idx"
-            :movie="movie" class="bestMovie">
+            :movie="movie" class="bestMovie"
+            @like-change="getMovies">
         </movie-list-recent-item >
       </div>
       <div v-else>
@@ -50,7 +51,6 @@
         <div v-else>
           <movie-genre-list v-for="gmovie in ageList" :key="gmovie.idx"
             :gmovie="gmovie" :genreName="genreName">
-            
           </movie-genre-list>
         </div>
       </div>
@@ -79,7 +79,7 @@ export default {
       genreMovie: null,
       genreId : "최신",
       changeList: null,
-      genreName: "전체",
+      genreName: "최신 ",
       age: "전체",
       ageList : null
     }
@@ -100,7 +100,7 @@ export default {
       })
         .then(res => {
           // console.log(res)
-          // console.log(res.data)
+          console.log(res.data,"여기에용")
           this.movies = res.data
         })
         .catch(err => {

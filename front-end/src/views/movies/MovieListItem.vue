@@ -1,6 +1,6 @@
 <template>
   <div>
-    
+    <!-- {{movie.title}} -->
     <img :src="imgSrc" alt="#">
     <br>
     <button @click="movieDetailInfo">상세정보</button>
@@ -19,14 +19,14 @@ export default {
       // console.log(this.movie)
       const movieInfo = this.movie
       this.$store.state.movieDetailInfo = movieInfo
-      // console.log(this.$store.state.movieDetailInfo)
+      console.log(this.$store.state.movieDetailInfo)
 
       // console.log(this.movie.id)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {
             movieId : this.movie.id,
-          } 
+          }
       })
     }
   },

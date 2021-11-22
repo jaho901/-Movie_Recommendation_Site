@@ -1,14 +1,14 @@
 <template>
   <div>
     <p>{{review.rank}}</p>
-    <p>{{review}}</p>
-
+    <!-- <p>{{review}}</p> -->
+    <!-- <p>{{review.content}}</p> -->
     <p v-if="update">{{review.content}}</p>
-    <input v-else type="text" value="content" v-model="newReview">
-
-    <button @click="deleteReview(review)">삭제</button>
+    <input v-else type="text" value="#" v-model="newReview">
     <button @click="updateReview" v-if="update">수정</button>
     <button @click="pushReview" v-else>업데이트</button>
+
+    <button @click="deleteReview(review)">삭제</button>
 
     <button @click="reviewLikeClick" v-if="!like">좋아요</button>
     <button @click="reviewLikeClick" v-else>좋아요취소</button>

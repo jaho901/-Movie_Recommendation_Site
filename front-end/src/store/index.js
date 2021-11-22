@@ -4,8 +4,7 @@ import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
 const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
-const YOUTUBE_KEY = process.env.VUE_APP_YOUTUBE_API
-
+const YOUTUBE_KEY = "AIzaSyAl95MuzIshQD-mpyN5iNvM6oRcOE154Ag"
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,6 +16,7 @@ export default new Vuex.Store({
     loginUserID : null,
     movieDetailInfo: null,
     youtubeVideos: [],
+    all : null
   },
   mutations: {
     // DETAIL_MOVIE_INFO : function (state, movieInfo) {
@@ -32,7 +32,7 @@ export default new Vuex.Store({
     // }
     searchYoutube: function ({ commit }, searchText) {
       const params = {
-        q: searchText+'예고편',
+        q: searchText,
         key: YOUTUBE_KEY,
         part: 'snippet',
         type: 'video'
@@ -43,10 +43,10 @@ export default new Vuex.Store({
         params,
       })
       .then(res => {
-        // console.log(res.data.items)
+        console.log(res.data.items,'스토어')
         commit('SEARCH_YOUTUBE', res)
       })
-      .catch(err => console.log(err))
+      .catch(err => console.log(err,'에러'))
     },
   },
   modules: {

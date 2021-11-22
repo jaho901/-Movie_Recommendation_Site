@@ -8,7 +8,6 @@ from django.http import JsonResponse
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.contrib.auth import get_user_model, update_session_auth_hash
-
 from .models import User
 from .serializers import UserSerializer
 from movies.models import Movie, Review

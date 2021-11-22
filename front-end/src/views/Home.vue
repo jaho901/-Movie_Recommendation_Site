@@ -11,6 +11,9 @@
 // @ is an alias to /src
 // import HelloWorld from '@/components/HelloWorld.vue'
 // import movie from '@/views/movies/Movie.vue'
+// import axios from 'axios'
+
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'Home',
   components: {
@@ -22,7 +25,7 @@ export default {
     },
     gotoLogin :function () {
       this.$router.push({name:'Login'})
-    }
+    },
   }
 }
 </script>
