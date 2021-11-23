@@ -38,6 +38,8 @@
               <span>
                 <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
                 <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
+                <!-- <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else></b-icon>
+                <b-popover target="like-2" triggers="hover" placement="top">{{ this.likeCount }}명이 좋아합니다.</b-popover> -->
               </span>
             </b-col>
             <b-col>
@@ -60,7 +62,6 @@
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
-
 export default {
   name : 'MovieListRecentItem',
   props: {
@@ -202,12 +203,6 @@ export default {
   created: function () {
     this.getData()
   }
-  // watch : {
-  //   movieLike : function () {
-  //     this.movie = this.getMovies()
-  //   }
-  // }
-  
 }
 </script>
 

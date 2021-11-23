@@ -1,16 +1,36 @@
 <template>
   <div>
-    {{ ko_movies }}
+    <pre>
+
+
+
+    </pre>
+    <center><h1 style="color: white;"><bold> 오늘의 한국 영화 </bold></h1></center>
+    <b-card-group deck
+      class="d-flex justify-content-center"
+    >
+      <reco-korea-item
+        v-for="(movie, idx) in ko_movies" :key="idx"
+        :movie="movie"
+        @like-change="getMovies"
+        >
+      </reco-korea-item >
+    </b-card-group>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import _ from 'lodash'
+import RecoKoreaItem from '@/views/recommendation/RecoKoreaItem'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'RecoKorea',
+  components: {
+    RecoKoreaItem
+  },
   data: function () {
     return {
       ko_movies : null,
@@ -31,7 +51,7 @@ export default {
         headers: this.setToken()  // 'JWT token~~~'
       })
         .then(res => {
-          this.ko_movies = res.data
+          this.ko_movies = _.sampleSize(res.data, 20)
           console.log(res)
           console.log('성공')
         })

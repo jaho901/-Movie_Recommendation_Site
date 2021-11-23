@@ -140,3 +140,16 @@ def change_password(request, user_pk):
         user.save()
         return Response(serializer.data)
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def favorite_list(request, user_pk):
+    movies = Movie.objects.filter(favorite_users__in=[user_pk])
+    serializer = MovieSerializer(movies, many=True)
+    user = User.objects.get(pk=user_pk)
+    userserializer = UserSerializer(user)
+    context = {
+        'movies': serializer.data,
+        'user': userserializer.data
+    }
+    return Response(context)

@@ -9,7 +9,6 @@
     </community-list>
 
     <button @click="writeContent">게시글 작성</button>
-    <button>게시글 정보</button>
   </div>
 </template>
 

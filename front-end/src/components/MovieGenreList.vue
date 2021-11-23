@@ -14,7 +14,7 @@
       <b-modal v-model="modalShow" :title="gmovie.title" ok-only button-size="ml">
         <br>
         <center>
-          <img :src="imgSrc" alt="" style="width: 300px">
+          <img @click="movieDetailInfo(gmovie.id)" :src="imgSrc" alt="" style="width: 300px">
         </center>
           <br><br><hr><br>
         <span>출연  :  {{ gmovie.actor_1 }}, {{gmovie.actor_2}}, {{ gmovie.actor_3 }}</span>
@@ -37,15 +37,13 @@
             <b-col offset-md="4">
               <span>
                 <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
-                <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else id="like-2"></b-icon>
-                <b-popover target="like-2" triggers="hover" placement="top">{{this.likeCount}}명이 좋아합니다.</b-popover>
+                <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else  v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
               </span>
             </b-col>
             <b-col>
               <span>
                 <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 영화가 마음에 들지 않습니다.'"></b-icon>
-                <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else id="hate-2"></b-icon>
-                <b-popover target="hate-2" triggers="hover" placement="top">{{this.hateCount}}명이 싫어합니다.</b-popover>
+                <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else v-b-popover.hover.top="`${hateCount}명이 싫어합니다.`"></b-icon>
               </span>
             </b-col>
           </b-row>
@@ -78,7 +76,7 @@ export default {
       modalShow: false
     }
   },
-   methods: {
+  methods: {
     setToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -88,6 +86,7 @@ export default {
     },
     movieLike : function () { 
       const movieId = this.gmovie.id
+      console.log(this.gmovie.id)
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -101,7 +100,6 @@ export default {
           headers: this.setToken()
         })
           .then(res => {
-            console.log(res)
             console.log('리센트무비')
             this.like = res.data.like
             this.likeCount  = res.data.count
@@ -185,6 +183,14 @@ export default {
       this.likeCount = this.gmovie.like_users.length
       this.hateCount = this.gmovie.hate_users.length
       
+    },
+    movieDetailInfo: function(movie_id) {
+      this.$router.push(
+        { name : 'MovieDetails', 
+          params: {
+            movieId : movie_id,
+          }
+      })
     }
 
     
