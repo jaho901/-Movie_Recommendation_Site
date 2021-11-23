@@ -1,16 +1,15 @@
 <template>
   <div style="background: #1a1e23">
-    <img :src="imgSrc" alt="#">
-    <p>{{this.movie}}</p>
-    <p @click="movieLike" v-if="!like">좋아요</p>
-    <p @click="movieLike" v-else>좋아요취소</p>
-    <p> {{this.likeCount}}명이 좋아합니다</p>
-    <p @click="movieHate" v-if="!hate">싫어요</p>
-    <p @click="movieHate" v-else>싫어요취소</p>
-    <p>{{this.hateCount}} 명이 싫어합니다</p>
-    <p @click="movieFavorit" v-if="!favorite">찜뽕</p>
-    <p @click="movieFavorit" v-else>찜뽕취소ㅠ</p>
-    
+    <b-card
+      :img-src="imgSrc"
+      img-alt="Image"
+      img-top 
+      img-width="280px"
+      img-height="450px"
+      style="width: 290px; height: 453px;"
+      class="my-5"
+      >
+    </b-card>
   </div>
   
 </template>
@@ -142,9 +141,15 @@ export default {
       this.likeCount = this.movie.like_users.length
       this.hateCount = this.movie.hate_users.length
       
+    },
+    movieDetailInfo: function() {
+      this.$router.push(
+        { name : 'MovieDetails', 
+          params: {
+            movieId : this.movie.id,
+          }
+      })
     }
-
-    
   },
   computed: {
     imgSrc : function() {
