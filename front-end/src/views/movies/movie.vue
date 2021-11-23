@@ -8,7 +8,7 @@
 
 <script>
 import MovieList from '@/components/MovieList.vue'
-import MovieListRecent from '@/views/movies/MovieListRecent.vue'
+import MovieListRecent from '@/components/MovieListRecent.vue'
 export default {
   name: 'Movie',
   components: { MovieList, MovieListRecent },

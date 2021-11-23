@@ -29,7 +29,7 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
         base_url = 'https://www.google.com/search?q='
         plus_url = quote_plus('오늘의 요일')
         url = base_url + plus_url
-        driver = webdriver.Chrome(executable_path='D:\\Users\\qkreh\\Desktop\\finalproject\\back-end\\chromedriver.exe')
+        driver = webdriver.Chrome(executable_path='C:\\Users\\analysis\\Desktop\\SSAFY\\projects\\A_projects\\finalproject\\back-end\\chromedriver.exe')
         driver.get(url)
         html = driver.page_source
         soup = BeautifulSoup(html)

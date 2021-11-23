@@ -1,7 +1,7 @@
 <template>
   <b-carousel-slide>
     <template #img>
-      <img :src="imgSrc" alt="" width="30%" @click="movieDetailInfo">
+      <img :src="imgSrc" alt="" width="35%" @click="movieDetailInfo">
     </template>
   </b-carousel-slide>
 </template>

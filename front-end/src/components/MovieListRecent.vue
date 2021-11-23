@@ -33,29 +33,50 @@
 
     <br>
     <hr>
-    <p>{{genreName}} 영화 목록</p>
+    <h2 style="color: white">{{genreName}} 영화 목록</h2>
+    <br>
+    <br>
       <div v-if="genreId==='최신'">
-        <movie-list-recent-item
-          v-for="(movie, idx) in movies" :key="idx"
-            :movie="movie" class="bestMovie"
-            @like-change="getMovies">
-        </movie-list-recent-item >
+        <b-card-group deck
+          class="d-flex justify-content-center"
+        >
+          <movie-list-recent-item
+            v-for="(movie, idx) in movies" :key="idx"
+              :movie="movie"
+              @like-change="getMovies"
+            >
+          </movie-list-recent-item >
+        </b-card-group>
       </div>
       <div v-else>
         <div v-if="age==='전체'">
-          <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
-            :gmovie="gmovie" :genreName="genreName"
-            @change="getGenre">
-            
-          </movie-genre-list>
+          <b-container class="bv-example-row">
+            <b-row>
+              <b-col cols="3">
+                <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
+                  :gmovie="gmovie" :genreName="genreName"
+                  @change="getGenre">    
+                </movie-genre-list>
+              </b-col>
+            </b-row>
+          </b-container>
         </div>
         <div v-else>
-          <movie-genre-list v-for="gmovie in ageList" :key="gmovie.idx"
-            :gmovie="gmovie" :genreName="genreName"
-            @change="getGenre">
-          </movie-genre-list>
+          <b-container class="bv-example-row">
+            <b-row>
+              <b-col cols="3">
+                <movie-genre-list v-for="gmovie in ageList" :key="gmovie.idx"
+                  :gmovie="gmovie" :genreName="genreName"
+                  @change="getGenre">
+                </movie-genre-list>
+              </b-col>
+            </b-row>
+          </b-container>
         </div>
       </div>
+
+
+
     <br>
     
   </div>
@@ -66,7 +87,7 @@
 import axios from 'axios'
 // import jwtDecode from "jwt-decode"
 
-import MovieListRecentItem from '@/views/movies/MovieListRecentItem.vue'
+import MovieListRecentItem from '@/components/MovieListRecentItem.vue'
 import MovieGenreList from '@/views/movies/MovieGenreList.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -200,8 +221,5 @@ export default {
 </script>
 
 <style>
-.bestMovie {
-  float: left
-}
 
 </style>

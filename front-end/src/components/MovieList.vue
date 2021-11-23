@@ -1,6 +1,7 @@
 <template>
   <div>
-    <center><h1>Movie List</h1></center>
+    <br>
+    <center><h1 style="color: white">Movie List</h1></center>
     <br>
     <b-carousel
       id="carousel-1"
@@ -12,7 +13,7 @@
       img-width="1024"
       img-height="480"
       style="text-shadow: 1px 1px 2px #333;
-       width: 80%;
+       width: 60%;
        height: 150%;
        margin: 0 auto;
        z-index: auto;"
