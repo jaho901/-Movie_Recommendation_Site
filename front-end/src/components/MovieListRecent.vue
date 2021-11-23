@@ -24,6 +24,7 @@
     </div>
     <div>
       연령별
+      <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="모든연령">ALL</b-button>
       <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="전체">전체관람가능</b-button>
       <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="12세">12세이상 관람가능</b-button>
       <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="15세">15세이상 관람가능</b-button>
@@ -42,36 +43,38 @@
         >
           <movie-list-recent-item
             v-for="(movie, idx) in movies" :key="idx"
-              :movie="movie"
-              @like-change="getMovies"
+            :movie="movie"
+            @like-change="getMovies"
             >
           </movie-list-recent-item >
         </b-card-group>
       </div>
       <div v-else>
-        <div v-if="age==='전체'">
-          <b-container class="bv-example-row">
-            <b-row>
-              <b-col cols="3">
-                <movie-genre-list v-for="gmovie in changeList" :key="gmovie.idx"
-                  :gmovie="gmovie" :genreName="genreName"
-                  @change="getGenre">    
-                </movie-genre-list>
-              </b-col>
-            </b-row>
-          </b-container>
+        <div v-if="age==='모든연령'">
+          <b-card-group deck
+            class="d-flex justify-content-center"
+          >
+            <movie-genre-list
+              v-for="gmovie in changeList"
+              :key="gmovie.idx"
+              :gmovie="gmovie"
+              :genreName="genreName"
+              @change="getGenre">    
+            </movie-genre-list>
+          </b-card-group>
         </div>
         <div v-else>
-          <b-container class="bv-example-row">
-            <b-row>
-              <b-col cols="3">
-                <movie-genre-list v-for="gmovie in ageList" :key="gmovie.idx"
-                  :gmovie="gmovie" :genreName="genreName"
-                  @change="getGenre">
-                </movie-genre-list>
-              </b-col>
-            </b-row>
-          </b-container>
+          <b-card-group deck
+            class="d-flex justify-content-center"
+          >
+            <movie-genre-list
+              v-for="gmovie in ageList"
+              :key="gmovie.idx"
+              :gmovie="gmovie"
+              :genreName="genreName"
+              @change="getGenre">
+            </movie-genre-list>
+          </b-card-group>
         </div>
       </div>
 
@@ -88,7 +91,7 @@ import axios from 'axios'
 // import jwtDecode from "jwt-decode"
 
 import MovieListRecentItem from '@/components/MovieListRecentItem.vue'
-import MovieGenreList from '@/views/movies/MovieGenreList.vue'
+import MovieGenreList from '@/components/MovieGenreList.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -105,7 +108,7 @@ export default {
       genreId : "최신",
       changeList: null,
       genreName: "최신 ",
-      age: "전체",
+      age: "모든연령",
       ageList : null
     }
   },
@@ -156,7 +159,7 @@ export default {
       },
       valueChange : function (event) {
         // console.log(event.target.innerText)
-        this.age = "전체"
+        this.age = "모든연령"
         this.genreName = event.target.innerText
         this.genreId = event.target.value
         const genreId = this.genreId
@@ -187,17 +190,24 @@ export default {
         this.age = event.target.value
         const age = this.age
    
-         if (age==="전체") {
+         if (age==="모든연령") {
             // console.log(ageList.grade[0].rating)
             console.log('앙')
           }
-          else if (age=="12세") {
-            // console.log(ageList)
+          else if (age==="전체") {
+            console.log(this.changeList)
+            this.ageList = this.changeList.filter(list =>
+                list.grade[0].rating === "전체 관람가"
+              )
+          }
+          else if (age==="12세") {
+            console.log(this.changeList)
             this.ageList = this.changeList.filter(list =>
                 list.grade[0].rating === "12세 관람가"
               )
           }
-          else if (age=="15세") {
+          else if (age==="15세") {
+            console.log(this.changeList)
             this.ageList = this.changeList.filter(list =>
                 list.grade[0].rating === "15세 관람가"
               )
