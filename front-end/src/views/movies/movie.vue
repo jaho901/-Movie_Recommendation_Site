@@ -1,22 +1,34 @@
 <template>
   <div>
-    <movie-list></movie-list>
+    <movie-li></movie-li>
     <hr>
     <movie-list-recent></movie-list-recent>
   </div>
 </template>
 
 <script>
-import MovieList from '@/components/MovieList.vue'
+import MovieLi from '@/components/MovieLi.vue'
 import MovieListRecent from '@/components/MovieListRecent.vue'
 export default {
   name: 'Movie',
-  components: { MovieList, MovieListRecent },
+  components: {
+    MovieLi,
+    MovieListRecent,
+  },
+  methods: {
+  setToken: function () {
+    const token = localStorage.getItem('jwt')
+    const config = {
+      Authorization: `JWT ${token}`
+    }
+    return config
+    },
+  },
+  created () {
+    this.$store.dispatch("movie13", this.setToken())
+  }
 }
 </script>
 
 <style scoped>
-.bestMovie {
-  float: left
-}
 </style>

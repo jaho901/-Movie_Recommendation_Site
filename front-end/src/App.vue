@@ -1,21 +1,55 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <span v-if="isLogin">
-        <router-link @click.native="logout" to="#">Logout</router-link> |
-        <router-link :to="{ name: 'Movie' }">Movie</router-link> |
-        <!-- <router-link :to="{ name: 'Profile',params: {user_id: } }">Movie</router-link> | -->
-        <button @click="myProfile">내프로필</button>
-        <button @click="otherProfile">딴놈프로필</button>
-        <!-- <router-link :to="{ name: 'MovieDetails' }">MovieDetails</router-link> | -->
+  <div id="app" >
+    <div id="navbar">
+      <b-navbar toggleable="lg" type="dark" variant="dark">
+        <b-navbar-brand href="#">NavBar</b-navbar-brand>
 
-      </span>
-      <span v-else>
-        <router-link :to="{ name: 'Signup' }">Signup</router-link> |
-        <router-link :to="{ name: 'Login' }">Login</router-link>
-      </span>
+
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav  v-if="isLogin">
+            <b-nav-item :to="{ name: 'Movie' }">MOVIE</b-nav-item>
+            <b-nav-item :to="{ name: 'Community' }">Community</b-nav-item>
+            <b-nav-item href="#">즐겨찾기</b-nav-item>
+            <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
+          </b-navbar-nav>
+      
+          <b-navbar-nav  v-else>
+            <b-nav-item><router-link :to="{ name: 'Signup' }">Signup</router-link></b-nav-item>
+            <b-nav-item><router-link :to="{ name: 'Login' }">Login</router-link></b-nav-item>
+            <b-nav-item :to="{ name: 'Login' }">lllllllll</b-nav-item>
+            <b-nav-item href="#">즐겨찾기</b-nav-item>
+            <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
+          </b-navbar-nav>
+
+          
+          
+          <!-- Right aligned nav items -->
+          <b-navbar-nav class="ml-auto">
+            
+            <b-nav-item-dropdown right v-if="isLogin">
+              <!-- Using 'button-content' slot -->
+              <template #button-content>
+                <em>User</em>
+              </template>
+              <b-dropdown-item href="#">Profile</b-dropdown-item>
+              <b-dropdown-item ><router-link click.native="logout" to="#">Logout</router-link></b-dropdown-item>
+            </b-nav-item-dropdown>
+          </b-navbar-nav>
+
+          <b-nav-form style="display: inline-block">
+              <b-form-input  class="mr-sm-2" placeholder="Search"></b-form-input>
+              <b-button  class="my-2 my-sm-0" type="submit">Search</b-button>
+          </b-nav-form>
+
+        </b-collapse>
+      </b-navbar>
     </div>
-    <router-view @login="isLogin=true" :key="$route.fullPath"/>
+
+  <router-view @login="isLogin=true" :key="$route.fullPath"/>
+  
+  
   </div>
 </template>
 
@@ -66,7 +100,6 @@ export default {
         method: 'get',
         url: `${SERVER_URL}/community/`,
         headers: this.setToken()  // 'JWT token~~~'
-      })
         .then(res => {
           console.log(res,"스토어")
           // console.log(res.data)
@@ -75,7 +108,9 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          })
         })
+        
       },
       myProfile : function() {
         const token = localStorage.getItem('jwt')
@@ -93,8 +128,7 @@ export default {
       otherProfile : function() {
         this.$router.push({name: "profile", params: {user_id: 5}})
       }
-   
-  },
+    },
   created: function () {
     // 1. Vue Instance가 생성된 직후에 호출되어 jwt를 가져오기
     const token = localStorage.getItem('jwt')
@@ -103,14 +137,12 @@ export default {
       // 3. true로 변경하고 없으면 유지
       this.isLogin = true
     
-    if (localStorage.getItem('jwt')) {
-      this.getMovies()
-      this.getCommunity()
-    } else {
-      this.$router.push({ name: 'Login' })
-    }
-
-    
+      if (localStorage.getItem('jwt')) {
+        this.getMovies()
+        this.getCommunity()
+      } else {
+        this.$router.push({ name: 'Login' })
+      }
     }
   }
 }
@@ -123,18 +155,65 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  z-index: 1;
 }
 
-#nav {
-  padding: 30px;
+#navbar {
+  position: fixed-top;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+
+body {
+	height: 100vh;
+	margin: 0;
+	/* display: flex; */
+	justify-content: center;
+}
+.menu-bar {
+	border-radius: 25px;
+	height: fit-content;
+	display: inline-flex;
+	background-color: rgba(0, 0, 0, .4);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	align-items: center;
+	padding: 0 10px;
+	margin: 10px 0 10px 0;
+}
+.menu-bar li {
+	list-style: none;
+	color: white;
+	font-family: sans-serif;
+	font-weight: bold;
+	padding: 12px 16px;
+	margin: 0 8px;
+	position: relative;
+	cursor: pointer;
+	white-space: nowrap;
+}
+.menu-bar li::before {
+	content: " ";
+  position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+	transition: 0.2s;
+	border-radius: 25px;
+}
+.menu-bar li:hover {
+	color: black;
+}
+.menu-bar li:hover::before {
+	background: linear-gradient(to bottom, #e8edec, #554564);
+	box-shadow: 0px 3px 20px 0px black;
+	transform: scale(1.2);
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+p {
+  margin-bottom: 0;
+} 
+
+
 </style>

@@ -12,6 +12,7 @@ import Community from '@/views/community/Community'
 import communityDetail from '@/views/community/communityDetail'
 import statusSetting from '@/views/accounts/statusSetting'
 import Recommendation from '@/views/recommendation/Recommendation'
+import Favorite from '@/views/recommendation/RecoFavorite'
 // import Review from '@/views/movies/Review'
 Vue.use(VueRouter)
 
@@ -71,6 +72,11 @@ const routes = [
     name: 'communityDetail',
     component: communityDetail,
   },
+  {
+    path: '/favorite/',
+    name: 'Favorite',
+    component: Favorite
+  }
 
 ]
 

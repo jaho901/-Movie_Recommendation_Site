@@ -3,8 +3,8 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
 
-const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
-const YOUTUBE_KEY = "AIzaSyAl95MuzIshQD-mpyN5iNvM6oRcOE154Ag"
+const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -17,37 +17,74 @@ export default new Vuex.Store({
     movieDetailInfo: null,
     youtubeVideos: [],
     all : null,
-    communityList : null
+    communityList : null,
+    movieToday: null,
+    TodayUser: null,
+    movieWeek: null,
+    movieKorea: null,
+    movie13: null,
+    movieFavorite: null,
   },
   mutations: {
-    // DETAIL_MOVIE_INFO : function (state, movieInfo) {
-    //     state.detailMovieInfo = movieInfo
-    // }
-    SEARCH_YOUTUBE: function (state, res) {
-      state.youtubeVideos = res.data.items
+    MOVIE_13(state, res) {
+      state.movie13 = res
+    },
+    MOVIE_TODAY(state, res) {
+      state.movieToday = res.movies
+      state.TodayUser = res.user
+    },
+    MOVIE_WEEK(state, res) {
+      state.movieWeek = res
+    },
+    MOVIE_KOREA(state, res) {
+      state.movieKorea = res
     },
   },
   actions: {
-    // movieDetailInfo : function ({commit}, movieInfo) {
-    //   commit('DETAIL_MOVIE_INFO', movieInfo)
-    // }
-    searchYoutube: function ({ commit }, searchText) {
-      const params = {
-        q: searchText,
-        key: YOUTUBE_KEY,
-        part: 'snippet',
-        type: 'video'
-      }
+    movie13({ commit }, token) {
       axios({
         method: 'get',
-        url: YOUTUBE_URL,
-        params,
+        url: `${SERVER_URL}/movies/movie_list/`,
+        headers: token,
       })
       .then(res => {
-        console.log(res.data.items,'스토어')
-        commit('SEARCH_YOUTUBE', res)
+        console.log('gpgp')
+        commit('MOVIE_13', res.data)
       })
-      .catch(err => console.log(err,'에러'))
+      .catch(err => console.log(err))
+    },
+    movieToday({ commit }, token) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/recommendation/today_user_list/`,
+        headers: token,
+      })
+      .then(res => {
+        commit('MOVIE_TODAY', res.data)
+      })
+      .catch(err => console.log(err))
+    },
+    movieWeek({ commit }, token) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/recommendation/recommend_by_day_of_week/`,
+        headers: token,
+      })
+      .then(res => {
+        commit('MOVIE_WEEK', res.data)
+      })
+      .catch(err => console.log(err))
+    },
+    movieKorea({ commit }, token) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/recommendation/recommend_by_korea/`,
+        headers: token,
+      })
+      .then(res => {
+        commit('MOVIE_KOREA', res.data)
+      })
+      .catch(err => console.log(err))
     },
   },
   modules: {
