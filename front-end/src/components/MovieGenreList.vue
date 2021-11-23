@@ -11,20 +11,20 @@
     >
       <b-button @click="modalShow = !modalShow">Go to Detail</b-button>
 
-      <b-modal v-model="modalShow" :title="movie.title" ok-only button-size="ml">
+      <b-modal v-model="modalShow" :title="gmovie.title" ok-only button-size="ml">
         <br>
         <center>
           <img :src="imgSrc" alt="" style="width: 300px">
         </center>
           <br><br><hr><br>
-        <span>출연  :  {{ movie.actor_1 }}, {{movie.actor_2}}, {{ movie.actor_3 }}</span>
+        <span>출연  :  {{ gmovie.actor_1 }}, {{gmovie.actor_2}}, {{ gmovie.actor_3 }}</span>
         <br><br>
         <span>장르  :  </span>
-        <span v-for="(genre, idx) in movie.genre" :key="idx">
+        <span v-for="(genre, idx) in gmovie.genre" :key="idx">
           {{ genre.name }}
         </span>
         <br><br>
-        <span>평점  :  {{ movie.vote }}</span>
+        <span>평점  :  {{ gmovie.vote }}</span>
         <pre>
 
         </pre>
@@ -55,7 +55,6 @@
       </b-modal>
     </b-card>
   </div>
-  
 </template>
 
 <script>
@@ -64,11 +63,12 @@ import jwtDecode from "jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  name : 'MovieListRecentItem',
+  name: "MovieGenreList",
   props: {
-    movie: Object
+    gmovie : Object,
+    genreName : String,
   },
-  data : function () {
+  data: function () {
     return {
       likeCount : null,
       like : null,
@@ -76,10 +76,9 @@ export default {
       hate : null,
       favorite : null,
       modalShow: false
-      // itemData : this.movie
     }
   },
-  methods: {
+   methods: {
     setToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -88,7 +87,7 @@ export default {
       return config
     },
     movieLike : function () { 
-      const movieId = this.movie.id
+      const movieId = this.gmovie.id
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -106,7 +105,7 @@ export default {
             console.log('리센트무비')
             this.like = res.data.like
             this.likeCount  = res.data.count
-            this.$emit('like-change')
+            this.$emit('change')
           })
           .catch(err => {
             console.log(err)
@@ -114,7 +113,7 @@ export default {
           })
     },
     movieHate : function () { 
-      const movieId = this.movie.id
+      const movieId = this.gmovie.id
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -132,7 +131,7 @@ export default {
             console.log('리센트무비')
             this.hate = res.data.hate
             this.hateCount  = res.data.count
-            this.$emit('like-change')
+            this.$emit('change')
           })
           .catch(err => {
             console.log(err)
@@ -140,7 +139,7 @@ export default {
           })
     },
     movieFavorit : function () { 
-      const movieId = this.movie.id
+      const movieId = this.gmovie.id
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -157,7 +156,8 @@ export default {
             console.log(res)
             console.log('리센트무비')
             this.favorite = res.data.favorite
-            this.$emit('like-change')
+  
+            this.$emit('change')
           })
           .catch(err => {
             console.log(err)
@@ -167,49 +167,37 @@ export default {
     getData : function () {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
-      if (this.movie.like_users.includes(user_id)) { 
+      if (this.gmovie.like_users.includes(user_id)) { 
         this.like = true
       } else {
         this.like = false
       }
-      if (this.movie.hate_users.includes(user_id)) { 
+      if (this.gmovie.hate_users.includes(user_id)) { 
         this.hate = true
       } else {
         this.hate = false
       }
-      if (this.movie.favorite_users.includes(user_id)) { 
+      if (this.gmovie.favorite_users.includes(user_id)) { 
         this.favorite = true
       } else {
         this.favorite = false
       }
-      this.likeCount = this.movie.like_users.length
-      this.hateCount = this.movie.hate_users.length
+      this.likeCount = this.gmovie.like_users.length
+      this.hateCount = this.gmovie.hate_users.length
       
-    },
-    movieDetailInfo: function() {
-      this.$router.push(
-        { name : 'MovieDetails', 
-          params: {
-            movieId : this.movie.id,
-          }
-      })
     }
+
+    
   },
   computed: {
     imgSrc : function() {
-      const imgsrc = this.movie.poster_path
+      const imgsrc = this.gmovie.poster_path
       return imgsrc
     },
   },
   created: function () {
     this.getData()
   }
-  // watch : {
-  //   movieLike : function () {
-  //     this.movie = this.getMovies()
-  //   }
-  // }
-  
 }
 </script>
 

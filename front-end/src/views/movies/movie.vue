@@ -1,5 +1,5 @@
 <template>
-  <div style="background:#1a1e23">
+  <div>
     <movie-list></movie-list>
     <hr>
     <movie-list-recent></movie-list-recent>
