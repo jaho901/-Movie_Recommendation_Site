@@ -1,46 +1,79 @@
 <template>
-  <div>
-    <p>게시글 작성 페이지입니다</p>
-    <!-- 영화제목 찾기용 입력 -->
-    <input type="text"
-      v-model.trim = "search_name"
-      @keyup.enter="filtering"
-      >
-    <!-- 영화정보를 가져와서 선택하게 할 창 -->
+  <div style="margin-top:100px;">
+    <!-- 영화 검색 -->
+    <div>
+      <b-button v-b-modal.modal-lg>영화 검색하기!</b-button>
+
+        <b-modal  id="modal-lg" size="lg" scrollable title="영화검색">
+          <b-form-input  placeholder="Enter Movie Title"
+            v-model.trim = "search_name"
+            @keyup.enter="filtering"
+            >
+          </b-form-input>
+
+          <hr>
+          <h3>검색결과</h3>
+          <div v-if="!firstinput">
+            <p>카드를 클릭하시면 자동으로 기입됩니다</p>
+            <p>한번 더 선택하면, 자동으로 초기 검색 결과를 보여줍니다</p>
+          </div>
+          <div v-if="!movienull">
+            <br>
+            <h3>검색 결과가 없어용</h3>
+            <h4>뿌잉 ㅠㅠ</h4>
+            <br>
+          <img  src="https://m.whodadoc.com/assets/consumer/mobile/img/map/img_schNoData.png" alt="">
+          </div>      
+          <b-form id="modal-scrollable" scrollable>
+            <b-card-group deck
+              class="d-flex justify-content-center"
+            >
+              <search-movie-list
+                v-for="result in clickByResult" :key="result.id"
+                :result ="result"
+                @changeresult="changeResults"
+                @clickidMovieInfo="movieInfosave"
+                >
+              </search-movie-list>
+            </b-card-group>
+          </b-form>
+        </b-modal>
+    </div>
     
-    <search-movie-list
-      v-for="result in clickByResult" :key="result.id"
-      :result ="result"
-      @changeresult="changeResults"
-      @clickidMovieInfo="movieInfosave"
-      >
-    </search-movie-list>   
-  
-    <!-- 게시글 제목  -->
-    <hr>
-    <p>제목</p>
-    <input type="text"
-       v-model = "community_title"
-      >
-    <br>
-    <br>
-    <!-- <input type="file" name="image" @change="EditImage" ref="serveyImage"> -->
+    <b-container>
+      <b-row>
+        <b-col cols="4">{{movieInfo}}</b-col>
+        <b-col cols="8">
+          <hr>
+          <p style="color :white;">제목</p>
+          <b-form-textarea
+            id="textarea-state"
+            :state="community_title.length >= 5"
+            placeholder="Enter at least 10 characters"
+            
+            v-model = "community_title"
+          ></b-form-textarea>
+          
+          <br>
+          <!-- 게시글 내용 -->
+          <p style="color: white;">내용</p>
+          <br>
+          <b-form-textarea
+            id="textarea-rows"
+            placeholder="Tall textarea"
+            rows="20"
+             v-model="content"
+          ></b-form-textarea>
 
+          <button
+            @click="createCommunity"
+          >
+          작성하기
+          </button>
 
-    <!-- 게시글 내용 -->
-    <p>내용</p>
-    <input type="text"
-      v-model="content"
-      >
-    <br>
-
-    <!-- @click="createArticle" -->
-    <button
-      @click="createCommunity"
-    >
-    작성하기
-    </button>
-
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
@@ -58,11 +91,14 @@ export default {
   data: function () {
     return {
       search_name : null,
-      community_title : null,
+      community_title : "",
       content :null,
       movie_list : null,
       results: [],
       movieInfo : null,
+      modalShow: false,
+      movienull : true,
+      firstinput : false 
     }
   },
   methods :  {
@@ -84,6 +120,12 @@ export default {
         
       })
       console.log(this.results)
+      if (this.results.length === 0) {
+        this.movienull = false
+      } else {
+        this.movienull = true
+      }
+      this.firstinput= true
     },
     changeResults : function(selectMovie) {
       
