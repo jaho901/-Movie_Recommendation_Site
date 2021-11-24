@@ -1,12 +1,12 @@
 <template>
   <div>
-    {{movieTitle}}
-    {{content}}
-    {{imgsrc}}
     <youtube-list v-for="(video,idx) in youtubeList"
      :key="idx"
       :video="video"
       />
+    {{movieTitle}}
+    {{content}}
+    {{imgsrc}}
     <hr>
     <!-- {{this.movie.similar_movies}} -->
     <!-- {{simmilarMovie}} -->
