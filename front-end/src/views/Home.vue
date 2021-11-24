@@ -1,6 +1,12 @@
 <template>
-   <div id="home">   
-      <div class="about">
+   <div id="home">
+
+      <div class="welcom">
+         <h1>WelCome</h1>
+         <h2>영화보러갈래?</h2>
+      </div>
+
+      <!-- <div class="about">
          <a class="bg_links social portfolio" href="https://www.rafaelalucas.com" target="_blank">
             <span class="icon"></span>
          </a>
@@ -11,21 +17,20 @@
             <span class="icon"></span>
          </a>
          <a class="bg_links logo"></a>
-      </div>
+      </div> -->
 
 
       <div class="content">
          <!-- card -->
-         <div class="card">
-            
+         <div class="card" @click="goMovie">
+
                <div class="icon"><i class="material-icons md-36"></i></div>
                <h3 class="title">Movies</h3>
                <p class="text">Click to see the Movies.</p>
-            
          </div>
          <!-- end card -->
          <!-- card -->
-         <div class="card">
+         <div class="card" @click="goSignup">
             
                <div class="icon"><i class="material-icons md-36"></i></div>
                <h3 class="title">Sign-up</h3>
@@ -34,7 +39,7 @@
          </div>
          <!-- end card -->
          <!-- card -->
-         <div class="card">
+         <div class="card"  @click="goLogin">
             
                <div class="icon"><i class="material-icons md-36"></i></div>
                <h3 class="title">Log-In</h3>
@@ -47,6 +52,20 @@
 
 <script>
   // import HelloWorld from '../components/HelloWorld'
+  export default {
+     name : 'Home',
+     methods : {
+        goMovie : function () {
+           this.$router.push({name:"Movie"})
+        },
+        goSignup : function() {
+           this.$router.push({ name: 'Signup' })
+        },
+        goLogin : function() {
+           this.$router.push({ name: 'Signup' })
+        }
+     }
+  }
 
 
 </script>
@@ -54,12 +73,17 @@
 <style lang="scss" scoped>
 
 #home {
-   // background-image: url("https://https://data2.1freewallpapers.com/detail/legend-2015-tom-hardy.jpg-tbn0.gstatic.com/images?q=tbn:ANd9GcR1ehGMY6y6uM4_qBY_RIfJLbJXgcG37MBz8w&usqp=CAU");
-   background-color: #212529;
+   background-image: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160501_213%2Fgentlemanoptic_1462091646333PzcAC_JPEG%2F692437.jpg&type=sc960_832");
+   // background-color: #212529;
    height: 100vh;   
    background-repeat : no-repeat;
    background-size : cover;
    // position: relative;
+}
+
+.welcom {
+   padding-top: 100px;
+   color: whitesmoke;
 }
 
 body {
@@ -235,7 +259,7 @@ body {
    max-width: 1024px;
    width: 100%;
    padding: 0 4%;
-   padding-top: 250px;
+   padding-top: 100px;
    margin: 0 auto;
    display: flex;
    justify-content: center;
@@ -254,7 +278,7 @@ body {
    max-width: 300px;
    min-width: 200px;
    height: 400px;
-   background-color: #343a40;
+   background-color: rgba(#343a40,0.75);
    margin: 10px;
    border-radius: 10px;
    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
@@ -275,7 +299,7 @@ body {
    width: 100%;
    height: 80px;
    max-width:80px;
-   background: linear-gradient(90deg, #FF7E7E 0%, #FF4848 40%, rgba(0, 0, 0, 0.28) 60%);
+   background: linear-gradient(90deg, #FF7E7E 0%, #7048ff 40%, rgba(0, 0, 0, 0.28) 60%);
    border-radius: 100%;
    display: flex;
    justify-content: center;
