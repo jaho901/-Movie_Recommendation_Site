@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import _ from 'lodash'
 import createPersistedState from 'vuex-persistedstate'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     MOVIE_KOREA(state, res) {
       state.movieKorea = res
     },
+    COMMUNITY_LIST(state, res) {
+      state.communityList = res
+    }
   },
   actions: {
     movie13({ commit }, token) {
@@ -86,6 +90,17 @@ export default new Vuex.Store({
       })
       .catch(err => console.log(err))
     },
+    communityList({ commit }, token) {
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/community/`,
+        headers: token
+      })
+        .then(res => {
+          commit('COMMUNITY_LIST', _.orderBy(res.data, 'id', 'desc'))
+        })
+        .catch(err => console.log(err))
+    }
   },
   modules: {
 
