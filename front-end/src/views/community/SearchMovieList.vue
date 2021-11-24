@@ -1,13 +1,46 @@
 <template>
-  <div 
-    @click="selectMovie" 
-    :data-movie-title="result.title"
-    v-show="result.filterCheck"
-    >
+  <div>
+    <!-- <b-column> -->
+      <b-col>
+        <b-card
+          :img-src="imgSrc"
+          img-alt="Image"
+          img-width="280px"
+          img-height="450px"
+          style="width: 290px; height: 528px;"
+          class="my-3"
+          @click="selectMovie" 
+          :data-movie-title="result.title"
+          v-show="result.filterCheck"
+        >
 
-    <img :src="imgSrc" alt="#">
-    <h1>{{result.title}}</h1>
+        <b-card-text>
+          <p>{{result.title}}</p>
+        </b-card-text>
+        
+        </b-card>
+      </b-col>
+      <!-- <b-row>
+        <b-col cols="8" style="text: center">{{result.title}}</b-col>
+      
+        <b-form-checkbox cols="4"
+        v-model="check"
+        >
+        </b-form-checkbox>
+      </b-row> -->
+      
+        
+        <!-- img-width="280px"
+        img-height="450px"
+        style="width: 290px; height: 528px;" -->
+
+    <!-- </b-column> -->
   </div>
+
+  <!-- img-top 
+    img-width="280px"
+    img-height="450px"
+    style="width: 290px; height: 528px;" -->
 </template>
 
 <script>
@@ -18,17 +51,19 @@ export default {
   },
   data : function () {
     return {
+      check: false
     }
   },
   methods : {
     selectMovie : function (event) {
       // 추후 수정
       console.log(event)
+      if (this.check) {
+        this.check = false
+      } else {
+        this.check = true
+      }
       this.$store.state.selectMovie = this.result
-      // console.log(this.$store.state.selectMovie)
-      // console.log(event.target.innerText)
-      // this.click = true
-      // const title = event.target.parentNode.dataset.movieTitle
       this.$emit("changeresult",this.result)
       this.$emit('clickidMovieInfo', this.result)
 
@@ -39,17 +74,11 @@ export default {
       const imgsrc = this.result.poster_path
       return imgsrc
     },
-    // ChangeResults : function () {
-    //   if (this.click) {
-    //     this.show = true
-    //   } else {
-    //     this.show = false
-    //   } 
-    // }
+
   }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

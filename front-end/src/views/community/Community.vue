@@ -1,6 +1,6 @@
 <template>
-    <div class="table-wrapper">
-    <h2>Community</h2>
+  <div class="table-wrapper" style="background-color: #1a1e23;">
+    <h1>Community</h1>
       <div class="overflow-auto">
         <center>
           <b-button style="width: 80%;" block variant="secondary" @click="writeContent">Create Community</b-button>
@@ -59,6 +59,18 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 
+body {
+  background-color: #1a1e23;
+}
+
+h1{
+    text-align: center;
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+    padding: 30px 0;
+}
 </style>

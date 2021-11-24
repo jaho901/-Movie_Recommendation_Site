@@ -1,4 +1,4 @@
-<template>
+<template style="background-color: #1a1e23;">
   <div id="mod">
     <h1 style="color: white;">오늘의 블로거 {{ TodayUser.nickname }}의 영화 리스트!!!</h1>
     <pre>
@@ -6,9 +6,9 @@
     </pre>
     <vue-glide
       v-if="movieToday"
-      :startAt="2"
-      :focusAt="1"
-      :perView="3"
+      :startAt="3"
+      :focusAt="2"
+      :perView="5"
       :autoplay="2500"
       class="demo"
     >
@@ -57,7 +57,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style scoped lang="scss">
 #mod {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
