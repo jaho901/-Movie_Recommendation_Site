@@ -34,8 +34,8 @@
       <div v-if="reviewerId === userId">
         <button class="mx-3" @click="updateReview" v-if="update">수정</button>
         <button class="mx-3" @click="pushReview" v-else>업데이트</button>
+        <button class="mx-3" @click="deleteReview(review)">삭제</button>
       </div>
-      <button class="mx-3" @click="deleteReview(review)">삭제</button>
     </div>
     <hr>
   </div>
