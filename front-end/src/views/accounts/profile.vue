@@ -18,12 +18,26 @@
               <div class="stat col-xs-4" style="padding-right: 50px;">
                 <p class="number-stat">{{ follower }}</p>
                 <p class="desc-stat">Followers</p>
-                <p class="desc-stat">list</p>
+                <!-- <b-icon id="dropdown-1" icon="card-list"> -->
+                  <b-dropdown size="sm" text="List..." variant="secondary" class="m-2">
+                    <div v-for="(list, idx) in followerList" :key="idx">
+                      <b-dropdown-item>
+                        {{ list.nickname }}
+                      </b-dropdown-item>
+                    </div>
+                  </b-dropdown>
+                <!-- </b-icon> -->
               </div>
               <div class="stat col-xs-4">
                 <p class="number-stat">{{ following }}</p>
                 <p class="desc-stat">Following</p>
-                <p class="desc-stat">list</p>
+                <b-dropdown size="sm" text="List..." variant="secondary" class="m-2">
+                    <div v-for="(list, idx) in followingList" :key="idx">
+                      <b-dropdown-item>
+                        {{ list.nickname }}
+                      </b-dropdown-item>
+                    </div>
+                  </b-dropdown>
               </div>
               <div class="stat col-xs-4" style="padding-left: 50px;">
                 <p class="number-stat">{{ userCreateCommunity.length }}</p>
@@ -31,20 +45,26 @@
               </div>
             </div>
             <p class="desc">Hi ! My nickname is {{ nickname }}. <br> Nice to Meet you <br> Let me introduce my profile page</p>
-            <div class="social">
-              <i class="fa fa-facebook-square" aria-hidden="true"></i>
-              <i class="fa fa-twitter-square" aria-hidden="true"></i>
-              <i class="fa fa-pinterest-square" aria-hidden="true"></i>
-              <i class="fa fa-tumblr-square" aria-hidden="true"></i>
-            </div>
+            <div>skdksk</div>
           </div>
           <div class="right col-lg-8">
-            <ul class="nav">
+            <ul class="nav mb-3">
               <li @click="selectProfile" value="LikeMovies">LikeMovies</li>
               <li @click="selectProfile" value="Communities">Communities</li>
               <li @click="selectProfile" value="Favorites">Favorites</li>
             </ul>
-            <span class="follow">Follow</span>
+            <div v-if="itsME">
+              <span class="follow">Me</span>
+            </div>
+            <div v-else>
+              <div v-if="followBoolen">
+                <span @click="follow" class="follow">Follow</span>
+              </div>
+              <div v-else>
+                <span @click="follow" class="follow">Unfollow</span>
+              </div>
+            </div>
+            
             <div v-if="select==='LikeMovies'">
               <profile-item :list-array="userLikeMovies" :select="select"></profile-item>
             </div>
@@ -75,7 +95,7 @@ export default {
   data: function () {
     return {
       userData : null,
-      itsMe : null,
+      itsMe : '',
       userId : null,
       nickname : null,
       username: null,
@@ -137,11 +157,10 @@ export default {
             this.userCreateCommunity = res.data.userCreateCommunity
             this.userFavoriteMovies = res.data.userFavoriteMovies
             
-            console.log(this.userLikeMovies.length, ';;')
             // console.log(res.data,'유저데이터')
             if (userId === user_id) {
               this.itsMe = true
-              // console.log('나다')
+              console.log('나다')
             } else {
               this.itsME = false
             }
@@ -170,7 +189,7 @@ export default {
         })
           .then(res => {
             console.log(res)
-            console.log('성공했슴다팔로우')
+            console.log(res.data, '성공했슴다팔로우')
             this.followBoolen= res.data.follow
             // console.log(res.data.followers)
             this.follower= res.data.followers
@@ -293,7 +312,7 @@ export default {
 
 .container {
   max-width: 1500px;
-  margin: 0px auto 30px;
+  margin: 100px auto 30px;
   padding: 0px!important;
   width: 90%;
   background-color: #fff;

@@ -41,7 +41,7 @@ def movie_detail(request, movie_id):
 
     # 같은 장르의 영화 최신순 10개 받아오기
     genre = movie.genre.all().values_list('id', flat=True)
-    similar_movies = Movie.objects.filter(genre__id__in=genre).prefetch_related('genre').distinct()[:15]
+    similar_movies = Movie.objects.filter(genre__id__in=genre).prefetch_related('genre').distinct()[:8]
 
     similar_serializer = MovieSerializer(similar_movies, many=True)
     context = {

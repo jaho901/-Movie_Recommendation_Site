@@ -91,7 +91,7 @@ export default {
   left: 0; 
   right: 0; 
   bottom: 0;
-  background-image: url("https://phoneky.co.uk/thumbs/wallpapers/p2ls/movies/40/0951109d12731614.jpg");
+  background-image: url("https://mblogthumb-phinf.pstatic.net/20140920_112/naoml5511_1411177810076izVV2_JPEG/%C5%E4%B8%A3%B9%E8%B0%E6%C8%AD%B8%E9_010.jpg?type=w2");
   background-size: 100% 100%;
   /* filter: blur(2px);  */
   z-index: -1; 

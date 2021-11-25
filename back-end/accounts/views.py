@@ -51,6 +51,10 @@ def profile(request, user_pk):
     likeMoive = Movie.objects.filter(like_users=user_pk)
     likeserializer = MovieSerializer(likeMoive, many=True)
 
+    #찜한 영화
+    movies = Movie.objects.filter(favorite_users__in=[user_pk])
+    favoriteserializer = MovieSerializer(movies, many=True)
+
     # 댓글을 단 영화
     review = Review.objects.filter(user=user_pk)
     review_li = []
@@ -74,6 +78,7 @@ def profile(request, user_pk):
         'reviewInMovies': reserializer.data,
         'userCreateCommunity': comserializer.data,
         'userLikeCommunity': likecomserializer.data,
+        'userFavoriteMovies': favoriteserializer.data,
     }
     return Response(context)
 

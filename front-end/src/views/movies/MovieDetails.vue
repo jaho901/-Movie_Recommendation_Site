@@ -1,7 +1,7 @@
 <template>
   <div class="topp">
     <div class="is-full featured_wrapper p-0">
-      <img id="topId" src="https://t1.daumcdn.net/cfile/tistory/99EEF7335BFC00501E" class="featured">
+      <img id="topId" :src="imgsrc" class="featured">
       <div class="title_wrapper">
           <h1 class="has-text-white">{{ movieTitle }}</h1>
           <div style="float: right; padding-right: 100px; padding-bottom: 100px;">
@@ -328,12 +328,14 @@ img {
 
 #topId {
 	width: 100%;
-	width: 100%;
+	width: 90%;
 	height: 800px;
 	-o-object-fit: cover;
 	object-fit: cover;
 	-o-object-position: top;
 	object-position: top;
+  padding-left: 600px;
+  opacity: 0.2;
 }
 
 

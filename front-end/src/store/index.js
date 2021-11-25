@@ -22,6 +22,18 @@ export default new Vuex.Store({
     movieToday: null,
     TodayUser: null,
     movieWeek: null,
+    movie1: null,
+    movie2: null,
+    movie3: null,
+    movie4: null,
+    movie5: null,
+    movie6: null,
+    movie7: null,
+    movie8: null,
+    movie9: null,
+    movie10: null,
+    movie11: null,
+    movie12: null,
     movieKorea: null,
     movie13: null,
     movieFavorite: null,
@@ -35,7 +47,19 @@ export default new Vuex.Store({
       state.TodayUser = res.user
     },
     MOVIE_WEEK(state, res) {
-      state.movieWeek = res
+      state.movieWeek = _.sampleSize(res, 12)
+      state.movie1 = state.movieWeek[0]
+      state.movie2 = state.movieWeek[1]
+      state.movie3 = state.movieWeek[2]
+      state.movie4 = state.movieWeek[3]
+      state.movie5 = state.movieWeek[4]
+      state.movie6 = state.movieWeek[5]
+      state.movie7 = state.movieWeek[6]
+      state.movie8 = state.movieWeek[7]
+      state.movie9 = state.movieWeek[8]
+      state.movie10 = state.movieWeek[9]
+      state.movie11 = state.movieWeek[10]
+      state.movie12 = state.movieWeek[11]
     },
     MOVIE_KOREA(state, res) {
       state.movieKorea = res

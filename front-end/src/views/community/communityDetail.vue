@@ -1,73 +1,93 @@
 <template>
-<div class="html">
+<div class="html" style="background: #1a1e23">
   <div class="body"> 
-    <section class="product" style="width:1000px; margin-top: 100px;">
+    <section class="product" style="width:800px; margin-top: 100px;">
       <div class="product__photo" style="width: 300px; height: 435px;">
         <div class="photo-container">
           <div class="photo-main">
             <div class="controls">
               <img :src="imgSrc" alt="" style="width: 300px; height: 435px;">
+
+              
             </div>
-            
           </div>
         </div>
+       
       </div>
-      <div class="product__info">
+      <div class="product__info" style="margin-right: 20px;">
         <div class="title">
-          <h1>Delicious Apples</h1>
-          <span>COD: 45999</span>
+          <h1 >게시글 제목</h1> 
+          <hr>
+          <h5>{{this.communityInfo.community_title}}</h5>
+          <hr>
+          <span>username: {{communityInfo.user.nickname}}</span>
         </div>
-        <div class="price">
-          R$ <span>7.93</span>
+        <!-- <div class="price">
+        
         </div>
         <div class="variant">
-          <h3>SELECT A COLOR</h3>
-          <ul>
-            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png" alt="green apple"></li>
-            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302752/codepen/delicious-apples/yellow-apple.png" alt="yellow apple"></li>
-            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png" alt="orange apple"></li>
-            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png" alt="red apple"></li>
-          </ul>
-        </div>
-        <div class="description">
-          <h3>BENEFITS</h3>
+        </div> -->
+        <h4>게시글 내용</h4>
+        <div class="description" style="height: 300px; overflow: auto">
+          <!-- <h3>BENEFITS</h3>
           <ul>
             <li>Apples are nutricious</li>
             <li>Apples may be good for weight loss</li>
             <li>Apples may be good for bone health</li>
             <li>They're linked to a lowest risk of diabetes</li>
-          </ul>
+          </ul> -->
+          <div style="height: 300px;">
+             {{this.communityInfo.content}}
+          </div>
         </div>
-        <button class="buy--btn">ADD TO CART</button>
+        <!-- <button class="buy--btn">ADD TO CART</button> -->
+         <div class="d-flex justify-content-center">
+            <div style="margin-right: 30px;">
+              <span>
+                <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
+                <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
+              </span>
+            </div>
+            <div>
+              <span>
+                <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 영화가 마음에 들지 않습니다.'"></b-icon>
+                <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else v-b-popover.hover.top="`${hateCount}명이 싫어합니다.`"></b-icon>
+              </span>
+            </div>
+          </div>
       </div>
     </section>
     </div>
 
-    <div class="body"> 
-      <div class="product"  style="width:1000px; margin-top: 100px; margin-bottom: 200px;">
-        <h1 >아이이이이이</h1>
-        <h1 >아이이이이이</h1>
-        <h1 >아이이이이이</h1>
-        <h1 >아이이이이이</h1>
-        <h1 >아이이이이이</h1>
-        <h1>{{this.communityInfo}}</h1>
-      </div>
+    <div class="product2" style="width:800px; margin-top: 100px;"> 
+      
+      <h1>리뷰</h1>
+      <hr>
+      <community-review
+        v-for="review in review_list" :key="review.pk"
+        :community="communityInfo" :review="review"
+        @update="getCommunityDetail(this.community_id)"
+        >
+      </community-review>
+
+      <community-reivew-form
+      :community_id="community_id"
+      @update-reviews="getReviews"
+      />
     </div>
-
-
-
-  </div>
+</div>
+  
 </template>
 
 <script>
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
-// import CommunityReivewForm from './CommunityReivewForm.vue'
-// import CommunityReview from '@/views/community/CommunityReview'
+import CommunityReivewForm from './CommunityReivewForm.vue'
+import CommunityReview from '@/views/community/CommunityReview'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
-  // components: { CommunityReivewForm, CommunityReview },
+  components: { CommunityReivewForm, CommunityReview },
   name:"communityDetail",
   data: function() {
     return {
@@ -89,8 +109,11 @@ export default {
       return config
     },
     getCommunityDetail: function (event) {
+      console.log(event,'이벤트')
       console.log(this.$route.params,'hey')
       const communityId = event
+      this.community_id = communityId
+      
       console.log(communityId,"커뮤아이디")
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
@@ -127,6 +150,7 @@ export default {
     },
     movieLike : function () { 
       const communityId = this.community_id
+      console.log(communityId)
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
@@ -144,7 +168,7 @@ export default {
             console.log('리센트무비')
             this.like = res.data.like
             this.likeCount  = res.data.count
-            this.getCommunityDetail()
+            this.getCommunityDetail(this.community_id)
           })
           .catch(err => {
             console.log(err)
@@ -170,7 +194,7 @@ export default {
             console.log('리센트무비')
             this.hate = res.data.like
             this.hateCount  = res.data.count
-            this.getCommunityDetail()
+            this.getCommunityDetail(this.community_id)
           })
           .catch(err => {
             console.log(err)
@@ -205,14 +229,9 @@ export default {
        
         let community = this.$route.params.community_id
         // let communityId = parseInt(community)
-        // const wantCommunity = this.$store.state.communityList.filter(
-        //   community => community.id === communityId
-        // )
-        // console.log(wantCommunity, '짜잔')
-        // this.communityInfo = wantCommunity[0]
-        // this.community_id = wantCommunity[0].id
-        // console.log(typeof(communityId))
-        console.log(this.communityInfo)
+        this.community_id = community
+        console.log()
+        console.log(this.communityInfo,'커뮤인포')
         this.setToken()
         this.getCommunityDetail(community)
         this.getReviews()
@@ -251,7 +270,14 @@ $color-highlight: #ff3f40;
 	display: grid;
 	grid-template-rows: 1fr;
 	font-family: "Raleway", sans-serif;
-	background-color: #01e37f;
+}
+
+.body2 {
+  display : row;
+  height: 100%;
+  grid-template-rows: 1fr;
+	font-family: "Raleway", sans-serif;
+	background-color: #010704;
 }
 
 h3 {
@@ -268,6 +294,15 @@ h3 {
 /* ----- Product Section ----- */
 .product {
 	display: grid;
+	grid-template-columns: 0.9fr 1fr;
+	margin: auto;
+	padding: 2.5em 0;
+	min-width: 600px;
+	background-color: white;
+	border-radius: 5px;
+}
+.product2 {
+	display: row;
 	grid-template-columns: 0.9fr 1fr;
 	margin: auto;
 	padding: 2.5em 0;
