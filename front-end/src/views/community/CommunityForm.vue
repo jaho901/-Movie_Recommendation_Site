@@ -65,7 +65,7 @@
                 <p>게시글 제목</p>
                  <b-form-textarea
                     id="textarea-state"
-                    :state="community_title.length >= 0"
+                    :state="community_title.length >= 1"
                     placeholder="Enter at least 10 characters"
                     
                     v-model = "community_title"

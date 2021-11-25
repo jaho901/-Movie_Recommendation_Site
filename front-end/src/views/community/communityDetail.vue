@@ -15,44 +15,58 @@
        
       </div>
       <div class="product__info" style="margin-right: 20px;">
-        <div class="title">
+        <div class="title" v-if="update">
           <h1 >게시글 제목</h1> 
           <hr>
             <h5>{{this.communityInfo.community_title}}</h5>
           <hr>
           <span>username: {{communityInfo.user.nickname}}</span>
         </div>
-        <!-- <div class="price">
-        
+        <div v-else>
+           <b-form-textarea
+            id="textarea-state"
+            
+            placeholder="Enter at least 10 characters"
+            
+            v-model = "newtitle"
+          ></b-form-textarea>
         </div>
-        <div class="variant">
-        </div> -->
+   
         <h4>게시글 내용</h4>
-        <div class="description" style="height: 300px; overflow: auto">
-          <!-- <h3>BENEFITS</h3>
-          <ul>
-            <li>Apples are nutricious</li>
-            <li>Apples may be good for weight loss</li>
-            <li>Apples may be good for bone health</li>
-            <li>They're linked to a lowest risk of diabetes</li>
-          </ul> -->
+        <div class="description" style="height: 300px; overflow: auto" v-if="update">
           <div style="height: 300px;">
              {{this.communityInfo.content}}
+             {{this.communityInfo}}
+            
           </div>
+        </div>
+        <div v-else>
+         <b-form-textarea
+            id="textarea-rows"
+            placeholder="Tall textarea"
+            rows="20"
+            v-model="newcontent"
+          ></b-form-textarea>
         </div>
         <!-- <button class="buy--btn">ADD TO CART</button> -->
          <div class="d-flex justify-content-center">
             <div style="margin-right: 30px;">
               <span>
-                <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
+                <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 글이 마음에 듭니다.'"></b-icon>
                 <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
               </span>
             </div>
             <div>
               <span>
-                <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 영화가 마음에 들지 않습니다.'"></b-icon>
+                <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 글이 마음에 들지 않습니다.'"></b-icon>
                 <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else v-b-popover.hover.top="`${hateCount}명이 싫어합니다.`"></b-icon>
               </span>
+            </div>
+
+            <div>
+              <b-button @click="updateReview" v-if="update">수정</b-button>
+              <b-button @click="pushReview" v-else>업데이트</b-button>
+              <b-button>삭제</b-button>
             </div>
           </div>
       </div>
@@ -98,6 +112,9 @@ export default {
       hateCount : 0,
       hate : null,
       review_list: {},
+      update : true,
+      newtitle : null,
+      newcontent : null
     }
   },
   methods: {
@@ -204,23 +221,89 @@ export default {
     },
     getReviews: function () {
         // const movieId = this.$route.params.movieId
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/community/${this.community_id}/review_create/`,
+        headers: this.setToken()
+      })
+      .then(res => {
+        console.log(res,'겟리뷰')
+        this.review_list = res.data
+        // console.log('성공')
+      })
+      .catch(err => {
+        console.log(err)
+        console.log('실패')
+      })
       
-        axios({
-          method: 'get',
-          url: `${SERVER_URL}/community/${this.community_id}/review_create/`,
+    },
+    updateDetail : function () {
+      const communityId = this.community_id
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/community/${communityId}/update/`,
+          data: likeItem,
           headers: this.setToken()
         })
-        .then(res => {
-          console.log(res,'겟리뷰')
-          this.review_list = res.data
-          // console.log('성공')
+          .then(res => {
+            console.log(res)
+            console.log('리센트무비')
+            this.hate = res.data.like
+            this.hateCount  = res.data.count
+            this.getCommunityDetail(this.community_id)
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
+    updateReview: function () {
+      this.update = false
+    },
+    pushReview: function() {
+      const communityId = this.communityInfo.id 
+      // const token = localStorage.getItem('jwt')
+      // const user_id = jwtDecode(token).user_id
+      const movieItem = {
+        // user : user_id,
+        movie: this.communityInfo.movie,
+        community_title: this.newtitle,
+        movie_title : this.communityInfo.movie_title,
+        content : this.newcontent,
+        poster_path: this.communityInfo.poster_path,
+        // image: this.image
+      }
+      console.log(movieItem)
+      if (movieItem.community_title && movieItem.movie_title && movieItem.content) 
+      {
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/community/${communityId}/update/`,
+          data: movieItem,
+          headers: this.setToken()
         })
-        .catch(err => {
-          console.log(err)
-          console.log('실패')
-        })
-      
-      },
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+            
+            this.getCommunityDetail(this.community_id)
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패해떠염')
+          })
+
+
+        }
+    
+      this.update = true
+    },
 
 
 
