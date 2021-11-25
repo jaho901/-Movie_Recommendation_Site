@@ -2,7 +2,7 @@
   <div>
     <hr>
     <img :src="imgSrc" alt="#">
-    <h2 @click="goToUserProfile">{{communityContents.user.username}}</h2>
+    <h2 @click="goToUserProfile(communityContents.user.pk)">{{communityContents.user.username}}</h2>
     <!-- <h2>{{communityContents}}</h2/> -->
     <p>{{communityContents.community_title}}</p>
     <p>{{communityContents.movie_title}}</p>
@@ -25,12 +25,12 @@ export default {
     }
   },
   methods: {
-    goToUserProfile: function () {
-      console.log(this.communityContents.user.pk)
+    goToUserProfile: function (communityPk) {
+      console.log(communityPk)
       this.$router.push({
         name: 'profile',
         params: {
-          user_id: this.communityContents.user.pk
+          user_id: communityPk
         }
       })
     },
