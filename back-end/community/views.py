@@ -35,15 +35,20 @@ def community_detail(request, community_id):
 
 
 @api_view(['DELETE'])
-def community_delete(request, community_id):
-    community = get_object_or_404(Community, pk=community_id)
-    community.delete()
-    return Response('DELETE SUCCESS')
+def community_delete(request, user_pk, community_id):
+    user = get_object_or_404(User, pk=user_pk)
+    if request.user == user:
+        community = get_object_or_404(Community, pk=community_id)
+        community.delete()
+        return Response('DELETE SUCCESS')
 
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def community_update(request, community_id):
+    # print(request.)
+    # user = get_object_or_404(User, pk=request.user)
+    # if request.user == user:
     community = get_object_or_404(Community, pk=community_id)
     serializer = CommunitySerializer(instance=community, data=request.data)
 

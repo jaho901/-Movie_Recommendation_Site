@@ -36,7 +36,6 @@
         <div class="description" style="height: 300px; overflow: auto" v-if="update">
           <div style="height: 300px;">
              {{this.communityInfo.content}}
-             {{this.communityInfo}}
             
           </div>
         </div>
@@ -49,7 +48,7 @@
           ></b-form-textarea>
         </div>
         <!-- <button class="buy--btn">ADD TO CART</button> -->
-         <div class="d-flex justify-content-center">
+         <div class="d-flex justify-content-space-around;">
             <div style="margin-right: 30px;">
               <span>
                 <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 글이 마음에 듭니다.'"></b-icon>
@@ -63,12 +62,15 @@
               </span>
             </div>
 
-            <div>
-              <b-button @click="updateReview" v-if="update">수정</b-button>
-              <b-button @click="pushReview" v-else>업데이트</b-button>
-              <b-button>삭제</b-button>
-            </div>
+            
+            <b-button @click="updateReview" v-if="update">수정</b-button>
+            <b-button @click="pushReview" v-else>업데이트</b-button>
+            <b-button @click="deleteDetail">삭제</b-button>
+            
+          
           </div>
+          <p v-if="!check">본인의 게시글이 아닙니다!</p>
+          <p v-if="!deletecheck">삐빅 삭제불가입니다!</p>
       </div>
     </section>
     </div>
@@ -114,7 +116,11 @@ export default {
       review_list: {},
       update : true,
       newtitle : null,
-      newcontent : null
+      newcontent : null,
+      coummunityuser : null,
+      nowuser : null,
+      check : true,
+      deletecheck : true
     }
   },
   methods: {
@@ -155,6 +161,8 @@ export default {
             }
            this.likeCount = this.communityInfo.like_users.length
            this.hateCount = this.communityInfo.hate_users.length
+           this.nowuser= user_id
+           this.coummunityuser = this.communityInfo.user.pk
            this.getReviews()
           
         })
@@ -264,7 +272,11 @@ export default {
           })
     },
     updateReview: function () {
-      this.update = false
+      if (this.nowuser === this.coummunityuser) {
+        this.update = false
+      } else {
+        this.check = false
+      }
     },
     pushReview: function() {
       const communityId = this.communityInfo.id 
@@ -279,7 +291,7 @@ export default {
         poster_path: this.communityInfo.poster_path,
         // image: this.image
       }
-      console.log(movieItem)
+      console.log(movieItem ,'무비아이템')
       if (movieItem.community_title && movieItem.movie_title && movieItem.content) 
       {
         axios({
@@ -295,19 +307,37 @@ export default {
             this.getCommunityDetail(this.community_id)
           })
           .catch(err => {
-            console.log(err)
+            console.log(err.data)
             console.log('실패해떠염')
           })
 
 
         }
-    
-      this.update = true
+        
+        this.update = true
+        
+      },
+      deleteDetail : function () {
+        const communityId = this.communityInfo.id 
+        const userId = this.communityInfo.user.pk
+        axios({
+          method: 'post',
+          url: `${SERVER_URL}/community/${userId}/delete/${communityId}/`,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('성공')
+            
+            this.getCommunityDetail(this.community_id)
+          })
+          .catch(err => {
+            console.log(err.data)
+            console.log('실패해떠염')
+            this.deletecheck = false
+          })
+      }
     },
-
-
-
-  },
   created: function() {
     if (localStorage.getItem('jwt')) {
        
@@ -344,6 +374,12 @@ $color-highlight: #ff3f40;
 * {
 	box-sizing: border-box;
 }
+
+.d-flex {
+  display: flex;
+  justify-content : space-around;
+}
+
 
 .html,
 .body {
