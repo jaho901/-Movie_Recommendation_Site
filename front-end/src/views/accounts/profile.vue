@@ -45,7 +45,6 @@
               </div>
             </div>
             <p class="desc">Hi ! My nickname is {{ nickname }}. <br> Nice to Meet you <br> Let me introduce my profile page</p>
-            <div>skdksk</div>
           </div>
           <div class="right col-lg-8">
             <ul class="nav mb-3">
@@ -138,7 +137,12 @@ export default {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const userId = this.$route.params.user_id
-      // console.log(userId)
+      if (userId === user_id) {
+          this.itsMe = true
+          console.log('나다')
+        } else {
+          this.itsME = false
+        }
       axios({
           method: 'GET',
           url: `${SERVER_URL}/accounts/profile/${userId}/`,
@@ -158,12 +162,7 @@ export default {
             this.userFavoriteMovies = res.data.userFavoriteMovies
             
             // console.log(res.data,'유저데이터')
-            if (userId === user_id) {
-              this.itsMe = true
-              console.log('나다')
-            } else {
-              this.itsME = false
-            }
+           
               
           })
           .catch(err => {

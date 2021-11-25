@@ -44,9 +44,9 @@
         </b-modal>
     </div>
      
-    <div class="html">
+    <div class="html" style="height: 1000px;">
       <div class="body"> 
-        <section class="product" style="width:800px; margin-top: 50px; padding-bottom: 0px; margin-bottom: 100px;">
+        <section class="product" style="width: 800px;margin-top: 50px;padding-bottom: 0px;margin-bottom: 100px;height: 640px;">
           <div class="product__photo" style="width: 300px; height: 435px;">
             <div class="photo-container">
               <div class="photo-main">
@@ -281,7 +281,7 @@ $color-highlight: #ff3f40;
 .body {
 	height: 100%;
   background-color: #343a40;
-  margin-top: 0px;
+  margin-top: 0px!important;
 }
 
 .body {

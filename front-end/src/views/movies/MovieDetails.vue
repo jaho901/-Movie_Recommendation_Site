@@ -27,7 +27,7 @@
             </div>
           </div>
           <br>
-          <span style="font-size: 1.3rem;">관람객 평점: <b-icon icon="star-fill"></b-icon> {{ vote }}점</span>
+          <span style="font-size: 1.3rem;">관람객 평점: <b-icon icon="star-fill" style="color : yellow;"></b-icon> {{ vote }}점</span>
           <br><br>
           <div>출연: {{ actors }}</div>
           <div>장르: {{ genres }}</div>
@@ -37,7 +37,8 @@
           <div>국가: {{ country }}</div>
           <br>
           <div style="width: 50%"><span class="title is-1 has-text-white">{{ content }}</span></div>
-          <b-icon v-b-modal.modal-1 icon="youtube" font-scale="5"></b-icon>
+          <br>
+          <b-icon v-b-modal.modal-1 icon="youtube" font-scale="5" style="color: #d03939;"></b-icon>
           <b-modal id="modal-1" title="Youtube 관련 영상">
             <div>
               <b-embed
@@ -52,7 +53,7 @@
     </div>
     <div>
       <br>
-      <h3 style="color: white; text-align: left; margin-left: 60px;">추천 영화 리스트</h3>
+      <h2 style="color: white;text-align: center;margin-left: 0px;margin-bottom: 20px;">추천 영화 리스트</h2>
       <b-container class="bv-example-row">
         <b-row class="text-center">
           <b-col v-for="(smovie, idx) in simmilarMovie" :key="idx">

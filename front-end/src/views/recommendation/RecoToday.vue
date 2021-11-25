@@ -1,7 +1,10 @@
 <template>
   <div>
     <div id="mod">
-      <h1 style="color: white;">오늘의 블로거 {{ TodayUser.nickname }}의 영화 리스트!!!</h1>
+      <div style="background-color: rgba(0, 0, 0, 0.3);text-align: center;width: 300px;height: 100px;margin-left: auto;margin-right: auto;border-radius: 20px;">
+        <h3 style="color: white;padding-top: 10px;">오늘의 User </h3>
+        <h2 style="color: white;">{{ TodayUser.nickname }} 님의 Pick</h2>
+      </div>
       <pre>
 
       </pre>
