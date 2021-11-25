@@ -23,7 +23,7 @@
           </td>
           <td><h5>{{ community.movie_title }}</h5></td>
           <td><h5>{{ community.community_title }}</h5></td>
-          <td><h5 @click="goToUserProfile(community.user.id)">{{ community.user.nickname }}</h5></td>
+          <td><h5 @click="goToUserProfile(community.user.pk)">{{ community.user.nickname }}</h5></td>
           <td><b-button @click="communityDetail(community.id)">Detail</b-button></td>
         </tr>
       </tbody> -->

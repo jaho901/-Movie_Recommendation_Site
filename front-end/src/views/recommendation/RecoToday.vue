@@ -55,9 +55,11 @@ export default {
   },
   computed: {
     movieToday: function () {
+      console.log(this.$store.state.movieToday, '오늘')
       return this.$store.state.movieToday
     },
     TodayUser: function () {
+      console.log(this.$store.state.TodayUser, '유저')
       return this.$store.state.TodayUser
     }
   }

@@ -31,7 +31,7 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
         base_url = 'https://www.google.com/search?q='
         plus_url = quote_plus('오늘의 요일')
         url = base_url + plus_url
-        driver = webdriver.Chrome(executable_path='D:\\Users\\qkreh\\Desktop\\찐막\\finalproject\\back-end\\chromedriver.exe')
+        driver = webdriver.Chrome(executable_path='C:\\Users\\analysis\\Desktop\\SSAFY\\projects\\A_projects\\finalproject\\back-end\\chromedriver.exe')
         driver.get(url)
         html = driver.page_source
         soup = BeautifulSoup(html)
@@ -60,11 +60,14 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
 @api_view(['GET'])
 def today_user_list(request):
     community = Community.objects.values('user_id').annotate(num_user=Count('user_id')).order_by('-num_user')[:10]
+    print(community)
     person = random.choice(community)
     person_id = [person['user_id']]
     user = get_object_or_404(User, pk=person_id[0])
+    print(person_id[0])
     userserializer = UserSerializer(user)
     movies = Movie.objects.filter(like_users__in = person_id)
+    print(movies)
     serializer = MovieSerializer(movies, many=True)
 
     context = {
