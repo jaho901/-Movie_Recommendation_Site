@@ -18,7 +18,7 @@
         <div class="title">
           <h1 >게시글 제목</h1> 
           <hr>
-          <h5>{{this.communityInfo.community_title}}</h5>
+            <h5>{{this.communityInfo.community_title}}</h5>
           <hr>
           <span>username: {{communityInfo.user.nickname}}</span>
         </div>
@@ -66,7 +66,7 @@
       <community-review
         v-for="review in review_list" :key="review.pk"
         :community="communityInfo" :review="review"
-        @update="getCommunityDetail(this.community_id)"
+        @update="getCommunityDetail()"
         >
       </community-review>
 
@@ -138,6 +138,7 @@ export default {
             }
            this.likeCount = this.communityInfo.like_users.length
            this.hateCount = this.communityInfo.hate_users.length
+           
           
         })
         .catch(err => {

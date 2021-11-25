@@ -137,12 +137,15 @@ export default {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const userId = this.$route.params.user_id
-      if (userId === user_id) {
-          this.itsMe = true
-          console.log('나다')
-        } else {
-          this.itsME = false
-        }
+      console.log(user_id,'로그인한유저')
+      const userpk = parseInt(userId)
+      console.log(userpk,'프로필의 유저')
+      if (userpk === user_id) {
+        this.itsMe = true
+        console.log('같은유저네요')
+      } else {
+        this.itsMe = false
+      }
       axios({
           method: 'GET',
           url: `${SERVER_URL}/accounts/profile/${userId}/`,
@@ -277,6 +280,7 @@ export default {
     if (localStorage.getItem('jwt')) {
       this.getUserProfile()
       this.getData()
+      console.log(this.itsMe,'생성')
       // this.getData()
       // console.log('로그인은됨')
     } else {
