@@ -43,7 +43,7 @@ export default new Vuex.Store({
       state.movie13 = res
     },
     MOVIE_TODAY(state, res) {
-      state.movieToday = res.movies
+      state.movieToday = _.sampleSize(res.movies, 20)
       state.TodayUser = res.user
     },
     MOVIE_WEEK(state, res) {
@@ -88,6 +88,7 @@ export default new Vuex.Store({
         headers: token,
       })
       .then(res => {
+        console.log(res.data, '확인좀')
         commit('MOVIE_TODAY', res.data)
       })
       .catch(err => console.log(err))

@@ -60,11 +60,14 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
 @api_view(['GET'])
 def today_user_list(request):
     community = Community.objects.values('user_id').annotate(num_user=Count('user_id')).order_by('-num_user')[:10]
+    print(community)
     person = random.choice(community)
     person_id = [person['user_id']]
     user = get_object_or_404(User, pk=person_id[0])
+    print(person_id[0])
     userserializer = UserSerializer(user)
     movies = Movie.objects.filter(like_users__in = person_id)
+    print(movies)
     serializer = MovieSerializer(movies, many=True)
 
     context = {
