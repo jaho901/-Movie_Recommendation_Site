@@ -1,7 +1,7 @@
 <template>
   <div id="topp">
     <div style="padding-top: 60px; padding-bottom: 100px;">
-      <div style="background-color: rgba(0,0,0,0.5); text-align: center;width: 300px;height: 80px;margin-left: auto;margin-right: auto; border-radius : 20px; 
+      <div id="transe" style="background-color: rgba(0,0,0,0.5); text-align: center;width: 300px;height: 80px;margin-left: auto;margin-right: auto; border-radius : 20px; 
         ">
         <h1 style="color: white;display: inline-block;padding-top: auto;padding-top: 20px; opacity: 1; ">최신 영화 12선</h1>
       </div>
@@ -65,6 +65,19 @@ export default {
 }
 </script>
 <style>
+
+
+@keyframes fadeInDown {
+      0% {
+          opacity: 0;
+          transform: translate3d(0, -100%, 0);
+      }
+      to {
+          opacity: 1;
+          transform: translateZ(0);
+      }
+  }
+
   #topp::before{
   position: fixed; 
   top: 0; 
@@ -76,5 +89,13 @@ export default {
   /* filter: blur(2px);  */
   z-index: -1; 
   content: "";
+}
+
+h1 {
+  font-family: 'Black Han Sans', sans-serif;
+}
+
+#transe {
+  animation : fadeInDown 2s;
 }
 </style>

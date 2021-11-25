@@ -66,7 +66,7 @@
                  <b-form-textarea
                     id="textarea-state"
                     :state="community_title.length >= 1"
-                    placeholder="Enter at least 10 characters"
+                    placeholder="Enter at least 1 characters"
                     
                     v-model = "community_title"
                   ></b-form-textarea>

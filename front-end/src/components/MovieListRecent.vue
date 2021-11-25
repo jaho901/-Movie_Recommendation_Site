@@ -1,7 +1,8 @@
 <template>
   <div style="background-color: #1a1e23;">
-    
-    <div class="py-5">
+    <h3 style="color:white">장르별</h3>
+    <div style="
+    padding-top: 0px;">
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="최신">최신</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="horrorMovies">공포</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="sfMovies">SF</b-button>

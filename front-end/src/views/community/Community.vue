@@ -1,7 +1,10 @@
 <template>
   <div id="topp">
     <div class="table-wrapper">
-      <h1>Community</h1>
+      <div id="transe" style="background-color: rgba(0, 0, 0, 0.5);text-align: center;width: 300px;height: 80px;margin-left: auto;margin-right: auto;border-radius: 20px;margin-top: 100px;margin-bottom: 100px;">
+        <h1 style="color: white;display: inline-block;padding-top: auto;padding-top: 20px; opacity: 1; ">Community</h1>
+      </div>
+      
         <div class="overflow-auto">
           <center>
             <b-button style="width: 80%;" block variant="secondary" @click="writeContent">Create Community</b-button>
