@@ -1,57 +1,54 @@
 <template>
   <div>
-    <b-card
-      :img-src="imgSrc"
-      img-alt="Image"
-      img-top 
-      img-width="280px"
-      img-height="450px"
-      style="width: 290px; height: 528px;"
-      class="my-5"
-    >
-      <b-button @click="modalShow = !modalShow">Go to Detail</b-button>
-
-      <b-modal v-model="modalShow" :title="gmovie.title" ok-only button-size="ml">
-        <br>
-        <center>
-          <img @click="movieDetailInfo(gmovie.id)" :src="imgSrc" alt="" style="width: 300px">
-        </center>
-          <br><br><hr><br>
-        <span>출연  :  {{ gmovie.actor_1 }}, {{gmovie.actor_2}}, {{ gmovie.actor_3 }}</span>
-        <br><br>
-        <span>장르  :  </span>
-        <span v-for="(genre, idx) in gmovie.genre" :key="idx">
-          {{ genre.name }}
-        </span>
-        <br><br>
-        <span>평점  :  {{ gmovie.vote }}</span>
-        <pre>
-
-        </pre>
-        <b-container fluid class="bv-example-row">
-          <b-row>
-            <b-col offset-md="1">
-              <b-icon icon="star" font-scale="2" @click="movieFavorit" v-if="!favorite" v-b-popover.hover.top="'내가 찜한 콘텐츠에 추가'"></b-icon>
-              <b-icon icon="star-fill" font-scale="2" @click="movieFavorit" v-else v-b-popover.hover.top="'내가 찜한 콘텐츠에서 제거'"></b-icon>
-            </b-col>
-            <b-col offset-md="4">
-              <span>
-                <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
-                <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else  v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
-              </span>
-            </b-col>
-            <b-col>
-              <span>
-                <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 영화가 마음에 들지 않습니다.'"></b-icon>
-                <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else v-b-popover.hover.top="`${hateCount}명이 싫어합니다.`"></b-icon>
-              </span>
-            </b-col>
-          </b-row>
-          <br>
-        </b-container>
-
-      </b-modal>
-    </b-card>
+    <div class="container">
+      <div class="movie">
+        <div class="movie-image">
+          <img style="width: 100%;" :src="gmovie.poster_path" alt="" />
+          <span><i class="fa fa-align-lef"></i></span>
+        </div>
+        <div class="movie-info">
+          <p class="title">{{ gmovie.title }}</p>
+          <p class="genres">
+            <span v-for="(genre, idx) in gmovie.genre" :key="idx">
+              {{ genre.name }}
+            </span>
+          </p>
+          <div class="movie-text">
+            <div class="likes">
+              <b-container fluid class="bv-example-row">
+                <b-row>
+                  <b-col>
+                    <b-icon icon="star" font-scale="2" @click="movieFavorit" v-if="!favorite" v-b-popover.hover.top="'내가 찜한 콘텐츠에 추가'"></b-icon>
+                    <b-icon icon="star-fill" font-scale="2" @click="movieFavorit" v-else v-b-popover.hover.top="'내가 찜한 콘텐츠에서 제거'"></b-icon>
+                  </b-col>
+                  <b-col>
+                    <span>
+                      <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
+                      <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
+                    </span>
+                  </b-col>
+                  <b-col>
+                    <span>
+                      <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 영화가 마음에 들지 않습니다.'"></b-icon>
+                      <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else v-b-popover.hover.top="`${hateCount}명이 싫어합니다.`"></b-icon>
+                    </span>
+                  </b-col>
+                </b-row>
+                <br>
+              </b-container>
+            </div>
+            <div class="actions">
+              <button @click="movieDetailInfo(gmovie.id)">Go to Detail</button>
+              <div class="actions-more">
+                <i class="fa fa-save"></i>
+                <i class="fa fa-bookmark"></i>
+                <i class="fa fa-share-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -185,6 +182,7 @@ export default {
       
     },
     movieDetailInfo: function(movie_id) {
+      window.scrollTo(0,0)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {
@@ -207,6 +205,189 @@ export default {
 }
 </script>
 
-<style>
+
+<style scoped lang="scss">
+*,
+*::after,
+*::before{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+  background: url("https://i.pinimg.com/originals/af/8d/63/af8d63a477078732b79ff9d9fc60873f.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 60px 0;
+}
+
+.movie{
+  width: 300px;
+  height: 660px;
+  background: #1e1b26;
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  margin: 0 20px 0 20px;
+  box-shadow: 0 0 20px;
+  -webkit-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+.movie:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.movie-image-1{
+  background: url("https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201703/07/7696c9d8-f8bd-4604-b481-fa2402786d14.jpg"), rgb(30, 27, 38);
+}
+
+.movie-image{
+  // max-height: 350px;
+  // height: 55%;
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  background-blend-mode: screen;
+  -webkit-mask-image: -webkit-gradient(linear, left top, left bottom, 
+			color-stop(0.00,  rgba(0,0,0,1)),
+			color-stop(0.35,  rgba(0,0,0,1)),
+			color-stop(0.50,  rgba(0,0,0,1)),
+			color-stop(0.65,  rgba(0,0,0,1)),
+			color-stop(0.85,  rgba(0,0,0,0.6)),
+      color-stop(1.00,  rgba(0,0,0,0)));
+}
+
+// img{
+//   -webkit-transition: all 0.5s ease;
+// 	-o-transition: all 0.5s ease;
+// 	transition: all 0.5s ease;
+// }
+
+// .movie-image img:hover {
+//     -webkit-transform: scale(1.1);
+//     -ms-transform: scale(1.1);
+//     transform: scale(1.1);
+// }
+
+.movie-image span{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  font-size: 1.5rem;
+}
+
+.movie-info{
+  color: #bbb;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px;
+}
+
+.title {
+  font-size: 1.3rem;
+  margin-bottom: 5px;
+}
+
+.genres {
+  font-size: 0.8rem;
+  color: gray;
+  margin-top: -2px;
+}
+
+.movie-text {
+  // display: flex;
+  // justify-content: space-between;
+  margin-top: 10px;
+}
+
+.movie-text p:nth-child(1){
+  font-size: 0.8rem;;
+}
+
+.likes {
+  color: #f44336;
+  font-size: 0.8rem;
+}
+
+.likes span{
+  margin-left: 10px;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: justify;
+  margin: 5px 0;
+}
+
+.text {
+  font-size: 0.7rem;
+  color: gray;
+  margin-bottom: 5px;
+}
+
+.cast {
+  font-size: 0.7rem;
+  font-style: italic;
+  color: #bbb;
+}
+
+.actions {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 3px 8px;
+  background: transparent;
+  border: 1px solid #f44336;
+  color: #f44336;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover i{
+  color: #eee;
+}
+
+button:hover {
+  color: #eee;
+  background-color: #f44336;
+}
+
+button .fa{
+  font-size: 0.8rem;
+}
+
+.fa{
+  color:#f44336;
+  margin-right: 5px;
+}
+
+.actions-more .fa{
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
 
 </style>

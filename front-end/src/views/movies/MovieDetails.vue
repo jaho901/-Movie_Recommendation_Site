@@ -1,22 +1,54 @@
 <template>
-
-  <div class="top" style="background-color: #1a1e23;">
-      <div class="is-full featured_wrapper p-0">
-        <img id="topId" src="https://mblogthumb-phinf.pstatic.net/20150903_161/kwwoolim_1441229176941Lfdyl_JPEG/32.jpg?type=w2" class="featured">
-        <div class="title_wrapper">
-            <h1 class="has-text-white">{{ movieTitle }}</h1>
-            <br>
-            <span style="font-size: 1.3rem;">관람객 평점: <b-icon icon="star-fill"></b-icon> {{ vote }}점</span>
-            <br><br>
-            <div>출연: {{ actors }}</div>
-            <div>장르: {{ genres }}</div>
-            <br>
-            <div>{{ openDate }}  |  {{ runTime }}</div>
-            <div>{{ grade }}</div>
-            <div>국가: {{ country }}</div>
-            <br>
-            <div style="width: 50%"><span class="title is-1 has-text-white">{{ content }}</span></div>
-        </div>
+  <div class="topp">
+    <div class="is-full featured_wrapper p-0">
+      <img id="topId" src="https://t1.daumcdn.net/cfile/tistory/99EEF7335BFC00501E" class="featured">
+      <div class="title_wrapper">
+          <h1 class="has-text-white">{{ movieTitle }}</h1>
+          <div style="float: right; padding-right: 100px; padding-bottom: 100px;">
+            <img style="width: 280px;" :src="imgsrc" alt="">
+          </div>
+          <br>
+          <div class="d-flex justify-content-start">
+            <div style="margin-right: 30px;">
+              <b-icon icon="star" font-scale="2" @click="movieFavorit" v-if="!favorite" v-b-popover.hover.top="'내가 찜한 콘텐츠에 추가'"></b-icon>
+              <b-icon icon="star-fill" font-scale="2" @click="movieFavorit" v-else v-b-popover.hover.top="'내가 찜한 콘텐츠에서 제거'"></b-icon>
+            </div>
+            <div style="margin-right: 30px;">
+              <span>
+                <b-icon icon="emoji-smile" font-scale="2" @click="movieLike" v-if="!like" v-b-popover.hover.top="'이 영화가 마음에 듭니다.'"></b-icon>
+                <b-icon icon="emoji-smile-fill" font-scale="2" @click="movieLike" v-else v-b-popover.hover.top="`${likeCount}명이 좋아합니다.`"></b-icon>
+              </span>
+            </div>
+            <div>
+              <span>
+                <b-icon icon="emoji-frown" font-scale="2" @click="movieHate" v-if="!hate" v-b-popover.hover.top="'이 영화가 마음에 들지 않습니다.'"></b-icon>
+                <b-icon icon="emoji-frown-fill" font-scale="2" @click="movieHate" v-else v-b-popover.hover.top="`${hateCount}명이 싫어합니다.`"></b-icon>
+              </span>
+            </div>
+          </div>
+          <br>
+          <span style="font-size: 1.3rem;">관람객 평점: <b-icon icon="star-fill"></b-icon> {{ vote }}점</span>
+          <br><br>
+          <div>출연: {{ actors }}</div>
+          <div>장르: {{ genres }}</div>
+          <br>
+          <div>{{ openDate }}  |  {{ runTime }}</div>
+          <div>{{ grade }}</div>
+          <div>국가: {{ country }}</div>
+          <br>
+          <div style="width: 50%"><span class="title is-1 has-text-white">{{ content }}</span></div>
+          <b-icon v-b-modal.modal-1 icon="youtube" font-scale="5"></b-icon>
+          <b-modal id="modal-1" title="Youtube 관련 영상">
+            <div>
+              <b-embed
+                type="iframe"
+                aspect="16by9"
+                :src="youtubeList"
+                allowfullscreen
+              ></b-embed>
+            </div>
+          </b-modal>
+      </div>
     </div>
     <div>
       <br>
@@ -28,6 +60,7 @@
           </b-col>
         </b-row>
       </b-container>
+      
     </div>
   </div>
 
@@ -43,6 +76,7 @@ import axios from 'axios'
 // import Review from '@/views/movies/Review.vue'
 // import Review from './Review.vue'
 import _ from 'lodash'
+import jwtDecode from "jwt-decode"
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
@@ -57,10 +91,9 @@ export default {
     data: function () {
       return {
         movie: null,
-        review_list: {},
+        movieId: "",
         update : true,
         content : null,
-        newReview : null,
         movieTitle : "",
         youtubeList : [],
         simmilarMovie: [],
@@ -72,6 +105,11 @@ export default {
         country: "",
         grade: "",
         vote: "",
+        likeCount : null,
+        like : null,
+        hateCount : 0,
+        hate : null,
+        favorite : null,
       }
   },
   methods: {
@@ -93,6 +131,7 @@ export default {
         .then(res => {
           console.log(res)
           this.movie = res.data
+          this.movieId = res.data.movie.id
           // console.log(this.movie,'여기')
           this.movieTitle =res.data.movie.title
           this.simmilarMovie = res.data.similar_movies
@@ -113,84 +152,142 @@ export default {
           console.log(err)
         })
       },
-      getReviews: function () {
-        const movieId = this.$route.params.movieId
-         axios({
+    getYoutubeList : function() {
+      const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
+      const YOUTUBE_KEY = "AIzaSyAl95MuzIshQD-mpyN5iNvM6oRcOE154Ag"
+      let movie = this.$route.params.movieId
+      let movieId = parseInt(movie)
+      this.movieTitle = this.$store.state.communityMovie[movieId].title
+      const params = {
+        q: this.movieTitle,
+        key: YOUTUBE_KEY,
+        part: 'snippet',
+        type: 'video',
+        maxResults : 1
+      }
+        axios({
           method: 'get',
-          url: `${SERVER_URL}/movies/${movieId}/review_create/`,
-          headers: this.setToken()
+          url: YOUTUBE_URL,
+          params,
         })
         .then(res => {
-          console.log(res)
-          this.review_list = res.data
-          // console.log('성공')
+          console.log(res,'youtube')
+          const videoId = res.data.items[0].id.videoId
+          console.log(videoId)
+          this.youtubeList = `https://www.youtube.com/embed/${videoId}`
         })
-        .catch(err => {
-          console.log(err)
+        .catch(err => console.log(err))
+      },
+    movieDetailInfo: function(movie_id) {
+      window.scrollTo(0,0)
+      this.$router.push(
+        { name : 'MovieDetails', 
+          params: {
+            movieId : movie_id,
+          }
         })
       },
-      updateReview: function () {
-        this.update = false
-      },
-      getYoutubeList : function() {
-        const YOUTUBE_URL = 'https://www.googleapis.com/youtube/v3/search'
-        const YOUTUBE_KEY = "AIzaSyAl95MuzIshQD-mpyN5iNvM6oRcOE154Ag"
-        let movie = this.$route.params.movieId
-        let movieId = parseInt(movie)
-        this.movieTitle = this.$store.state.communityMovie[movieId].title
-        const params = {
-          q: this.movieTitle,
-          key: YOUTUBE_KEY,
-          part: 'snippet',
-          type: 'video',
-          maxResults : 2
-        }
-          axios({
-            method: 'get',
-            url: YOUTUBE_URL,
-            params,
-          })
+    movieLike : function () { 
+      console.log(this.movieId)
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${this.movieId}/like/`,
+          data: likeItem,
+          headers: this.setToken()
+        })
           .then(res => {
             console.log(res)
-            this.youtubeList = res.data.items
+            console.log('리센트무비')
+            this.like = res.data.like
+            this.likeCount  = res.data.count
+            this.$emit('like-change')
           })
-          .catch(err => console.log(err))
-        },
-      movieDetailInfo: function(movie_id) {
-        this.$router.push(
-          { name : 'MovieDetails', 
-            params: {
-              movieId : movie_id,
-            }
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
+    movieHate : function () { 
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
+      }
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${this.movieId}/hate/`,
+          data: likeItem,
+          headers: this.setToken()
         })
-      }
+          .then(res => {
+            console.log(res)
+            console.log('리센트무비')
+            this.hate = res.data.hate
+            this.hateCount  = res.data.count
+            this.$emit('like-change')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
     },
-  
-    created: function () {
-      if (localStorage.getItem('jwt')) {
-        let movie = this.$route.params.movieId
-        let movieId = parseInt(movie)
-        console.log(movieId)
-        this.movieTitle = this.$store.state.communityMovie[movieId].title
-        this.movie = this.$store.state.communityMovie[movieId]
-        this.getYoutubeList()
-        this.setToken()
-        this.getMovies()
-        this.getReviews()
-      } else {
-        this.$router.push({ name: 'Login' })
+    movieFavorit : function () { 
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const likeItem = {
+        user: user_id
       }
+      // console.log(movieId)
+      axios({
+          method: 'post',
+          url: `${SERVER_URL}/movies/${this.movieId}/favorite/`,
+          data: likeItem,
+          headers: this.setToken()
+        })
+          .then(res => {
+            console.log(res)
+            console.log('리센트무비')
+            this.favorite = res.data.favorite
+            this.$emit('like-change')
+          })
+          .catch(err => {
+            console.log(err)
+            console.log('실패')
+          })
+    },
+  },
 
-    },
-    watch :{
-      getYoutubeList : function() {
-        this.youtubeList = this.getYoutubeList()
-      }
-    },
-    computed: {
-
+  created: function () {
+    if (localStorage.getItem('jwt')) {
+      let movie = this.$route.params.movieId
+      let movieId = parseInt(movie)
+      console.log(movieId)
+      this.movieTitle = this.$store.state.communityMovie[movieId].title
+      this.movie = this.$store.state.communityMovie[movieId]
+      this.getYoutubeList()
+      this.setToken()
+      this.getMovies()
+    } else {
+      this.$router.push({ name: 'Login' })
     }
+
+  },
+  watch :{
+    getYoutubeList : function() {
+      this.youtubeList = this.getYoutubeList()
+    }
+  },
+  computed: {
+
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -201,9 +298,14 @@ html {
 	background: #000000;
 	padding: 0;
 	margin: 0;
-	padding-bottom: 6rem;
+	// padding-bottom: 6rem;
 	font-family: "Montserrat", sans-serif;
 	width: 100%;
+}
+
+.topp {
+   background-color: #1a1e23;
+   margin-top: 0px!important;
 }
 
 img {
@@ -223,10 +325,11 @@ img {
 .featured_wrapper {
 	position: relative;
 }
+
 #topId {
 	width: 100%;
 	width: 100%;
-	height: 600px;
+	height: 800px;
 	-o-object-fit: cover;
 	object-fit: cover;
 	-o-object-position: top;
@@ -237,7 +340,7 @@ img {
 .title_wrapper {
   font-weight: bold;
 	position: absolute;
-	width: 120%;
+	width: 100%;
 	left: 2rem;
 	bottom: 5rem;
 	padding: 20px 40px;

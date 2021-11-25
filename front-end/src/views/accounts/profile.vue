@@ -1,94 +1,64 @@
 <template>
-  <div class="container">
-    <header>
-      <i class="fa fa-bars" aria-hidden="true"></i>
-    </header>
-    <main>
-      <div class="row">
-        <div class="left col-lg-4">
-          <div class="photo-left">
-            <img class="photo" src="https://mblogthumb-phinf.pstatic.net/MjAyMTAzMjVfMjQ1/MDAxNjE2NjczNDM4MjY1.jjotNR5RgwVQwtsRltMqI3cCv_wdGKURL1bbPVmNoIgg.J0M7ucbY-PsGmAP5YWBoCNmkXkqlVYW7kKZ9sbgyFeUg.JPEG.aas0728/1616663255.jpg?type=w800"/>
-            <div class="active"></div>
+  <div id="topp">
+    <div class="container">
+      <header>
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </header>
+      <main>
+        <div class="row">
+          <div class="left col-lg-4">
+            <div class="photo-left">
+              <img class="photo" src="https://mblogthumb-phinf.pstatic.net/MjAyMTAzMjVfMjQ1/MDAxNjE2NjczNDM4MjY1.jjotNR5RgwVQwtsRltMqI3cCv_wdGKURL1bbPVmNoIgg.J0M7ucbY-PsGmAP5YWBoCNmkXkqlVYW7kKZ9sbgyFeUg.JPEG.aas0728/1616663255.jpg?type=w800"/>
+              <div class="active"></div>
+            </div>
+            <h4 class="name">{{ nickname }}</h4>
+            <p class="info">Movie Exper</p>
+            <p class="info">{{ username }}</p>
+            <div class="stats row">
+              <div class="stat col-xs-4" style="padding-right: 50px;">
+                <p class="number-stat">{{ follower }}</p>
+                <p class="desc-stat">Followers</p>
+                <p class="desc-stat">list</p>
+              </div>
+              <div class="stat col-xs-4">
+                <p class="number-stat">{{ following }}</p>
+                <p class="desc-stat">Following</p>
+                <p class="desc-stat">list</p>
+              </div>
+              <div class="stat col-xs-4" style="padding-left: 50px;">
+                <p class="number-stat">{{ userCreateCommunity.length }}</p>
+                <p class="desc-stat">Uploads</p>
+              </div>
+            </div>
+            <p class="desc">Hi ! My nickname is {{ nickname }}. <br> Nice to Meet you <br> Let me introduce my profile page</p>
+            <div class="social">
+              <i class="fa fa-facebook-square" aria-hidden="true"></i>
+              <i class="fa fa-twitter-square" aria-hidden="true"></i>
+              <i class="fa fa-pinterest-square" aria-hidden="true"></i>
+              <i class="fa fa-tumblr-square" aria-hidden="true"></i>
+            </div>
           </div>
-          <h4 class="name">{{ nickname }}</h4>
-          <p class="info">Movie Exper</p>
-          <p class="info">{{ username }}</p>
-          <div class="stats row">
-            <div class="stat col-xs-4" style="padding-right: 50px;">
-              <p class="number-stat">{{ follower }}</p>
-              <p class="desc-stat">Followers</p>
-              <p class="desc-stat">list</p>
+          <div class="right col-lg-8">
+            <ul class="nav">
+              <li @click="selectProfile" value="LikeMovies">LikeMovies</li>
+              <li @click="selectProfile" value="Communities">Communities</li>
+              <li @click="selectProfile" value="Favorites">Favorites</li>
+            </ul>
+            <span class="follow">Follow</span>
+            <div v-if="select==='LikeMovies'">
+              <profile-item :list-array="userLikeMovies" :select="select"></profile-item>
             </div>
-            <div class="stat col-xs-4">
-              <p class="number-stat">{{ following }}</p>
-              <p class="desc-stat">Following</p>
-              <p class="desc-stat">list</p>
+            <div v-else-if="select==='Communities'">
+              <profile-item :list-array="userCreateCommunity" :select="select"></profile-item>
             </div>
-            <div class="stat col-xs-4" style="padding-left: 50px;">
-              <p class="number-stat">{{ userCreateCommunity.length }}</p>
-              <p class="desc-stat">Uploads</p>
+            <div v-else>
+              <profile-item :list-array="userFavoriteMovies" :select="select"></profile-item>
             </div>
-          </div>
-          <p class="desc">Hi ! My nickname is {{ nickname }}. <br> Nice to Meet you <br> Let me introduce my profile page</p>
-          <div class="social">
-            <i class="fa fa-facebook-square" aria-hidden="true"></i>
-            <i class="fa fa-twitter-square" aria-hidden="true"></i>
-            <i class="fa fa-pinterest-square" aria-hidden="true"></i>
-            <i class="fa fa-tumblr-square" aria-hidden="true"></i>
           </div>
         </div>
-        <div class="right col-lg-8">
-          <ul class="nav">
-            <li value="LikeMovies">LikeMovies</li>
-            <li value="Communities">Communities</li>
-          </ul>
-          <span class="follow">Follow</span>
-          <div class="row gallery" v-for="(movie, idx) in userLikeMovies" :key="idx">
-            <div class="col-md-4">
-              <img @click="movieDetailInfo(movie.id)" :src="movie.poster_path"/>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
   </div>
-
-
-
-
-
-
-  <!-- <div>
-    <p>{{ nickname }}님의 프로필페이지입니다.</p>
-
-    <div v-if="!itsMe" >
-      <button @click="follow" v-if="followBoolen">팔로우</button>
-      <button @click="follow" v-else>언팔로우</button>
-    </div>
-    <div v-else>
-      <button @click="goToSetting">유저정보 변경</button>
-    </div>
-      
-    <button @click="owChange">팔로워 목록</button>
-    <p v-if="owList">{{this.followerList}}</p>
-
-    <button @click="ingChanges">팔로워 목록</button>
-    <p v-if="ingList">{{this.followingList}}</p>
-   
-    <p>팔로워 수  {{this.follower}}</p>
-    <p>팔로잉 수  {{this.following}}</p>
-
-    <hr>
-    <h3>좋아요 눌린 영화</h3>
-    <p>{{userLikeMovies}}</p>
-    <h3>리뷰를 남긴 영화</h3>
-    <p>{{reviewInMovies}}</p>
-    <h3>작성 한 게시글</h3>
-    <p>{{userCreateCommunity}}</p>
-    <h3>좋아요눌린 게시글</h3>
-    <p>{{userLikeCommunity}}</p>
-    
-  </div>  -->
 </template>
 
 
@@ -96,14 +66,12 @@
 // import MovieListItem from '@/views/movies/MovieListItem'
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
+import ProfileItem from '@/views/accounts/ProfileItem'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
 
 export default {
   name: 'profile',
-  components:{
-    
-  },
   data: function () {
     return {
       userData : null,
@@ -122,10 +90,23 @@ export default {
       userLikeMovies : [],
       reviewInMovies : [],
       userCreateCommunity : [],
-      userLikeCommunity : []
+      userLikeCommunity : [],
+      userFavoriteMovies: [],
+      select: 'LikeMovies',
+      pageNum: 0,
     }
   },
+  components: {
+    ProfileItem,
+  },
   methods: {
+    nextPage () {
+      this.pageNum += 1;
+    },
+    prevPage () {
+      this.pageNum -= 1;
+    },
+
     setToken: function () {
       const token = localStorage.getItem('jwt')
       const config = {
@@ -154,15 +135,16 @@ export default {
             this.userLikeMovies = res.data.userLikeMovies
             this.reviewInMovies = res.data.reviewInMovies
             this.userCreateCommunity = res.data.userCreateCommunity
+            this.userFavoriteMovies = res.data.userFavoriteMovies
             
-            console.log(this.userLikeMovies)
+            console.log(this.userLikeMovies.length, ';;')
             // console.log(res.data,'유저데이터')
-              if (userId === user_id) {
-                this.itsMe = true
-                // console.log('나다')
-              } else {
-                this.itsME = false
-              }
+            if (userId === user_id) {
+              this.itsMe = true
+              // console.log('나다')
+            } else {
+              this.itsME = false
+            }
               
           })
           .catch(err => {
@@ -201,83 +183,88 @@ export default {
             console.log('실패')
           })
 
-      },
-      getData : function () {
-        const token = localStorage.getItem('jwt')
-        const user_id = jwtDecode(token).user_id
-        const profile_id = this.$route.params.user_id
-        // console.log(profile_id)
-        axios({
-          method: 'get',
-          url: `${SERVER_URL}/accounts/${profile_id}/follow_list/`,
-          headers: this.setToken()
-        })
-          .then(res => {
-            console.log(res)
-            console.log('성공했슴다1')
-            const list = res.data.followers.filter(user =>
-                user.pk === user_id
-                )
-            // console.log(list.length)
-            if (list.length) {
-              this.followBoolen = false
-              console.log('팔로우하고있음',this.followBoolen)
-            } else {
-              this.followBoolen = true
-              console.log('팔로우취소',this.followBoolen)
-            }
-            console.log(this.followBoolen)
-            console.log(res.data.followers.length)
-            this.follower = res.data.followers.length
-            this.following = res.data.followings.length
-            this.followerList = res.data.followers
-            this.followingList = res.data.followings
-            console.log(this.followerList)
-            console.log(this.followingList, '팔로잉리스트')
-          })
-          .catch(err => {
-            console.log(err)
-            console.log('실패')
-          })
-        },
-      owChange : function () {
-        if (this.owList === true) {
-          console.log('떠라')
-          this.owList = false
-        } else {
-          this.owList = true
-        }
-        // this.getData()
-      },
-      ingChanges : function () {
-        if (this.ingList === true) {
-          console.log('왔다')
-          this.ingList = false
-        } else {
-          this.ingList = true
-        }
-        // this.getData()
-      },
-      movieDetailInfo: function(movie_id) {
-        this.$router.push(
-          { name : 'MovieDetails', 
-            params: {
-              movieId : movie_id,
-            }
-        })
-      }
     },
-  
-    created: function () {
-      if (localStorage.getItem('jwt')) {
-        this.getUserProfile()
-        this.getData()
-        // this.getData()
-        // console.log('로그인은됨')
+    getData : function () {
+      const token = localStorage.getItem('jwt')
+      const user_id = jwtDecode(token).user_id
+      const profile_id = this.$route.params.user_id
+      // console.log(profile_id)
+      axios({
+        method: 'get',
+        url: `${SERVER_URL}/accounts/${profile_id}/follow_list/`,
+        headers: this.setToken()
+      })
+        .then(res => {
+          console.log(res)
+          console.log('성공했슴다1')
+          const list = res.data.followers.filter(user =>
+              user.pk === user_id
+              )
+          // console.log(list.length)
+          if (list.length) {
+            this.followBoolen = false
+            console.log('팔로우하고있음',this.followBoolen)
+          } else {
+            this.followBoolen = true
+            console.log('팔로우취소',this.followBoolen)
+          }
+          console.log(this.followBoolen)
+          console.log(res.data.followers.length)
+          this.follower = res.data.followers.length
+          this.following = res.data.followings.length
+          this.followerList = res.data.followers
+          this.followingList = res.data.followings
+          console.log(this.followerList)
+          console.log(this.followingList, '팔로잉리스트')
+        })
+        .catch(err => {
+          console.log(err)
+          console.log('실패')
+        })
+      },
+    owChange : function () {
+      if (this.owList === true) {
+        console.log('떠라')
+        this.owList = false
       } else {
-        this.$router.push({ name: 'Login' })
+        this.owList = true
       }
+      // this.getData()
     },
+    ingChanges : function () {
+      if (this.ingList === true) {
+        console.log('왔다')
+        this.ingList = false
+      } else {
+        this.ingList = true
+      }
+      // this.getData()
+    },
+    movieDetailInfo: function(movie_id) {
+      window.scrollTo(0,0)
+      this.$router.push(
+        { name : 'MovieDetails', 
+          params: {
+            movieId : movie_id,
+          }
+      })
+    },
+    selectProfile: function (event) {
+      this.select = event.target.textContent
+      console.log(this.select)
+    }
+  },
+
+  created: function () {
+    if (localStorage.getItem('jwt')) {
+      this.getUserProfile()
+      this.getData()
+      // this.getData()
+      // console.log('로그인은됨')
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
+  },
   // computed: function() {
   //     // this.getData()
   // }
@@ -291,10 +278,23 @@ export default {
   z-index: auto;
 }
 
+#topp::before {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-image: url("https://t1.daumcdn.net/cfile/tistory/99AB80505BFC000121");
+  background-size: 100% 100%;
+  filter: blur(2px); 
+  z-index: -1; 
+  content: "";
+}
+
 .container {
-  max-width: 1250px;
-  margin: 30px auto 30px;
-  padding: 0 !important;
+  max-width: 1500px;
+  margin: 0px auto 30px;
+  padding: 0px!important;
   width: 90%;
   background-color: #fff;
   box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.10);
@@ -451,7 +451,7 @@ main {
   color: #888;
 }
 
-.nav li:hover, .nav li:nth-child(1)  { 
+.nav li:hover  { 
   color: #999;
   border-bottom: 2px solid #999;
 }

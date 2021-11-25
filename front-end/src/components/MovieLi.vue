@@ -1,19 +1,21 @@
 <template>
-  <div class="pt-3">
-    <carousel-3d
-      height="480"
-      border="5"
-      :autoplay="true"
-      :count="movie13.length"
-    >
-      <slide style="border-color: #9d7809;" v-for="(movie, idx) in movie13" :index="idx" :key="idx">
-        <template slot-scope="{ index, isCurrent, leftIndex, rightIndex }">
-          <img 
-            @click="movieDetailInfo(movie.id)" :data-index="index" 
-            :class="{ current: isCurrent, onLeft: (leftIndex >= 0), onRight: (rightIndex >= 0) }" :src="movie.poster_path">
-        </template>
-      </slide>
-    </carousel-3d>
+  <div id="topp">
+    <div style="padding-top: 60px; padding-bottom: 100px;">
+      <carousel-3d
+        height="480"
+        border="5"
+        :autoplay="true"
+        :count="movie13.length"
+      >
+        <slide style="border-color: rgb(26, 30, 35);" v-for="(movie, idx) in movie13" :index="idx" :key="idx">
+          <template slot-scope="{ index, isCurrent, leftIndex, rightIndex }">
+            <img 
+              @click="movieDetailInfo(movie.id)" :data-index="index" 
+              :class="{ current: isCurrent, onLeft: (leftIndex >= 0), onRight: (rightIndex >= 0) }" :src="movie.poster_path">
+          </template>
+        </slide>
+      </carousel-3d>
+    </div>
   </div>
 </template>
 
@@ -42,6 +44,7 @@ export default {
       return config
     },
     movieDetailInfo: function(movie_id) {
+      window.scrollTo(0,0)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {
@@ -58,5 +61,16 @@ export default {
 }
 </script>
 <style>
-
+  #topp::before{
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-image: url("https://t1.daumcdn.net/cfile/tistory/227F0641574AB98428");
+  background-size: 100% 100%;
+  /* filter: blur(2px);  */
+  z-index: -1; 
+  content: "";
+}
 </style>

@@ -39,6 +39,7 @@ export default {
       return config
     },
     movieDetailInfo: function(movie_id) {
+      window.scrollTo(0,0)
       this.$router.push(
         { name : 'MovieDetails', 
           params: {

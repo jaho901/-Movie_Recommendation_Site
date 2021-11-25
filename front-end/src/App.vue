@@ -1,7 +1,7 @@
 <template>
   <div id="app" >
     <div id="navbar">
-      <b-navbar toggleable="lg" type="dark" variant="dark">
+      <b-navbar style="background-color: rgba(0,0,0,0.3)!important;" class="fixed-top" toggleable="lg" type="dark">
         <b-navbar-brand href="#">NavBar</b-navbar-brand>
 
 
@@ -47,7 +47,7 @@
       </b-navbar>
     </div>
 
-  <router-view @login="isLogin=true" :key="$route.fullPath"/>
+  <router-view style="margin-top: 56px;" @login="isLogin=true" :key="$route.fullPath"/>
   
   
   </div>
@@ -158,6 +158,7 @@ export default {
   z-index: 1;
 }
 
+
 #navbar {
   position: fixed-top;
 }
@@ -173,7 +174,7 @@ body {
 	border-radius: 25px;
 	height: fit-content;
 	display: inline-flex;
-	background-color: rgba(0, 0, 0, .4);
+	background-color: rgba(0, 0, 0, 0.5);
 	-webkit-backdrop-filter: blur(10px);
 	backdrop-filter: blur(10px);
 	align-items: center;

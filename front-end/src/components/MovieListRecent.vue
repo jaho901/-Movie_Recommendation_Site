@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="background-color: #1a1e23;">
     
-    <div class="my-5">
+    <div class="py-5">
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="최신">최신</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="horrorMovies">공포</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="sfMovies">SF</b-button>
@@ -41,12 +41,12 @@
         <b-card-group deck
           class="d-flex justify-content-center"
         >
-          <movie-list-recent-item
+          <movie-list-recent-item-copy
             v-for="(movie, idx) in movies" :key="idx"
             :movie="movie"
             @like-change="getMovies"
             >
-          </movie-list-recent-item >
+          </movie-list-recent-item-copy >
         </b-card-group>
       </div>
       <div v-else>
@@ -90,7 +90,7 @@
 import axios from 'axios'
 // import jwtDecode from "jwt-decode"
 
-import MovieListRecentItem from '@/components/MovieListRecentItem.vue'
+import MovieListRecentItemCopy from '@/components/MovieListRecentItemCopy.vue'
 import MovieGenreList from '@/components/MovieGenreList.vue'
 
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -98,7 +98,7 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: 'MovieList',
   components:{
-    MovieListRecentItem,
+    MovieListRecentItemCopy,
     MovieGenreList
   },
   data: function () {
