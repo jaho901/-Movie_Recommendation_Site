@@ -1,15 +1,8 @@
 <template>
-  <div cols="12" style="
-    width: 1200px;
-    height: 900px;
-    margin-left: auto;margin-right: auto;"
-    >
-  <b-card style="margin-top:100px;">
-    <!-- 영화 검색 -->
-
+  <div class="html">
     <div>
       <b-button v-b-modal.modal-lg
-        style="margin-bottom:100px;"
+        style="margin-bottom:0px;margin-top: 100px;"
         >영화 검색하기!
         </b-button>
 
@@ -50,70 +43,58 @@
           </b-form>
         </b-modal>
     </div>
-    
-    <b-container >
-      <b-row>
-        <b-col cols="4">
-          <div v-if="movieInfo" class="my-3"> 
-            <b-card
-              title="Card Title"
-              :img-src="imgSrc"
-              img-alt="Image"
-              img-top
-              img-width="280px"
-              tag="article"
-              class="mb-2"
+     
+    <div class="html">
+      <div class="body"> 
+        <section class="product" style="width:800px; margin-top: 50px; padding-bottom: 0px; margin-bottom: 100px;">
+          <div class="product__photo" style="width: 300px; height: 435px;">
+            <div class="photo-container">
+              <div class="photo-main">
+                <div class="controls">
+                  <div v-if="movieInfo">
+                    <img :src="imgSrc" alt="없어염" style="width: 300px; height: 435px;">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+             <div class="product__info" style="margin-right: 20px;">
+              
+              <div class="title" style="margin-right: 20px;">
+                <p>게시글 제목</p>
+                 <b-form-textarea
+                    id="textarea-state"
+                    :state="community_title.length >= 0"
+                    placeholder="Enter at least 10 characters"
+                    
+                    v-model = "community_title"
+                  ></b-form-textarea>
+                        
+              </div>
+              
+              <div class="description" style="height: 300px; overflow: auto">
+                <p>게시글 내용</p>
+              <b-form-textarea
+                id="textarea-rows"
+                placeholder="Tall textarea"
+                rows="20"
+                v-model="content"
+              ></b-form-textarea>
+            </div>
+
+              <b-btn
+              @click="createCommunity"
+              style="margin-top: 20px;"
               >
-            </b-card>
-
-            <b-card>
-              {{this.movieInfoContent}}
-            </b-card>
-          </div>
-
-
-          <div v-else>
-            <b-card>
-            <h3>아직 영화 선택을안했어요ㅠㅠ</h3>
-            <h5>영화를 선택하시면 영화내용이 뜰거에용 쀼</h5>
-            </b-card>
-          </div>
-
-        </b-col>
-        <b-col cols="8">
-          <b-card>
-          <hr>
-          <p style="color :white;">제목</p>
-          <b-form-textarea
-            id="textarea-state"
-            :state="community_title.length >= 0"
-            placeholder="Enter at least 10 characters"
+              작성하기
+              </b-btn>
+            </div>
+              
             
-            v-model = "community_title"
-          ></b-form-textarea>
-          
-          <br>
-          <!-- 게시글 내용 -->
-          <p style="color: white;">내용</p>
-          <br>
-          <b-form-textarea
-            id="textarea-rows"
-            placeholder="Tall textarea"
-            rows="20"
-             v-model="content"
-          ></b-form-textarea>
-
-          <b-btn
-            @click="createCommunity"
-            style="margin-top: 20px;"
-          >
-          작성하기
-          </b-btn>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
-  </b-card>
+        </section>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -141,7 +122,7 @@ export default {
       modalShow: false,
       movienull : true,
       firstinput : false,
-      movieInfoContent : null
+      movieInfoContent : null,
     }
   },
   methods :  {
@@ -202,7 +183,9 @@ export default {
         this.movieInfoContent = _.replace(movieInfo.content, "[", "")
         this.movieInfoContent = _.replace(this.movieInfoContent, "]", "")
 
-        console.log(this.movieInfoContent)
+        console.log(this.movieInfo,'무비인포')
+        this.poster_path = this.movieInfo.poster_path
+        console.log(this.movieInfo.poster_path)
       } else {
         this.movieInfo = null
         // console.log(this.movieInfo)
@@ -260,7 +243,7 @@ export default {
   },
   created : function  () {
     this.getMovie()
-    console.log(this.movie_list)
+    console.log(this.movie_list,' 무비시르트')
   },
   computed : {
     clickByResult : function () {
@@ -269,6 +252,7 @@ export default {
       });
     },
     imgSrc : function() {
+      console.log(this.movieInfo, '컴퓻')
       const imgsrc = this.movieInfo.poster_path
       return imgsrc
     },
@@ -281,39 +265,242 @@ export default {
 }
 </script>
 
-<style scoped>
 
-.card {
-  background-color:violet;
+<style lang="scss" scoped>
+/* ----- Variables ----- */
+$color-primary: #4c4c4c;
+$color-secondary: #a6a6a6;
+$color-highlight: #ff3f40;
+
+/* ----- Global ----- */
+* {
+	box-sizing: border-box;
 }
 
-.modal-content {
-  align-items: center;
+.html,
+.body {
+	height: 100%;
+  background-color: #343a40;
+  margin-top: 0px;
 }
 
 .body {
-  padding-right: 0px;
+	display: grid;
+	grid-template-rows: 1fr;
+	font-family: "Raleway", sans-serif;
+	background-color: #343a40!important;
 }
 
-.cards {
-   width: 100%;
-   max-width: 300px;
-   min-width: 200px;
-   height: 400px;
-   background-color: rgba(#343a40,0.75);
-   margin: 10px;
-   border-radius: 10px;
-   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
-   border: 2px solid rgba(7, 7, 7, 0.12);
-   font-size: 16px;   
-   transition: all 0.3s ease;
-   position: relative;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   flex-direction: column;
-   cursor: pointer;
-   transition: all 0.3s ease;
+.body2 {
+  display : row;
+  height: 100%;
+  grid-template-rows: 1fr;
+	font-family: "Raleway", sans-serif;
+	background-color: #010704;
 }
+
+h3 {
+	font-size: 0.7em;
+	letter-spacing: 1.2px;
+	color: $color-secondary;
+}
+
+// img {
+// 			max-width: 100%;
+// 			filter: drop-shadow(1px 1px 3px $color-secondary);
+// 		}
+
+/* ----- Product Section ----- */
+.product {
+	display: grid;
+	grid-template-columns: 0.9fr 1fr;
+	margin: auto;
+	padding: 2.5em 0;
+	min-width: 600px;
+	background-color: white;
+	border-radius: 5px;
+}
+.product2 {
+	display: row;
+	grid-template-columns: 0.9fr 1fr;
+	margin: auto;
+	padding: 2.5em 0;
+	min-width: 600px;
+	background-color: white;
+	border-radius: 5px;
+}
+
+/* ----- Photo Section ----- */
+.product__photo {
+	position: relative;
+}
+
+.photo-container {
+	position: absolute;
+	left: -2.5em;
+	display: grid;
+	grid-template-rows: 1fr;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	box-shadow: 4px 4px 25px -2px rgba(0, 0, 0, 0.3);
+}
+
+.photo-main {
+	border-radius: 6px 6px 0 0;
+	background-color: #9be010;
+	background: radial-gradient(#343a40, #343a40);
+
+	.controls {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.8em;
+		color: #fff;
+
+		i {
+			cursor: pointer;
+		}
+	}
+
+	img {
+		position: absolute;
+		left: 1.5em;
+		top: 1.5em;
+		max-width: 110%;
+		filter: saturate(150%) contrast(120%) hue-rotate(10deg)
+			drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
+	}
+}
+
+.photo-album {
+	padding: 0.7em 1em;
+	border-radius: 0 0 6px 6px;
+	background-color: #fff;
+
+	ul {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	li {
+		float: left;
+		width: 55px;
+		height: 55px;
+		padding: 7px;
+		border: 1px solid $color-secondary;
+		border-radius: 3px;
+	}
+}
+
+/* ----- Informations Section ----- */
+.product__info {
+	padding: 0.8em 0;
+}
+
+.title {
+	h1 {
+		margin-bottom: 0.1em;
+		color: $color-primary;
+		font-size: 1.5em;
+		font-weight: 900;
+	}
+
+	span {
+		font-size: 0.7em;
+		color: $color-secondary;
+	}
+}
+
+.price {
+	margin: 1.5em 0;
+	color: $color-highlight;
+	font-size: 1.2em;
+
+	span {
+		padding-left: 0.15em;
+		font-size: 2.9em;
+	}
+}
+
+.variant {
+	overflow: auto;
+
+	h3 {
+		margin-bottom: 1.1em;
+	}
+
+	li {
+		float: left;
+		width: 35px;
+		height: 35px;
+		padding: 3px;
+		border: 1px solid transparent;
+		border-radius: 3px;
+		cursor: pointer;
+
+		&:first-child,
+		&:hover {
+			border: 1px solid $color-secondary;
+		}
+	}
+
+	li:not(:first-child) {
+		margin-left: 0.1em;
+	}
+}
+
+.description {
+	clear: left;
+	margin: 2em 0;
+
+	h3 {
+		margin-bottom: 1em;
+	}
+
+	ul {
+		font-size: 0.8em;
+		list-style: disc;
+		margin-left: 1em;
+	}
+
+	li {
+		text-indent: -0.6em;
+		margin-bottom: 0.5em;
+	}
+}
+
+.buy--btn {
+	padding: 1.5em 3.1em;
+	border: none;
+	border-radius: 7px;
+	font-size: 0.8em;
+	font-weight: 700;
+	letter-spacing: 1.3px;
+	color: #fff;
+	background-color: $color-highlight;
+	box-shadow: 2px 2px 25px -7px $color-primary;
+	cursor: pointer;
+
+	&:active {
+		transform: scale(0.97);
+	}
+}
+
+/* ----- Footer Section ----- */
+footer {
+	padding: 1em;
+	text-align: center;
+	color: #fff;
+
+	a {
+		color: $color-primary;
+
+		&:hover {
+			color: $color-highlight;
+		}
+	}
+}
+
+
 
 </style>
