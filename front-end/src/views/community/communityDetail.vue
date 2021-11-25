@@ -64,12 +64,12 @@
 
             
             <b-button @click="updateReview" v-if="update">수정</b-button>
-            <b-button @click="pushReview" v-else>업데이트</b-button>
-            <b-button @click="deleteDetail">삭제</b-button>
+            <b-button variant="success" @click="pushReview" v-else>업데이트</b-button>
+            <b-button variant="danger"  @click="deleteDetail">삭제</b-button>
             
           
           </div>
-          <p v-if="!check">본인의 게시글이 아닙니다!</p>
+          <p v-if="!check" style="margin-top: 10px;">본인의 게시글이 아닙니다!</p>
           <p v-if="!deletecheck">삐빅 삭제불가입니다!</p>
       </div>
     </section>
