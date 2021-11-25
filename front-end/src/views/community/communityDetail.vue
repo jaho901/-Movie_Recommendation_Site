@@ -66,7 +66,7 @@
       <community-review
         v-for="review in review_list" :key="review.pk"
         :community="communityInfo" :review="review"
-        @update="getCommunityDetail()"
+        @update="getCommunityDetail(community_id)"
         >
       </community-review>
 
@@ -91,7 +91,7 @@ export default {
   name:"communityDetail",
   data: function() {
     return {
-      community_id: "",
+      community_id: null,
       communityInfo: {},
       likeCount : 0,
       like : null,
@@ -138,7 +138,7 @@ export default {
             }
            this.likeCount = this.communityInfo.like_users.length
            this.hateCount = this.communityInfo.hate_users.length
-           
+           this.getReviews()
           
         })
         .catch(err => {
@@ -151,7 +151,7 @@ export default {
     },
     movieLike : function () { 
       const communityId = this.community_id
-      console.log(communityId)
+      console.log(communityId,'좋아요')
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       const likeItem = {
