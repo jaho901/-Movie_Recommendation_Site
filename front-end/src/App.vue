@@ -2,7 +2,7 @@
   <div id="app" >
     <div id="navbar">
       <b-navbar style="background-color: rgba(0,0,0,0.3)!important;" class="fixed-top" toggleable="lg" type="dark">
-        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+       <b-navbar-brand :to='{name:"Home"}'>JayPark</b-navbar-brand>
 
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -11,21 +11,10 @@
           <b-navbar-nav  v-if="isLogin">
             <b-nav-item :to="{ name: 'Movie' }">MOVIE</b-nav-item>
             <b-nav-item :to="{ name: 'Community' }">Community</b-nav-item>
-            <b-nav-item href="#">즐겨찾기</b-nav-item>
-            <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
-          </b-navbar-nav>
-      
-          <b-navbar-nav  v-else>
-            <b-nav-item><router-link :to="{ name: 'Signup' }">Signup</router-link></b-nav-item>
-            <b-nav-item><router-link :to="{ name: 'Login' }">Login</router-link></b-nav-item>
-            <b-nav-item :to="{ name: 'Login' }">lllllllll</b-nav-item>
-            <b-nav-item href="#">즐겨찾기</b-nav-item>
+            <b-nav-item :to="{ name:'Recommendation'}">Recommend</b-nav-item>
             <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
           </b-navbar-nav>
 
-          
-          
-          <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
             
             <b-nav-item-dropdown right v-if="isLogin">
@@ -33,12 +22,12 @@
               <template #button-content>
                 <em>User</em>
               </template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item ><router-link click.native="logout" to="#">Logout</router-link></b-dropdown-item>
+              <b-dropdown-item :to="{name: 'profile', params : {user_id: this.useridid} }">Profile</b-dropdown-item>
+              <b-dropdown-item  @click.native="logout" to="#">Logout</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
 
-          <b-nav-form style="display: inline-block">
+          <b-nav-form style="display: inline-block" v-if="isLogin">
               <b-form-input  class="mr-sm-2" placeholder="Search"></b-form-input>
               <b-button  class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
@@ -135,7 +124,10 @@ export default {
     // 2. 토큰이 있으면
     if (token) {
       // 3. true로 변경하고 없으면 유지
+      const user_id = jwtDecode(token).user_id
       this.isLogin = true
+      this.useridid = user_id
+
     
       if (localStorage.getItem('jwt')) {
         this.getMovies()

@@ -2,8 +2,8 @@
    <div id="home">
 
       <div class="welcom">
-         <h1>WelCome</h1>
-         <h2>영화보러갈래?</h2>
+         <h1>Welcome</h1>
+         <h1>Movie Assemble</h1>
       </div>
 
       <!-- <div class="about">

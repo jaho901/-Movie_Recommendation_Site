@@ -11,7 +11,7 @@
                   <input type="text" name="" placeholder="Username" v-model="credentials.username">
                   <input type="password" name="" placeholder="Password" v-model="credentials.password" @keyup.enter="login"> 
                   <p v-if = 'passwordToggle === true' style="color : red">비밀번호가 일치하지 않습니다!!!</p>
-                  <a class="forgot text-muted" @click="goSignup">회원이 아님? 가입 ㄱ</a>
+                  <a class="forgot text-muted" @click="goSignup">회원이 아니신가요? 회원가입 하러 갈까요?</a>
                   <input type="submit" name="" value="Login" @click="login">
                   <div class="col-md-12">
                       <ul class="social-network social-circle">

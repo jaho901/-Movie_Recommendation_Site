@@ -23,7 +23,8 @@
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="musicalMovies">뮤지컬</b-button>
     </div>
     <div>
-      연령별
+      <h3 style="color:white">연령별</h3>
+      <hr>  
       <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="모든연령">ALL</b-button>
       <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="전체">전체관람가능</b-button>
       <b-button pill variant="secondary" class="mx-2"  @click="ageChange" value="12세">12세이상 관람가능</b-button>
