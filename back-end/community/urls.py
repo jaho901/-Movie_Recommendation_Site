@@ -7,7 +7,7 @@ urlpatterns = [
     path('', views.community_list),
     path('community_create/', views.community_create),
     path('<int:community_id>/', views.community_detail),
-    path('<int:community_id>/delete/', views.community_delete),
+    path('<int:user_pk>/delete/<int:community_id>/', views.community_delete),
     path('<int:community_id>/update/', views.community_update),
     path('<int:community_id>/like/', views.community_like),
     path('<int:community_id>/hate/', views.community_hate),
