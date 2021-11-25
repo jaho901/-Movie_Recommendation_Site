@@ -78,7 +78,7 @@ export default {
     communityDetail : function (com_id) {
       // console.log(this.communityContents.id)
       const community_id = com_id
-      console.log(community_id)
+      console.log(community_id,'페이지리스트의 커뮤티니티아이디')
       this.$router.push({name:"communityDetail",params:{community_id : community_id}})
     }  
   },
