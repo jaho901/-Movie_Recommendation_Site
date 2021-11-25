@@ -7,7 +7,7 @@
     </pre>
     <div class="container">
         <header class="main-header clearfix">
-          <h1 class="name">3DTransform <span>Gallery</span></h1>
+          <h1 class="name" style="font-size: 2em; margin-bottom: 0px;">오늘의 요일 추천 영화</h1>
         </header>
 
         <div class="content clearfix">
@@ -58,6 +58,7 @@ export default {
   },
   data: function () {
     return {
+      day : ''
     }
   },
   methods: {
@@ -119,6 +120,8 @@ export default {
   },
   created : function() {
     this.getMovies()
+    this.day = this.$store.state.day
+    console.log(this.day ,'오늘의 요일')
   }
 }
 </script>

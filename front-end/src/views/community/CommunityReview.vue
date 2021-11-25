@@ -104,6 +104,7 @@ export default {
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
       this.userId = user_id
+    
       const likeItem = {
         user: user_id
       }
@@ -175,6 +176,8 @@ export default {
   },
   created : function() {
     this.checkStatus()
+    console.log(this.userId)
+    console.log(this.review.user)
   }
 }
 </script>

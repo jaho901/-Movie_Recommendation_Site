@@ -9,7 +9,7 @@
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="mysteryMovies">미스터리</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="thrillerMovies">스릴러</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="romanceMovies">멜로/로맨스</b-button>
-      <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="fantasyMovies">코미디</b-button>
+      <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="fantasyMovies">판타지</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="warMovies">전쟁</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="animationMovies">애니메이션</b-button>
       <b-button pill variant="secondary" class="mx-2 my-2" @click="valueChange" value="adventureMovies">모험</b-button>

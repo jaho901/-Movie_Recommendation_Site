@@ -37,6 +37,7 @@ export default new Vuex.Store({
     movieKorea: null,
     movie13: null,
     movieFavorite: null,
+    day : null
   },
   mutations: {
     MOVIE_13(state, res) {
