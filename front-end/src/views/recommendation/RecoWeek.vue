@@ -51,12 +51,6 @@
 </template>
 
 <script>
-// import RecoMovieList from '@/views/recommendation/RecoMovieList'
-import axios from 'axios'
-import _ from 'lodash'
-
-const SERVER_URL = process.env.VUE_APP_SERVER_URL
-
 export default {
   name: "RecoWeek",
   components:{
@@ -64,19 +58,6 @@ export default {
   },
   data: function () {
     return {
-      movies: [],
-      movie1: null,
-      movie2: null,
-      movie3: null,
-      movie4: null,
-      movie5: null,
-      movie6: null,
-      movie7: null,
-      movie8: null,
-      movie9: null,
-      movie10: null,
-      movie11: null,
-      movie12: null,
     }
   },
   methods: {
@@ -87,32 +68,7 @@ export default {
       }
       return config
     },
-    getMovies: function () {
-      axios({
-        method: 'GET',
-        url: `${SERVER_URL}/recommendation/recommend_by_day_of_week/`,
-        headers: this.setToken()  // 'JWT token~~~'
-      })
-        .then(res => {
-          this.movies = _.sampleSize(res.data, 12)
-          console.log(this.movie1)
-          this.movie1 = this.movies[0]
-          this.movie2 = this.movies[1]
-          this.movie3 = this.movies[2]
-          this.movie4 = this.movies[3]
-          this.movie5 = this.movies[4]
-          this.movie6 = this.movies[5]
-          this.movie7 = this.movies[6]
-          this.movie8 = this.movies[7]
-          this.movie9 = this.movies[8]
-          this.movie10 = this.movies[9]
-          this.movie11 = this.movies[10]
-          this.movie12 = this.movies[11]
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      },
+
     movieDetailInfo: function(movie_id) {
       window.scrollTo(0,0)
       this.$router.push(
@@ -122,6 +78,44 @@ export default {
           }
       })
     }
+  },
+  computed: {
+    movie1: function () {
+      return this.$store.state.movie1
+    },
+    movie2: function () {
+      return this.$store.state.movie2
+    },
+    movie3: function () {
+      return this.$store.state.movie3
+    },
+    movie4: function () {
+      return this.$store.state.movie4
+    },
+    movie5: function () {
+      return this.$store.state.movie5
+    },
+    movie6: function () {
+      return this.$store.state.movie6
+    },
+    movie7: function () {
+      return this.$store.state.movie7
+    },
+    movie8: function () {
+      return this.$store.state.movie8
+    },
+    movie9: function () {
+      return this.$store.state.movie9
+    },
+    movie10: function () {
+      return this.$store.state.movie10
+    },
+    movie11: function () {
+      return this.$store.state.movie11
+    },
+    movie12: function () {
+      return this.$store.state.movie12
+    },
   },
   created : function() {
     this.getMovies()

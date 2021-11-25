@@ -1,19 +1,43 @@
 <template>
   <div>
-    <p v-if="update">{{review.content}}</p>
-    <input v-else type="text" value="#" v-model="newReview">
-    <button @click="updateReview" v-if="update">수정</button>
-    <button @click="pushReview" v-else>업데이트</button>
-
-    <button @click="deleteReview(review)">삭제</button>
-
-    <button @click="reviewLikeClick" v-if="!like">좋아요</button>
-    <button @click="reviewLikeClick" v-else>좋아요취소</button>
-    <p>좋아요 갯수 {{this.likeCount}}</p>
-
-    <button @click="reviewHateClick" v-if="!hate">싫어요</button>
-    <button @click="reviewHateClick" v-else>싫어요취소</button>
-    <p>싫어요 갯수 {{this.hateCount}}</p>
+    <div class="d-flex justify-content-center" style="margin-bottom: 10px;">
+      <div class="mx-3">
+        작성자ID : {{ review.user }}
+      </div>
+      <div>
+        별점 : {{ review.rank }}점
+      </div>
+      <div v-if="update">
+        <div class="mx-3">
+          <span>리뷰 : {{review.content}}</span>
+        </div>
+      </div>
+      <input v-else type="text" value="#" v-model="newReview">
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="mx-3">
+        <span>
+          <b-icon icon="emoji-heart-eyes" font-scale="2" @click="reviewLikeClick" v-if="!like" v-b-popover.hover.top="'이 리뷰가 마음에 듭니다.'"></b-icon>
+          <b-icon icon="emoji-heart-eyes-fill" font-scale="2" @click="reviewLikeClick" v-else></b-icon>
+          <span style="margin-left: 10px;" v-if="!like">좋아요 {{ likeCount }}명</span>
+          <span style="margin-left: 10px;" v-else>좋아요 {{ likeCount }}명</span>
+        </span>
+      </div>
+      <div class="mx-3">
+        <span>
+          <b-icon icon="emoji-angry" font-scale="2" @click="reviewHateClick" v-if="!hate" v-b-popover.hover.top="'이 리뷰가 마음에 들지 않습니다.'"></b-icon>
+          <b-icon icon="emoji-angry-fill" font-scale="2" @click="reviewHateClick" v-else></b-icon>
+          <span style="margin-left: 10px;" v-if="!hate">싫어요 {{ hateCount }}명</span>
+          <span style="margin-left: 10px;" v-else>싫어요 {{ hateCount }}명</span>
+        </span>
+      </div>
+      <div v-if="reviewerId === userId">
+        <button class="mx-3" @click="updateReview" v-if="update">수정</button>
+        <button class="mx-3" @click="pushReview" v-else>업데이트</button>
+      </div>
+      <button class="mx-3" @click="deleteReview(review)">삭제</button>
+    </div>
+    <hr>
   </div>
 </template>
 
@@ -37,7 +61,9 @@ export default {
       like: false,
       likeCount : 0,
       hate: false,
-      hateCount : 0
+      hateCount : 0,
+      reviewerId: this.review.user,
+      userId : null
     }
   },
   methods:{
@@ -50,10 +76,10 @@ export default {
     },
     deleteReview: function (review) {
       // const movieId = this.movie.id
-      // console.log(this.review.id)
+      console.log(review.id)
        axios({
         method: 'delete',
-        url: `${SERVER_URL}/movies/${this.community.id}/review/${review.id}/delete`,
+        url: `${SERVER_URL}/community/${this.community.id}/review/${review.id}/delete`,
         headers: this.setToken()
       })
         .then(res => {
@@ -77,6 +103,7 @@ export default {
       // const movieId = this.movie.id
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
+      this.userId = user_id
       const likeItem = {
         user: user_id
       }
@@ -130,6 +157,7 @@ export default {
     checkStatus : function () {
       const token = localStorage.getItem('jwt')
       const userpk = jwtDecode(token).user_id
+      this.userId = userpk
       if (this.review.like_users.includes(userpk)) {
         this.like = true
       } else {

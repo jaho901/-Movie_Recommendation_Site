@@ -145,7 +145,7 @@ img{
     width: 80%;
     max-width: 100%;
     white-space: nowrap;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.8);
 }
 
 #fl-table td, #fl-table th {

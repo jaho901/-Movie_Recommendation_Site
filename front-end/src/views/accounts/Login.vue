@@ -75,12 +75,16 @@ export default {
 
 <style scoped>
 
-/* #LSform {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background: linear-gradient(to right, #b92b27, #1565c0)
-} */
+@keyframes fadeInDown {
+      0% {
+          opacity: 0;
+          transform: translate3d(0, -100%, 0);
+      }
+      to {
+          opacity: 1;
+          transform: translateZ(0);
+      }
+  }
 
 #topp::before{
   position: fixed; 
@@ -88,7 +92,7 @@ export default {
   left: 0; 
   right: 0; 
   bottom: 0;
-  background-image: url("https://mblogthumb-phinf.pstatic.net/20130708_140/bluekai1_1373262639056gV8rB_JPEG/thor_the_dark_world-wide.jpg?type=w2");
+  background-image: url("https://mblogthumb-phinf.pstatic.net/20140920_208/naoml5511_1411177809872B9baY_JPEG/%C5%E4%B8%A3%B9%E8%B0%E6%C8%AD%B8%E9_009.jpg?type=w2");
   background-size: 100% 100%;
   /* filter: blur(2px);  */
   z-index: -1; 
@@ -98,7 +102,8 @@ export default {
 .card {
     margin-bottom: 20px;
     border: none;
-    transform:scale(1.1);
+    /* transform:scale(1.1); */
+    animation: fadeInDown 2s;
     
 }
 
@@ -108,8 +113,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    background: #191919;
-    ;
+    background: rgba(0,0,0,0.7);
     text-align: center;
     transition: 0.25s;
     margin-top: 100px;

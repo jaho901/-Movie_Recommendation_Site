@@ -25,7 +25,7 @@ class Community(models.Model):
 class Ceview(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_ceview')
     community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='ceview')
-    # rank = models.CharField(max_length=10)
+    rank = models.CharField(max_length=10)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

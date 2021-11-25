@@ -11,8 +11,10 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from movies.models import Movie
 from accounts.models import User
+from community.models import Community
 from movies.serializers import MovieSerializer, MovieListSerializer
 from accounts.serializers import UserSerializer
+from django.db.models import Count
 
 from urllib.parse import quote_plus
 from bs4 import BeautifulSoup
@@ -35,21 +37,21 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
         soup = BeautifulSoup(html)
         week = soup.select_one('#rso > div.ULSxyf > div > div > div.vk_gy.vk_sh.card-section.sL6Rbf > div.vk_bk.dDoNo.FzvWSb').text
         if re.search(r'월요일', week):
-            genre_by_week = [0,1,2]
+            genre_by_week = [1,13]
         elif re.search(r'화요일', week):
-            genre_by_week = [3,4]
+            genre_by_week = [7,9,11]
         elif re.search(r'수요일', week):
-            genre_by_week = [5,6,7]
+            genre_by_week = [5,10,12,15]
         elif re.search(r'목요일', week):
-            genre_by_week = [8,9]
+            genre_by_week = [6,8,14]
         elif re.search(r'금요일', week):
-            genre_by_week = [10,11,12]
+            genre_by_week = [0,4]
         elif re.search(r'토요일', week):
-            genre_by_week = [13,14]
+            genre_by_week = [16,17]
         else:
-            genre_by_week = [15,16,17]
+            genre_by_week = [2,3]
 
-        return Movie.objects.filter(genre__in=genre_by_week)[:50]
+        return Movie.objects.filter(genre__in=genre_by_week)
     queryset = week()
     serializer_class = MovieListSerializer
 
@@ -57,14 +59,11 @@ class MovieRecommendByDayViewSet(ReadOnlyModelViewSet):
 
 @api_view(['GET'])
 def today_user_list(request):
-    people = User.objects.all()
-    people_id = []
-    for i in range(len(people)):
-        people_id.append(people[i].id)
-    person_id = [random.choice(people_id)]
+    community = Community.objects.values('user_id').annotate(num_user=Count('user_id')).order_by('-num_user')[:10]
+    person = random.choice(community)
+    person_id = [person['user_id']]
     user = get_object_or_404(User, pk=person_id[0])
     userserializer = UserSerializer(user)
-    
     movies = Movie.objects.filter(like_users__in = person_id)
     serializer = MovieSerializer(movies, many=True)
 
