@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="toaa">
     <pre>
 
 
@@ -134,9 +134,13 @@ export default {
 body {
 	font: 1em/1.5 'Open Sans', sans-serif;
 	color: #373737;
-	background: #eaeaea;
 	margin: 0;
 }
+
+#toaa {
+  background: #1a1e23;
+}
+
 a {
 	text-decoration: none;
 }
@@ -163,11 +167,6 @@ p {
 	margin: 0 0 1.5em;
 }
 
-/* ================================= 
-  Base Layout Styles
-==================================== */
-
-/* ---- Layout Containers ---- */
 
 .container,
 .content {
@@ -175,9 +174,11 @@ p {
 }
 .container {
 	width: 94.02985075%;
-	max-width: 1500px;
+	max-width: 1200px;
 	padding: 0 2.25em 4em;
-	background: #fff;
+	background: rgba(235, 235, 235, 0.6);
+  border-radius: 50px;
+  z-index: 1;
 }
 .main-header {
 	text-align: center;

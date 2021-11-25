@@ -1,21 +1,23 @@
-<template style="background-color: #1a1e23;">
-  <div id="mod">
-    <h1 style="color: white;">오늘의 블로거 {{ TodayUser.nickname }}의 영화 리스트!!!</h1>
-    <pre>
+<template>
+  <div>
+    <div id="mod">
+      <h1 style="color: white;">오늘의 블로거 {{ TodayUser.nickname }}의 영화 리스트!!!</h1>
+      <pre>
 
-    </pre>
-    <vue-glide
-      v-if="movieToday"
-      :startAt="3"
-      :focusAt="2"
-      :perView="5"
-      :autoplay="2500"
-      class="demo"
-    >
-      <vue-glide-slide style="width: 100%;" v-for="(movie, idx) in movieToday" :key="idx">
-        <img @click="movieDetailInfo(movie.id)" style="height: 400px;" :src="movie.poster_path" />
-      </vue-glide-slide>
-    </vue-glide>
+      </pre>
+      <vue-glide
+        v-if="movieToday"
+        :startAt="3"
+        :focusAt="2"
+        :perView="5"
+        :autoplay="2500"
+        class="demo"
+      >
+        <vue-glide-slide style="width: 100%;" v-for="(movie, idx) in movieToday" :key="idx">
+          <img @click="movieDetailInfo(movie.id)" style="height: 400px;" :src="movie.poster_path" />
+        </vue-glide-slide>
+      </vue-glide>
+    </div>
   </div>
 </template>
 
@@ -59,13 +61,17 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+
 #mod {
+  background-image: url("https://i.ytimg.com/vi/ijUsSpRVhBU/maxresdefault.jpg");
+  background-size: 100% 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #2c3e50;  
+  padding-top: 200px;
+  padding-bottom: 220px;
   .demo {
     .glide {
       &__slide {
@@ -79,12 +85,12 @@ export default {
         font-weight: 600;
         border-radius: 5px;
         transition: all .3s;
-        opacity: .3;
+        opacity: .8;
         &--active {
           border: none;
           color: #fff;
            opacity: 1;
-          background: #1a1e23;
+          background: rgba(0,0,0,0.6);
         }
       }
     }

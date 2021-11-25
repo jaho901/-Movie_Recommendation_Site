@@ -1,10 +1,8 @@
 <template>
-  <div>
+  <div class="topp">
     <reco-today :movie="movieToday"></reco-today>
-    <hr>
     <reco-week :movie="movieWeek"></reco-week>
-    <hr>
-    <reco-korea :movie="movieKorea"></reco-korea>
+    <reco-korea style="background-color: #1a1e23;" :movie="movieKorea"></reco-korea>
   </div>
 </template>
 
@@ -48,8 +46,8 @@ export default {
 }
 </script>
 
-<style scoped>
-.bestMovie {
-  float: left
+<style lang="scss" scoped>
+.topp{
+  margin-top: 0px!important;
 }
 </style>
