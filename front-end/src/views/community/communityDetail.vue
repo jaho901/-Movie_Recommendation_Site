@@ -264,6 +264,7 @@ $color-highlight: #ff3f40;
 .html,
 .body {
 	height: 100%;
+  margin-top: 0px!important;
 }
 
 .body {
