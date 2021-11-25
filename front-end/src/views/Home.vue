@@ -43,7 +43,7 @@
             
                <div class="icon"><i class="material-icons md-36"></i></div>
                <h3 class="title">Log-In</h3>
-               <p class="text">Go To Sign-In</p>
+               <p class="text">Go To Log-In</p>
             
          </div>
       </div>
@@ -62,7 +62,7 @@
            this.$router.push({ name: 'Signup' })
         },
         goLogin : function() {
-           this.$router.push({ name: 'Signup' })
+           this.$router.push({ name: 'Login' })
         }
      }
   }
@@ -73,12 +73,13 @@
 <style lang="scss" scoped>
 
 #home {
-   background-image: url("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2F20160501_213%2Fgentlemanoptic_1462091646333PzcAC_JPEG%2F692437.jpg&type=sc960_832");
+   background-image: url("https://ww.namu.la/s/a8ad199a99e35084f7db0162de912681df2ef21935406f05edcf81aa668760adaeb08211f53bbdfe687f21586c14c83326800b9ba233982565a110cb89266ec6bb20f0413a3af386ebf6ec0dd0065e6a");
    // background-color: #212529;
    height: 100vh;   
    background-repeat : no-repeat;
    background-size : cover;
    // position: relative;
+   margin-top: 0px!important;
 }
 
 .welcom {

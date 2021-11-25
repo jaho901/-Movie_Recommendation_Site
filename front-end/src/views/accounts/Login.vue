@@ -1,25 +1,27 @@
 <template>
-  <div id="LSform">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card">
-            <form onsubmit="event.preventDefault()" class="box">
-                <h1>Login</h1>
-                <p class="text-muted"> Please enter your login and password!</p> 
-                <input type="text" name="" placeholder="Username" v-model="credentials.username">
-                <input type="password" name="" placeholder="Password" v-model="credentials.password" @keyup.enter="login"> 
-                <p v-if = 'passwordToggle === true' style="color : red">비밀번호가 일치하지 않습니다!!!</p>
-                <a class="forgot text-muted" @click="goSignup">회원이 아님? 가입 ㄱ</a>
-                <input type="submit" name="" value="Login" @click="login">
-                <div class="col-md-12">
-                    <ul class="social-network social-circle">
-                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a></li>
-                    </ul>
-                </div>
-            </form>
+  <div id="topp">
+    <div id="LSform">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <form onsubmit="event.preventDefault()" class="box">
+                  <h1>Login</h1>
+                  <p class="text-muted"> Please enter your login and password!</p> 
+                  <input type="text" name="" placeholder="Username" v-model="credentials.username">
+                  <input type="password" name="" placeholder="Password" v-model="credentials.password" @keyup.enter="login"> 
+                  <p v-if = 'passwordToggle === true' style="color : red">비밀번호가 일치하지 않습니다!!!</p>
+                  <a class="forgot text-muted" @click="goSignup">회원이 아님? 가입 ㄱ</a>
+                  <input type="submit" name="" value="Login" @click="login">
+                  <div class="col-md-12">
+                      <ul class="social-network social-circle">
+                          <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                          <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                          <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a></li>
+                      </ul>
+                  </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -79,6 +81,19 @@ export default {
     font-family: sans-serif;
     background: linear-gradient(to right, #b92b27, #1565c0)
 } */
+
+#topp::before{
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-image: url("https://mblogthumb-phinf.pstatic.net/20130708_140/bluekai1_1373262639056gV8rB_JPEG/thor_the_dark_world-wide.jpg?type=w2");
+  background-size: 100% 100%;
+  /* filter: blur(2px);  */
+  z-index: -1; 
+  content: "";
+}
 
 .card {
     margin-bottom: 20px;

@@ -4,6 +4,7 @@
       <div class="movie">
         <div class="movie-image">
           <img style="width: 100%;" :src="movie.poster_path" alt="" />
+          <span><i class="fa fa-align-lef"></i></span>
         </div>
         <div class="movie-info">
           <p class="title">{{ movie.title }}</p>
@@ -56,6 +57,7 @@
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
+
 export default {
   name : 'MovieListRecentItem',
   props: {
@@ -198,6 +200,12 @@ export default {
   created: function () {
     this.getData()
   }
+  // watch : {
+  //   movieLike : function () {
+  //     this.movie = this.getMovies()
+  //   }
+  // }
+  
 }
 </script>
 

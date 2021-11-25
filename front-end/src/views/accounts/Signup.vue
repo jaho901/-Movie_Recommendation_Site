@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="topp">
     <!-- <p style="color:red">{{this.passwordLength}}</p> -->
     <div id="LSform">
     <div class="container">
@@ -85,6 +85,19 @@ export default {
       }
   }
 
+#topp::before{
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-image: url("https://phoneky.co.uk/thumbs/wallpapers/p2ls/movies/40/0951109d12731614.jpg");
+  background-size: 100% 100%;
+  /* filter: blur(2px);  */
+  z-index: -1; 
+  content: "";
+}
+
 .card {
     margin-bottom: 20px;
     border: none;
@@ -99,8 +112,7 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    background: #191919;
-    ;
+    background: rgba(0,0,0,0.7);
     text-align: center;
     transition: 0.25s;
     margin-top: 100px;

@@ -1,9 +1,6 @@
 <template>
   <div>
     <movie-li></movie-li>
-    <br>
-    <br>
-    <br>
     <movie-list-recent></movie-list-recent>
   </div>
 </template>

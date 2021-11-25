@@ -1,20 +1,22 @@
 <template>
-  <div class="table-wrapper" style="background-color: #1a1e23;">
-    <h1>Community</h1>
-      <div class="overflow-auto">
-        <center>
-          <b-button style="width: 80%;" block variant="secondary" @click="writeContent">Create Community</b-button>
-          <br>
-          <pagi-list
-            :list-array="communityList"
-          >
-          </pagi-list>
-        </center>
-      </div>
-    <pre>
+  <div id="topp">
+    <div class="table-wrapper">
+      <h1>Community</h1>
+        <div class="overflow-auto">
+          <center>
+            <b-button style="width: 80%;" block variant="secondary" @click="writeContent">Create Community</b-button>
+            <br>
+            <pagi-list
+              :list-array="communityList"
+            >
+            </pagi-list>
+          </center>
+        </div>
+      <pre>
 
 
-    </pre>
+      </pre>
+    </div>
   </div>
 </template>
 
@@ -61,8 +63,17 @@ export default {
 
 <style scoped>
 
-body {
-  background-color: #1a1e23;
+#topp::before{
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
+  background-image: url("https://www.10wallpaper.com/wallpaper/1920x1080/1107/The_incredible_hulk_wallpaper_The_Incredible_Hulk_Game_1920x1080.jpg");
+  background-size: 100% 100%;
+  /* filter: blur(2px);  */
+  z-index: -1; 
+  content: "";
 }
 
 h1{

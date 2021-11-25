@@ -1,59 +1,45 @@
 <template>
-  <div style="margin-top:100px;">
-    <!-- 영화 검색 -->
-    <div>
-      <b-button v-b-modal.modal-lg>영화 검색하기!</b-button>
-
-        <b-modal  id="modal-lg" size="lg" scrollable title="영화검색">
-          <b-form-input  placeholder="Enter Movie Title"
-            v-model.trim = "search_name"
-            @keyup.enter="filtering"
-            >
-          </b-form-input>
-
-          <hr>
-          <h3>검색결과</h3>
-          <div v-if="!firstinput">
-            <p>카드를 클릭하시면 자동으로 기입됩니다</p>
-            <p>한번 더 선택하면, 자동으로 초기 검색 결과를 보여줍니다</p>
-          </div>
-          <div v-if="!movienull">
-            <br>
-            <h3>검색 결과가 없어용</h3>
-            <h4>뿌잉 ㅠㅠ</h4>
-            <br>
-          <img  src="https://m.whodadoc.com/assets/consumer/mobile/img/map/img_schNoData.png" alt="">
-          </div>      
-          <b-form id="modal-scrollable" scrollable>
-            <b-card-group deck
-              class="d-flex justify-content-center"
-            >
-              <search-movie-list
-                v-for="result in clickByResult" :key="result.id"
-                :result ="result"
-                @changeresult="changeResults"
-                @clickidMovieInfo="movieInfosave"
-                >
-              </search-movie-list>
-            </b-card-group>
-          </b-form>
-        </b-modal>
-    </div>
-    
-    <b-container>
+    <div class="cards">
       <b-row>
-        <b-col cols="4">{{movieInfo}}</b-col>
+        <b-col cols="4">
+          <div v-if="movieInfo" class="my-3"> 
+            <b-card
+              title="Card Title"
+              :img-src="imgSrc"
+              img-alt="Image"
+              img-top
+              img-width="280px"
+              tag="article"
+              class="mb-2"
+              >
+            </b-card>
+
+            <b-card>
+              {{this.movieInfoContent}}
+            </b-card>
+          </div>
+
+
+          <div v-else>
+            <b-card>
+            <h3>아직 영화 선택을안했어요ㅠㅠ</h3>
+            <h5>영화를 선택하시면 영화내용이 뜰거에용 쀼</h5>
+            </b-card>
+          </div>
+
+        </b-col>
         <b-col cols="8">
+          <b-card>
           <hr>
           <p style="color :white;">제목</p>
-          <b-form-textarea
+          <!-- <b-form-textarea
             id="textarea-state"
-            :state="community_title.length >= 5"
+            :state="community_title.length >= 0"
             placeholder="Enter at least 10 characters"
             
             v-model = "community_title"
           ></b-form-textarea>
-          
+           -->
           <br>
           <!-- 게시글 내용 -->
           <p style="color: white;">내용</p>
@@ -62,23 +48,23 @@
             id="textarea-rows"
             placeholder="Tall textarea"
             rows="20"
-             v-model="content"
+            v-model="content"
           ></b-form-textarea>
 
-          <button
+          <b-btn
             @click="createCommunity"
+            style="margin-top: 20px;"
           >
           작성하기
-          </button>
-
+          </b-btn>
+          </b-card>
         </b-col>
       </b-row>
-    </b-container>
-  </div>
+    </div>
 </template>
 
 <script>
-import SearchMovieList from './SearchMovieList.vue'
+// import SearchMovieList from './SearchMovieList.vue'
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -86,19 +72,16 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL
 export default {
   name: "CommunityForm",
   components : {
-    SearchMovieList
+    // SearchMovieList
   },
   data: function () {
     return {
       search_name : null,
-      community_title : "",
+      community_title : null,
       content :null,
       movie_list : null,
       results: [],
       movieInfo : null,
-      modalShow: false,
-      movienull : true,
-      firstinput : false 
     }
   },
   methods :  {
@@ -120,12 +103,6 @@ export default {
         
       })
       console.log(this.results)
-      if (this.results.length === 0) {
-        this.movienull = false
-      } else {
-        this.movienull = true
-      }
-      this.firstinput= true
     },
     changeResults : function(selectMovie) {
       
@@ -231,5 +208,26 @@ export default {
 </script>
 
 <style>
+
+.cards {
+   width: 100%;
+   max-width: 300px;
+   min-width: 200px;
+   height: 400px;
+   background-color: rgba(white,0.75);
+   margin: 10px;
+   border-radius: 10px;
+   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.24);
+   border: 2px solid rgba(7, 7, 7, 0.12);
+   font-size: 16px;   
+   transition: all 0.3s ease;
+   position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   cursor: pointer;
+   transition: all 0.3s ease;
+}
 
 </style>

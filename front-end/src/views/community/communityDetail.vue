@@ -1,10 +1,61 @@
 <template>
-  <div class="diagonal-hero-bg">
-    <div class="stars">
-      <div class="small"></div>
-      <div class="medium"></div>
-      <div class="big"></div>
+<div class="html">
+  <div class="body"> 
+    <section class="product" style="width:1000px; margin-top: 100px;">
+      <div class="product__photo" style="width: 300px; height: 435px;">
+        <div class="photo-container">
+          <div class="photo-main">
+            <div class="controls">
+              <img :src="imgSrc" alt="" style="width: 300px; height: 435px;">
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="product__info">
+        <div class="title">
+          <h1>Delicious Apples</h1>
+          <span>COD: 45999</span>
+        </div>
+        <div class="price">
+          R$ <span>7.93</span>
+        </div>
+        <div class="variant">
+          <h3>SELECT A COLOR</h3>
+          <ul>
+            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png" alt="green apple"></li>
+            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302752/codepen/delicious-apples/yellow-apple.png" alt="yellow apple"></li>
+            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png" alt="orange apple"></li>
+            <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png" alt="red apple"></li>
+          </ul>
+        </div>
+        <div class="description">
+          <h3>BENEFITS</h3>
+          <ul>
+            <li>Apples are nutricious</li>
+            <li>Apples may be good for weight loss</li>
+            <li>Apples may be good for bone health</li>
+            <li>They're linked to a lowest risk of diabetes</li>
+          </ul>
+        </div>
+        <button class="buy--btn">ADD TO CART</button>
+      </div>
+    </section>
     </div>
+
+    <div class="body"> 
+      <div class="product"  style="width:1000px; margin-top: 100px; margin-bottom: 200px;">
+        <h1 >아이이이이이</h1>
+        <h1 >아이이이이이</h1>
+        <h1 >아이이이이이</h1>
+        <h1 >아이이이이이</h1>
+        <h1 >아이이이이이</h1>
+        <h1>{{this.communityInfo}}</h1>
+      </div>
+    </div>
+
+
+
   </div>
 </template>
 
@@ -37,9 +88,9 @@ export default {
       }
       return config
     },
-    getCommunityDetail: function () {
-      
-      const communityId = this.community_id
+    getCommunityDetail: function (event) {
+      console.log(this.$route.params,'hey')
+      const communityId = event
       console.log(communityId,"커뮤아이디")
       const token = localStorage.getItem('jwt')
       const user_id = jwtDecode(token).user_id
@@ -153,141 +204,249 @@ export default {
     if (localStorage.getItem('jwt')) {
        
         let community = this.$route.params.community_id
-        let communityId = parseInt(community)
-        console.log(this.$store.state.communityList,'리뷰리스트')
-        const wantCommunity = this.$store.state.communityList.filter(
-          community => community.id === communityId
-        )
-        console.log(wantCommunity, '짜잔')
-        this.communityInfo = wantCommunity[0]
-        this.community_id = wantCommunity[0].id
+        // let communityId = parseInt(community)
+        // const wantCommunity = this.$store.state.communityList.filter(
+        //   community => community.id === communityId
+        // )
+        // console.log(wantCommunity, '짜잔')
+        // this.communityInfo = wantCommunity[0]
+        // this.community_id = wantCommunity[0].id
         // console.log(typeof(communityId))
+        console.log(this.communityInfo)
         this.setToken()
-        this.getCommunityDetail()
+        this.getCommunityDetail(community)
         this.getReviews()
       } else {
         this.$router.push({ name: 'Login' })
       }
     
+  },
+  computed: {
+  imgSrc : function () {
+    const imgsrc = this.communityInfo.poster_path
+    console.log(imgsrc)
+    return imgsrc
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-body {
-  padding: 0;
-  margin: 0 0 0 0;
+/* ----- Variables ----- */
+$color-primary: #4c4c4c;
+$color-secondary: #a6a6a6;
+$color-highlight: #ff3f40;
+
+/* ----- Global ----- */
+* {
+	box-sizing: border-box;
 }
 
-.hero {
-  display: inline-block;
-  width: 100%;
-  height: 400px;
-  position: relative;
-
-}
-.diagonal-hero-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 550px;
-  background: #2b5876;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
-  z-index: -1;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 80%);
+.html,
+.body {
+	height: 100%;
 }
 
-// creates randomized star sizes
-@function stars($n) {
-  $value: '#{random(2000)}px #{random(2000)}px #767676';
-  @for $i from 2 through $n {
-    $value: '#{$value} , #{random(2000)}px #{random(2000)}px #767676';
-  }
-  @return unquote($value);
+.body {
+	display: grid;
+	grid-template-rows: 1fr;
+	font-family: "Raleway", sans-serif;
+	background-color: #01e37f;
 }
 
-// store random stars
-$stars-small: stars(700);
-$stars-medium: stars(200);
-$stars-big: stars(100);
-
-
-.stars {
-  z-index: -1;
-  overflow: hidden;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  transition: opacity 1s ease-in-out;
+h3 {
+	font-size: 0.7em;
+	letter-spacing: 1.2px;
+	color: $color-secondary;
 }
 
-.stars > .small {
-  width: 1px;
-  height: 1px;
-  background: transparent;
-  box-shadow: $stars-small;
-  animation: starsAnimation 50s linear infinite;
+// img {
+// 			max-width: 100%;
+// 			filter: drop-shadow(1px 1px 3px $color-secondary);
+// 		}
 
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 2000px;
-    width: 1px;
-    height: 1px;
-    background: transparent;
-    box-shadow: $stars-small;
-  }
+/* ----- Product Section ----- */
+.product {
+	display: grid;
+	grid-template-columns: 0.9fr 1fr;
+	margin: auto;
+	padding: 2.5em 0;
+	min-width: 600px;
+	background-color: white;
+	border-radius: 5px;
 }
 
-.stars > .medium {
-  width: 2px;
-  height: 2px;
-  background: transparent;
-  box-shadow: $stars-medium;
-  animation: starsAnimation 100s linear infinite;
-
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 2000px;
-    width: 2px;
-    height: 2px;
-    background: transparent;
-    box-shadow: $stars-medium;
-  }
+/* ----- Photo Section ----- */
+.product__photo {
+	position: relative;
 }
 
-.stars > .big {
-  width: 3px;
-  height: 3px;
-  background: transparent;
-  box-shadow: $stars-big;
-  border-radius: 100%;
-  animation: starsAnimation 150s linear infinite;
-
-  &:after {
-    content: " ";
-    position: absolute;
-    top: 2000px;
-    width: 3px;
-    height: 3px;
-    background: transparent;
-    box-shadow: $stars-big;
-    border-radius: 100%;
-  }
+.photo-container {
+	position: absolute;
+	left: -2.5em;
+	display: grid;
+	grid-template-rows: 1fr;
+	width: 100%;
+	height: 100%;
+	border-radius: 6px;
+	box-shadow: 4px 4px 25px -2px rgba(0, 0, 0, 0.3);
 }
 
-// swap from/to values to reverse animation
-@keyframes starsAnimation {
-  from {
-    transform: translateY(-2000px);
-  }
-  to {
-    transform: translateY(0px);
-  }
+.photo-main {
+	border-radius: 6px 6px 0 0;
+	background-color: #9be010;
+	background: radial-gradient(#343a40, #343a40);
+
+	.controls {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.8em;
+		color: #fff;
+
+		i {
+			cursor: pointer;
+		}
+	}
+
+	img {
+		position: absolute;
+		left: 1.5em;
+		top: 1.5em;
+		max-width: 110%;
+		filter: saturate(150%) contrast(120%) hue-rotate(10deg)
+			drop-shadow(1px 20px 10px rgba(0, 0, 0, 0.3));
+	}
 }
+
+.photo-album {
+	padding: 0.7em 1em;
+	border-radius: 0 0 6px 6px;
+	background-color: #fff;
+
+	ul {
+		display: flex;
+		justify-content: space-around;
+	}
+
+	li {
+		float: left;
+		width: 55px;
+		height: 55px;
+		padding: 7px;
+		border: 1px solid $color-secondary;
+		border-radius: 3px;
+	}
+}
+
+/* ----- Informations Section ----- */
+.product__info {
+	padding: 0.8em 0;
+}
+
+.title {
+	h1 {
+		margin-bottom: 0.1em;
+		color: $color-primary;
+		font-size: 1.5em;
+		font-weight: 900;
+	}
+
+	span {
+		font-size: 0.7em;
+		color: $color-secondary;
+	}
+}
+
+.price {
+	margin: 1.5em 0;
+	color: $color-highlight;
+	font-size: 1.2em;
+
+	span {
+		padding-left: 0.15em;
+		font-size: 2.9em;
+	}
+}
+
+.variant {
+	overflow: auto;
+
+	h3 {
+		margin-bottom: 1.1em;
+	}
+
+	li {
+		float: left;
+		width: 35px;
+		height: 35px;
+		padding: 3px;
+		border: 1px solid transparent;
+		border-radius: 3px;
+		cursor: pointer;
+
+		&:first-child,
+		&:hover {
+			border: 1px solid $color-secondary;
+		}
+	}
+
+	li:not(:first-child) {
+		margin-left: 0.1em;
+	}
+}
+
+.description {
+	clear: left;
+	margin: 2em 0;
+
+	h3 {
+		margin-bottom: 1em;
+	}
+
+	ul {
+		font-size: 0.8em;
+		list-style: disc;
+		margin-left: 1em;
+	}
+
+	li {
+		text-indent: -0.6em;
+		margin-bottom: 0.5em;
+	}
+}
+
+.buy--btn {
+	padding: 1.5em 3.1em;
+	border: none;
+	border-radius: 7px;
+	font-size: 0.8em;
+	font-weight: 700;
+	letter-spacing: 1.3px;
+	color: #fff;
+	background-color: $color-highlight;
+	box-shadow: 2px 2px 25px -7px $color-primary;
+	cursor: pointer;
+
+	&:active {
+		transform: scale(0.97);
+	}
+}
+
+/* ----- Footer Section ----- */
+footer {
+	padding: 1em;
+	text-align: center;
+	color: #fff;
+
+	a {
+		color: $color-primary;
+
+		&:hover {
+			color: $color-highlight;
+		}
+	}
+}
+
+
+
 </style>
