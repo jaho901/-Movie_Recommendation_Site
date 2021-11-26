@@ -144,7 +144,7 @@ export default {
         }
         
       })
-      console.log(this.results)
+      // console.log(this.results)
       if (this.results.length === 0) {
         this.movienull = false
       } else {
