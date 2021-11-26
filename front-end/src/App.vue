@@ -22,15 +22,15 @@
               <template #button-content>
                 <em>User</em>
               </template>
-              <b-dropdown-item :to="{name: 'profile', params : {user_id: this.useridid} }">Profile</b-dropdown-item>
+              <b-dropdown-item @click="myProfile">Profile</b-dropdown-item>
               <b-dropdown-item  @click.native="logout" to="#">Logout</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
 
-          <b-nav-form style="display: inline-block" v-if="isLogin">
+          <!-- <b-nav-form style="display: inline-block" v-if="isLogin">
               <b-form-input  class="mr-sm-2" placeholder="Search"></b-form-input>
               <b-button  class="my-2 my-sm-0" type="submit">Search</b-button>
-          </b-nav-form>
+          </b-nav-form> -->
 
         </b-collapse>
       </b-navbar>

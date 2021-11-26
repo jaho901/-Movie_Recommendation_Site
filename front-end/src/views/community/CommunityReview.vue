@@ -32,9 +32,9 @@
         </span>
       </div>
       <div v-if="reviewerId === userId">
-        <button class="mx-3" @click="updateReview" v-if="update">수정</button>
-        <button class="mx-3" @click="pushReview" v-else>업데이트</button>
-        <button class="mx-3" @click="deleteReview(review)">삭제</button>
+        <b-button class="mx-3" @click="updateReview" v-if="update">수정</b-button>
+        <b-button class="mx-3"  variant="success" @click="pushReview" v-else>업데이트</b-button>
+        <b-button class="mx-3"  variant="danger" @click="deleteReview(review)">삭제</b-button>
       </div>
     </div>
     <hr>

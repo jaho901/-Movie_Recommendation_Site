@@ -18,13 +18,6 @@
                   <p v-else-if = "credentials.password !== credentials.passwordConfirmation" style="color : red">비밀번호가 일치하지 않습니다!!!</p>
                 </div>
                 <input type="submit" name="" value="Signup" @click="signup">
-                <div class="col-md-12">
-                    <ul class="social-network social-circle">
-                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a></li>
-                    </ul>
-                </div>
             </form>
           </div>
         </div>
@@ -101,9 +94,7 @@ export default {
 .card {
     margin-bottom: 20px;
     border: none;
-    /* transform:scale(1.1); */
     animation: fadeInDown 2s;
-    
 }
 
 .box {
