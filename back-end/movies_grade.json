@@ -1,0 +1,30 @@
+[
+{
+    "model": "movies.grade",
+    "pk": 0,
+    "fields": {
+        "rating": "전체 관람가"
+    }
+},
+{
+    "model": "movies.grade",
+    "pk": 1,
+    "fields": {
+        "rating": "12세 관람가"
+    }
+},
+{
+    "model": "movies.grade",
+    "pk": 2,
+    "fields": {
+        "rating": "15세 관람가"
+    }
+},
+{
+    "model": "movies.grade",
+    "pk": 3,
+    "fields": {
+        "rating": "청소년 관람불가"
+    }
+}
+]

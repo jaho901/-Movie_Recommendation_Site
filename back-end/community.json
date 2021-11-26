@@ -1,0 +1,26 @@
+[
+{
+    "model": "community.community",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "movie": 30,
+        "community_title": "SF영화 듄, 티모시샬라메 사진ㅠㅠ 존멋",
+        "movie_title": "듄",
+        "content": "감독님이 영화로 제작해서 성공은 했지만??? 문제는SF소설 듄 원작과 너무 다른 부분이 많았고,내용이 너~무 축약되어있어서 혹평;;;; 결국 2020년 12월에 개봉하는 SF영화듄 은파라마운트를 거쳐서 레전더리 엔터테인먼트에서 제작하게 됐다고 함~",
+        "poster_path": "https://movie-phinf.pstatic.net/20210915_104/1631681279096sdjNA_JPEG/movie_image.jpg?type=m203_290_2",
+        "created_at": "2021-11-26T00:20:14.142Z",
+        "updated_at": "2021-11-26T00:20:14.142Z",
+        "like_users": [],
+        "hate_users": []
+    }
+},
+{
+    "model": "community.community",
+    "pk": 2,
+    "fields": {
+        "user": 1,
+        "movie": 3,
+        "community_title": "러브 어페어",
+        "movie_title": "러브 어페어 : 우리가 말하는 것, 우리가 하는 것",
+        "content": 
