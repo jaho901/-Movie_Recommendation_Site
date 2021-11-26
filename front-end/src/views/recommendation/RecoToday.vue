@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="mod">
-      <div style="background-color: rgba(0, 0, 0, 0.3);text-align: center;width: 300px;height: 100px;margin-left: auto;margin-right: auto;border-radius: 20px;">
+      <div style="background-color: rgba(0, 0, 0, 0.3);text-align: center;width: 500px;height: 100px;margin-left: auto;margin-right: auto;border-radius: 20px;">
         <h3 style="color: white;padding-top: 10px;">오늘의 User </h3>
         <h2 style="color: white;">{{ TodayUser.nickname }} 님의 Pick</h2>
       </div>
@@ -76,7 +76,7 @@ export default {
   text-align: center;
   color: #2c3e50;  
   padding-top: 200px;
-  padding-bottom: 220px;
+  padding-bottom: 400px;
   .demo {
     .glide {
       &__slide {

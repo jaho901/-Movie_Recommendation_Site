@@ -21,6 +21,9 @@
             <h5>{{this.communityInfo.community_title}}</h5>
           <hr>
           <span>username: {{communityInfo.user.nickname}}</span>
+          <br>
+          <span>작성일 : {{ create }}</span>
+          <br>
         </div>
         <div v-else>
            <b-form-textarea
@@ -98,6 +101,7 @@
 <script>
 import axios from 'axios'
 import jwtDecode from "jwt-decode"
+// import _ from 'lodash'
 import CommunityReivewForm from './CommunityReivewForm.vue'
 import CommunityReview from '@/views/community/CommunityReview'
 const SERVER_URL = process.env.VUE_APP_SERVER_URL
@@ -120,7 +124,8 @@ export default {
       coummunityuser : null,
       nowuser : null,
       check : true,
-      deletecheck : true
+      deletecheck : true,
+      create: '',
     }
   },
   methods: {
@@ -147,8 +152,11 @@ export default {
       })
         .then(res => {
           // console.log(res)
-          console.log(res.data)
+          console.log(res.data, '커뮤')
           this.communityInfo = res.data
+          const create = res.data.created_at.slice(0, 10)
+          this.create = create
+          console.log(this.create)
           if (this.communityInfo.like_users.includes(user_id)) { 
               this.like = true
             } else {

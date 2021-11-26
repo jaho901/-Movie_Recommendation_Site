@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #1a1e23;">
+  <div style="background-color: #1a1e23; padding-top: 60px;">
     <h3 style="color:white">장르별</h3>
     <div style="
     padding-top: 0px;">
