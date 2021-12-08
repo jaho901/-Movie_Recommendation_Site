@@ -301,7 +301,7 @@ User Dropbox를 통해 자신의 profile 페이지와 Logout도 가능하게 했
 
 #### 컨셉에 어울리는 동적인 화면, 각각의 사이트로 이동할 카드 생성
 
-<video src="Bandicam/bandicam 2021-11-26 04-44-17-673.mp4"></video>
+<video src="Bandicam/3.1.Home.gif"></video>
 
 ```
 마블 캐릭터들을 중점을 두고 디자인에 대해 회의를 시작했습니다.
