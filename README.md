@@ -341,7 +341,7 @@ User Dropbox를 통해 자신의 profile 페이지와 Logout도 가능하게 했
 
 ### 3.4 Sign-up
 
-<video src="Bandicam/bandicam 2021-11-26 04-45-52-531.mp4"></video>
+<img src="Bandicam/3.2.Sign-up.gif">
 
 ```
 ‘Animation: fadeInDown’ 을 사용해 Sign-up 창이 천천히 화면에 생성되게 지정해주었습니다.
@@ -406,7 +406,7 @@ V-if문을 사용해 비밀번호와 비밀번호 확인란의 값이 다른 경
 
 ### 3.5 Log-in
 
-<video src="Bandicam/bandicam 2021-11-26 04-48-14-804.mp4"></video>
+<img src="Bandicam/3.3.Log-in.gif">
 
 ```
 V-if문을 활용해 DB에 저장되어 있는 password값과 입력한 password값이 다른 경우 
@@ -450,7 +450,7 @@ V-if문을 활용해 DB에 저장되어 있는 password값과 입력한 password
 
 ### 4.1 Movies-1
 
-<video src="Bandicam/bandicam 2021-11-26 04-50-08-267.mp4"></video>
+<img src="Bandicam/4.1_1.movies.gif">
 
 ```
 Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 지정해 애니메이션 효과를 주면서 첫 페이지에 보여줬습니다.
@@ -464,7 +464,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 4.2 Movies-2
 
-<video src="Bandicam/bandicam 2021-11-26 04-51-40-586.mp4"></video>
+<img src="Bandicam/4.1_2.movies.gif">
 
 ```
 장고에서 장르별 데이터를 선별해 뷰에서 받을 수 있게 지정해줬습니다.
@@ -482,7 +482,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 4.3 Movie-Detail
 
-<video src="Bandicam/bandicam 2021-11-26 04-57-29-867.mp4"></video>
+<img src="Bandicam/4.2.movie_detail.gif">
 
 ```
 각각의 영화에 대한 정보를 보여주는 Detail 페이지를 생성했습니다.
@@ -506,7 +506,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 5.1 Community
 
-<video src="Bandicam/bandicam 2021-11-26 05-03-06-785.mp4"></video>
+<img src="Bandicam/5.1.community.gif">
 
 ```
 존재하는 커뮤니티 게시글과 Pagination을 연결해 한 페이지에 5개의 게시물만 볼 수 있도록 지정해주었습니다.
@@ -522,7 +522,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 5.2 Community - Create
 
-<video src="Bandicam/bandicam 2021-11-26 05-03-46-911.mp4"></video>
+<img src="Bandicam/5.2.community_create.gif">
 
 ```
 게시글 작성 페이지입니다. 위 페이지의 경우 ‘영화검색하기’ 버튼을 누를 때, 단어별로 엔터 입력 시 검색이 가능하게 만들었습니다.
@@ -536,7 +536,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 5.3 Community - Detail
 
-<video src="Bandicam/bandicam 2021-11-26 07-54-43-280.mp4"></video>
+<img src="Bandicam/5.3.community_detail.gif">
 
 ```
 유저가 작성한 영화 포스터와 제목, 그리고 게시글의 제목과 내용을 보여주는 커뮤니티 디테일을 생성했습니다.
@@ -559,7 +559,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 6.1 Recommend - User of Today
 
-<video src="Bandicam/bandicam 2021-11-26 05-08-36-463.mp4"></video>
+<img src="Bandicam/6.1.recommend_today.gif">
 
 ```
 커뮤니티에 글을 많이 쓴 사람일 수록, 영화를 진심으로 생각하고 있으며, 영화에 대한 지식이 높다고 생각합니다. 그렇기 때문에, 커뮤니티에 쓴 글이 많은 순으로 유저를 10명 뽑고, 그 중 1명을 랜덤으로 선택하면서 그 유저가 좋아요를 누른 영화를 vue-glide 를 사용해 보여주었습니다.
@@ -573,7 +573,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 6.2 Recommend - Week of Day
 
-<video src="Bandicam/bandicam 2021-11-26 05-11-06-050.mp4"></video>
+<img src="Bandicam/6.2.recommend_week.gif">
 
 ```
 각각의 요일을 크롤링 해서 각 요일에 맞는 영화장르에 따른 영화를 랜덤으로 추천해주는 알고리즘 또한, 구현했습니다. 그리고 총 추천된 12개의 영화를 cube-container를 사용해 추천해줬습니다.
@@ -595,7 +595,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### 6.3 Recommend - Korea
 
-<video src="Bandicam/bandicam 2021-11-26 08-47-18-100.mp4"></video>
+<img src="Bandicam/6.3.recommend_korea.gif">
 
 ```
 국뽕을 잊지말자!!
@@ -615,7 +615,7 @@ Carousel-3d를 활용해 최근에 나온 영화를 평점이 높은 순으로 �
 
 ### Profile
 
-<video src="Bandicam/bandicam 2021-11-26 05-26-58-574.mp4"></video>
+<img src="Bandicam/7.profile.gif">
 
 ```
 개개인의 프로필 페이지에 들어갔을 때, 그 유저가 좋아요를 누른 영화들, 게시글을 작성할 때 사용한 영화들, 그리고 찜한 영화들을 보여주었습니다. 역시, Pagination을 사용해 한 페이지에 최대 6개의 영화 포스터를 보여주었습니다.
